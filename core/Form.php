@@ -24,4 +24,11 @@ class Form {
 		}
 		return true; 
 	}
+
+	/**
+	 * Permet de remplir un champ d'un formulaire si il a déjà été rempli 
+	*/
+	public static function remplirChamp($tab,$champs) {
+		echo isset($tab[$champs]) ? $tab[$champs] : '';
+	}
 }
