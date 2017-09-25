@@ -14,6 +14,6 @@ require_once APP . 'App.php';
 require_once CORE . 'Controller/Controller.php';
 require_once CORE . 'Form/Form.php';
 
-// 
+//salut
 $app = new App();
 $app->run();
