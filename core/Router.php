@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Toutes les routes sont du type :  wwww.site.com/controlleur/action
+ */
+
 class Router {
 
     // Controlleur à appeller
@@ -12,10 +16,13 @@ class Router {
     private $params = array();
 
     public function get() {
-        $this->parseUrl();
+        $this->parseURL();
+        $this->callController();
+    }
+
+    private function callController() {
         // Si aucun controlleur -> Retour index.php
         if (!$this->controller) {
-
             require APP . 'controller/HomeController.php';
             $page = new HomeController();
             $page->indexAction();
@@ -25,31 +32,39 @@ class Router {
             require APP . 'controller/' . $this->controller . '.php';
             $this->controller = new $this->controller();
 
-            // Verification si l'action existe
-            if (method_exists($this->controller, $this->action)) {
-                // Si il existe des parametres get on les passe au controlleur
-                if (!empty($this->params)) {
-                    // On appelle l'action avec ses parametres
-                    call_user_func_array(array($this->controller, $this->action), $this->params);
-                } else {
-                    //Si il n'y a pas d'arguments on execute l'action
-                    $this->controller->{$this->action}();
-                }
-
-            } else {
-                if (strlen($this->action) == 0) {
-                    // Si aucune action n'est definie, appel celle par default qui est index
-                    $this->controller->indexAction();
-                } else {
-                    header('Location: ' . URL . 'error');
-                }
-            }
+            $this->callAction();
         } else {
-            header('Location: ' . URL . 'error');
+            $this->cantFindRoot();
         }
     }
 
-    private function parseUrl() {
+    private function callAction() {
+        // Verification si l'action existe
+        if (method_exists($this->controller, $this->action)) {
+            // Si il existe des parametres get on les passe au controlleur
+            if (!empty($this->params)) {
+                // On appelle l'action avec ses parametres
+                call_user_func_array(array($this->controller, $this->action), $this->params);
+            } else {
+                //Si il n'y a pas d'arguments on execute l'action
+                $this->controller->{$this->action}();
+            }
+
+        } else {
+            if (strlen($this->action) == 0) {
+                // Si aucune action n'est definie, appelle celle par default qui est indexAction
+                $this->controller->indexAction();
+            } else {
+                $this->cantFindRoot();
+            }
+        }
+    }
+
+    private function cantFindRoot() {
+        header('Location: ' . URL . 'error');
+    }
+
+    private function parseURL() {
         if (isset($_GET['url'])) {
             // On parse l'url
             $url = trim($_GET['url'], '/');

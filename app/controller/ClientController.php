@@ -13,7 +13,6 @@ class ClientController extends Controller {
 	public function ajouterAction() {
 
 		$informations = ["nom","prenom","ville"];
-		var_export($_POST);
 		if (isset($_POST["submit"])) {
 			if (Form::champsSontRemplisPost($informations)) {
 				$erreur = "Client ajouté";
