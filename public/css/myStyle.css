@@ -1,0 +1,60 @@
+body {
+	font-family: 'Helvetica';
+	margin : 0px;
+}
+
+/* ########################## HEADER ##########################  */
+
+nav {
+	display: flex;
+	background-color: #f1c40f;
+	height: 50px;
+	border: 2px solid black;
+	border-left: none;
+	border-right: none;
+}
+
+.link {
+	flex-grow: 25;
+	text-align:  center;
+	align-self: center;
+	font-weight: bold;
+}
+
+a:hover {
+	color : orange;
+}
+
+.link a:visited, .link a:link {
+	text-decoration: none;
+	color:#2c3e50;
+}
+
+header {
+	font-size: 3em;
+	height: 18vh;
+	color: #2c3e50;
+	font-weight: bold;
+	display: flex;
+	justify-content: center;
+}
+
+header div {
+	align-self: center;
+}
+
+/*  ########################## CONTAINERS ########################## */
+
+.container {
+	margin: 30px;
+	padding : 15px;
+	border : 1px solid black;
+	background-color: #ecf0f1;
+}
+
+/*  ########################## FOOTER ########################## */
+
+footer {
+	margin: 30px;
+	text-align: center;
+}

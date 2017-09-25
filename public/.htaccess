@@ -1,0 +1,18 @@
+Options -MultiViews
+
+RewriteEngine On
+RewriteBase /public
+Options -Indexes
+
+#Si ce n'est pas un répertoire tu coninues le .htaccess
+RewriteCond %{REQUEST_FILENAME} !-d
+#Si ce n'est pas un fichier tu coninues le .htaccess
+RewriteCond %{REQUEST_FILENAME} !-f
+#Si ce n'est pas un liens tu coninues le .htaccess
+RewriteCond %{REQUEST_FILENAME} !-l
+
+# Permet de rediriger les urls vers index.php avec le parametre url en GET
+# reggex ^(.+)$ pour matcher sur n'importe quel chaine
+# QSA : Pour passer de index/page?p=1 à index.php?url=page&p=1
+# L : pour arreter le déroulement du .htaccess si il réussi
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
