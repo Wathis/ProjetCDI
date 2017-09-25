@@ -19,9 +19,8 @@ define('URL', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER);
  * Configuration de la base de donnée
 */
 
-define('DB_TYPE', 'mysql');
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'php_');
-define('DB_USER', 'root');
-define('DB_PASS', 'root');
-define('DB_CHARSET', 'utf8');
+define('BDD_TYPE',"mysql");
+define('BDD_HOST', '127.0.0.1');
+define('BDD_NAME','projet_php');
+define('BDD_USER', 'root');
+define('BDD_PASS', 'root');

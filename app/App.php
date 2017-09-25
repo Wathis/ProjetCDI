@@ -56,13 +56,11 @@ class App {
 
     private function parseUrl() {
         if (isset($_GET['url'])) {
-
             // On parse l'url
             $url = trim($_GET['url'], '/');
             //Enlever les caracteres interdits dans une requete ( Ex : ' )
             $url = filter_var($url, FILTER_SANITIZE_URL);
             $url = explode('/', $url);
-
             //On extrait le nom du controlleur et de l'action
             $this->controller = isset($url[0]) ? $url[0] . 'Controller' : null;
             $this->action = isset($url[1]) ? $url[1]  . 'Action' : null;

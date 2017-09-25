@@ -1,20 +1,24 @@
 <?php
 class Controller
 {
-    public $db;
+    public $bdd;
     public $model;
 
     function __construct() {
-        $this->openDatabaseConnection();
+        $this->ouvrirLaConnexionBDD();
     }
 
-    private function openDatabaseConnection() {
+    private function ouvrirLaConnexionBDD() {
         //Configuration de la database
-        $this->db = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=' . DB_CHARSET, DB_USER, DB_PASS);
+        try {
+            $this->bdd = new PDO(BDD_TYPE . ':host=' . BDD_HOST . ';dbname=' . BDD_NAME . ';',BDD_USER, BDD_PASS);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
     protected function loadModel($modelName) {
         require APP . 'model/' . $modelName . '.php';
-        $this->model = new $modelName($this->db);
+        $this->model = new $modelName($this->bdd);
     }
 }
