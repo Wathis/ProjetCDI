@@ -32,6 +32,7 @@ class Form {
 		echo isset($tab[$champs]) ? $tab[$champs] : '';
 	}
 
+<<<<<<< HEAD
 	public static function verifierSaisieNouveauClient($champs){
 		$erreur[]
 		$erreur =
@@ -98,5 +99,57 @@ class Form {
 		return $champ;
 	}
 
+=======
+	public function verifierValiditeNom() {
+        if ($this->verifierLesBackSlashs() && $this->verifierTiretsEtEspaces() ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Transformer les multiples espaces en simple espace
+     */
+    public static function supprimerLesEspacesMultiples($champ) {
+        $model = "/(\/s)+/";
+        return preg_replace($model," ",$champ);
+    }
+
+
+    /**
+     * Verifier si le champs contient des backslach -> si oui interdit
+     */
+	public static function verifierLesBackSlashs($champ) {
+        $model = "/(\\\)+/";
+        if (preg_match($model,$champ) == true) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Verifier si le champ n'a pas de tiret  ( fin et début )
+     * @param $champ
+     */
+	public static function verifierTiretsEtEspacesALaFin($champ) {
+        $model = "/(^[\s-]+)|([\s-]$)/";
+        if (preg_match($model,$champ)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+//	public static function verifierSaisieNouveauClient($champs){
+//		$erreur[]
+//		$erreur =
+//
+//
+//
+//		return $erreur;
+//	}
+>>>>>>> 3b5f4f6de0e61faa52640e610ef007708e00eaeb
 
 }
