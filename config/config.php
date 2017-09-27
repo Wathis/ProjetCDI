@@ -23,4 +23,4 @@ define('BDD_TYPE',"mysql");
 define('BDD_HOST', '127.0.0.1');
 define('BDD_NAME','projet_php');
 define('BDD_USER', 'root');
-define('BDD_PASS', 'root');
+define('BDD_PASS', '');
