@@ -12,13 +12,20 @@ class ClientController extends Controller {
 	
 	public function ajouterAction() {
 
+		$erreurs = array();
 		$informations = ["nom","prenom","ville"];
+
 		if (isset($_POST["submit"])) {
 			if (Form::champsSontRemplisPost($informations)) {
-				$erreur = "Client ajouté";
-
+				if (($erreurRegex = Form::verifierSaisieNouveauClient($informations)) == ""){
+					$erreurs[] = "Client ajouté";
+				}
+				else
+				{
+					$erreurs[] =$erreurRegex;
+				}
 			} else {
-				$erreur = "Veuillez remplir tous les champs obligatoires (*)";
+				$erreurs[] = "Veuillez remplir tous les champs obligatoires (*)";
 			}
 		}
 

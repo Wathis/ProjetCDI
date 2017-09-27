@@ -23,12 +23,80 @@ class Form {
 			}
 		}
 		return true; 
-	}
-
+	
+}
 	/**
 	 * Permet de remplir un champ d'un formulaire si il a déjà été rempli 
 	*/
 	public static function remplirChamp($tab,$champs) {
 		echo isset($tab[$champs]) ? $tab[$champs] : '';
 	}
+
+	public static function verifierSaisieNouveauClient($champs){
+		$erreur[]
+		$erreur =
+
+
+
+		return $erreur; 
+	}
+	public static function mettreMajuscule($champ)
+	{
+		return strtoupper($champ);
+	} 
+	public static function mettreMinuscule($champ)
+	{
+		return strtolower($champ);
+	}
+	public static function retirerAccent($champ)
+	{
+		$champ = preg_replace('#Ç#', 'C', $champ);
+	    $champ = preg_replace('#ç#', 'c', $champ);
+	    $champ = preg_replace('#è|é|ê|ë#', 'e', $champ);
+	    $champ = preg_replace('#È|É|Ê|Ë#', 'E', $champ);
+	    $champ = preg_replace('#à|á|â|ã|ä|å#', 'a', $champ);
+	    $champ = preg_replace('#@|À|Á|Â|Ã|Ä|Å#', 'A', $champ);
+	    $champ = preg_replace('#ì|í|î|ï#', 'i', $champ);
+	    $champ = preg_replace('#Ì|Í|Î|Ï#', 'I', $champ);
+	    $champ = preg_replace('#ð|ò|ó|ô|õ|ö#', 'o', $champ);
+	    $champ = preg_replace('#Ò|Ó|Ô|Õ|Ö#', 'O', $champ);
+	    $champ = preg_replace('#ù|ú|û|ü#', 'u', $champ);
+	    $champ = preg_replace('#Ù|Ú|Û|Ü#', 'U', $champ);
+	    $champ = preg_replace('#ý|ÿ#', 'y', $champ);
+	    return preg_replace('#Ý#', 'Y', $champ);
+	}
+	public static function cassePrenom($champ)
+	{
+		$champ = mettreMinuscule($champ);
+		$prem = retirerAccent($champ[0]);
+		for ($i=1; $i<strlen($champ); $i++) {
+			$prem= $prem.$champ[$i];
+		}
+		$prem = ucwords($prem);
+		$tab = rechercheTiret($prem);
+		majusculeApresTiret($prem,$tab);
+		return $prem;
+	}
+	public static function rechercheTiret($champ)
+	{
+		$tab = array();
+		$i=0;
+		while (preg_match("#-#", $champ))
+		{
+			$tab[$i]=strpos($champ,"-");
+			$champ[$tab[$i]]="a";
+			$i++;
+		}
+		return $tab;
+	}
+	public static function majusculeApresTiret($champ,$tab)
+	{
+		foreach ($tab as $i)
+		{
+			$champ[$tab[$i]]=mettreMajuscule($champ[$tab[$i]]);
+		}
+		return $champ;
+	}
+
+
 }
