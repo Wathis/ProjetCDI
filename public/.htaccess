@@ -1,7 +1,6 @@
 Options -MultiViews
 
 RewriteEngine On
-RewriteBase /public
 Options -Indexes
 
 #Si ce n'est pas un répertoire tu coninues le .htaccess

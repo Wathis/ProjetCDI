@@ -31,4 +31,14 @@ class Form {
 	public static function remplirChamp($tab,$champs) {
 		echo isset($tab[$champs]) ? $tab[$champs] : '';
 	}
+
+	public static function verifierSaisieNouveauClient($champs){
+		$erreur[]
+		$erreur =
+
+
+
+		return $erreur; 
+	}
+
 }
