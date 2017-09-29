@@ -32,14 +32,13 @@ class Form {
 		echo isset($tab[$champs]) ? $tab[$champs] : '';
 	}
 
-<<<<<<< HEAD
 	public static function verifierSaisieNouveauClient($champs){
-		$erreur[]
-		$erreur =
+		//$erreur[]
+		//$erreur =
 
 
 
-		return $erreur; 
+		//return $erreur;
 	}
 	public static function mettreMajuscule($champ)
 	{
@@ -99,7 +98,6 @@ class Form {
 		return $champ;
 	}
 
-=======
 	public function verifierValiditeNom() {
         if ($this->verifierLesBackSlashs() && $this->verifierTiretsEtEspaces() ) {
             return true;
@@ -141,15 +139,5 @@ class Form {
             return true;
         }
     }
-
-//	public static function verifierSaisieNouveauClient($champs){
-//		$erreur[]
-//		$erreur =
-//
-//
-//
-//		return $erreur;
-//	}
->>>>>>> 3b5f4f6de0e61faa52640e610ef007708e00eaeb
 
 }
