@@ -3,7 +3,8 @@
 class TestController extends Controller {
 
     public function indexAction()  {
-        $test =  Form::majusculesApresTiret("qzdqzd--zdzd");
+        $form = new Form();
+        $test =  $form->faireUnTest();
         require APP . 'view/_templates/header.php';
         require APP . 'view/test/index.php';
         require APP . 'view/_templates/footer.php';

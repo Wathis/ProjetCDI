@@ -32,7 +32,7 @@ class Form {
 		echo isset($tab[$champs]) ? $tab[$champs] : '';
 	}
 
-	public static function verifierSaisieNouveauClient($champs){
+	public function verifierSaisieNouveauClient($champs){
 		//$erreur[]
 		//$erreur =
 
@@ -48,7 +48,7 @@ class Form {
 	{
 		return strtolower($champ);
 	}
-	public static function retirerAccent($champ)
+	public function retirerAccent($champ)
 	{
 		$champ = preg_replace('#Ç#', 'C', $champ);
 	    $champ = preg_replace('#ç#', 'c', $champ);
@@ -113,14 +113,16 @@ class Form {
     /**
      * Transformer les multiples espaces en simple espace
      */
-    public static function supprimerLesEspacesMultiples($champ) {
+    public function supprimerLesEspacesMultiples($champ) {
         $model = "/(\/s)+/";
         return preg_replace($model," ",$champ);
     }
 
-    //TO DO
+    /*
+     * @return true
+     */
     public function verifierLesDoublesTirets($champ) {
-
+        return !preg_match("/--/",$champ);
     }
 
 
@@ -135,10 +137,10 @@ class Form {
 
 
     /*
-     * Mettre des majuscules après les tirets
+     * Mettre des majuscules sur la première lettre après les tirets et le début
      */
-    public static function majusculesApresTiret($champ) {
-        return implode('-', array_map('ucfirst', explode('-', $champ)));
+    public function majusculesApresTiret($champ) {
+        return implode('-', array_map('ucwords', explode('-', $champ)));
     }
 
     /**
@@ -153,17 +155,22 @@ class Form {
         }
     }
 
+    public function faireUnTest() {
+	    $champ = $this->supprimerTiretsEtEspacesALaFin(" qzdqzd-qzdq zd");
+	    return $this->majusculesApresTiret($champ);
+    }
+
     /**
      * Verifier si le champ n'a pas de tiret  ( fin et début )
      * @param $champ
+     * @return Le champ modifié
      */
-	public static function verifierTiretsEtEspacesALaFin($champ) {
+	public function supprimerTiretsEtEspacesALaFin($champ) {
         $model = "/(^[\s-]+)|([\s-]$)/";
         if (preg_match($model,$champ)) {
-            return false;
-        } else {
-            return true;
+            return preg_replace($model,"",$champ);
         }
+        return $champ;
     }
 
 }

@@ -18,6 +18,7 @@ class Client {
 		$query->execute();
 		return $query->fetchAll();
 	}
+
 	public function getClientsRecherche() {
 		$_POST["choix"]= htmlentities($_POST["choix"]);
 		$_POST["champ"]=htmlentities($_POST["champ"]);
