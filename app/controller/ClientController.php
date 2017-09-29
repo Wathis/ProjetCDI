@@ -20,8 +20,7 @@ class ClientController extends Controller {
 				if (($erreurRegex = Form::verifierSaisieNouveauClient($informations)) == ""){
 					$erreurs[] = "Client ajouté";
 				}
-				else
-				{
+				else {
 					$erreurs[] =$erreurRegex;
 				}
 			} else {
@@ -37,7 +36,7 @@ class ClientController extends Controller {
 	}
 	public function rechercherAction() {
 		$this->loadModel('Client');
-		$clients = $this->model->getClientsrecherche();
+		$clients = $this->model->getClientsRecherche();
 		$champ = $_POST["champ"];
 		require APP . 'view/_templates/header.php';
         require APP . 'view/client/index.php';

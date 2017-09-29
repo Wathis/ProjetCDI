@@ -3,6 +3,9 @@
 class TestController extends Controller {
 
     public function indexAction()  {
-        echo Form::verifierLesBackSlashs("qqqqq");
+        $test =  Form::majusculesApresTiret("qzdqzd--zdzd");
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/test/index.php';
+        require APP . 'view/_templates/footer.php';
     }
 }

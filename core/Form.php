@@ -40,11 +40,11 @@ class Form {
 
 		//return $erreur;
 	}
-	public static function mettreMajuscule($champ)
+	public function mettreMajuscule($champ)
 	{
 		return strtoupper($champ);
 	} 
-	public static function mettreMinuscule($champ)
+	public function mettreMinuscule($champ)
 	{
 		return strtolower($champ);
 	}
@@ -56,6 +56,11 @@ class Form {
 	    $champ = preg_replace('#È|É|Ê|Ë#', 'E', $champ);
 	    $champ = preg_replace('#à|á|â|ã|ä|å#', 'a', $champ);
 	    $champ = preg_replace('#@|À|Á|Â|Ã|Ä|Å#', 'A', $champ);
+	    //A tester car fait avec mon mac les symboles
+	    $champ = preg_replace('/œ/','oe',$champ);
+        $champ = preg_replace('/Œ/','OE',$champ);
+        $champ = preg_replace('/æ/','ae',$champ);
+        $champ = preg_replace('/Æ/','AE',$champ);
 	    $champ = preg_replace('#ì|í|î|ï#', 'i', $champ);
 	    $champ = preg_replace('#Ì|Í|Î|Ï#', 'I', $champ);
 	    $champ = preg_replace('#ð|ò|ó|ô|õ|ö#', 'o', $champ);
@@ -65,16 +70,16 @@ class Form {
 	    $champ = preg_replace('#ý|ÿ#', 'y', $champ);
 	    return preg_replace('#Ý#', 'Y', $champ);
 	}
-	public static function cassePrenom($champ)
+	public function cassePrenom($champ)
 	{
-		$champ = mettreMinuscule($champ);
-		$prem = retirerAccent($champ[0]);
+		$champ = $this->mettreMinuscule($champ);
+		$prem = $this->retirerAccent($champ[0]);
 		for ($i=1; $i<strlen($champ); $i++) {
 			$prem= $prem.$champ[$i];
 		}
 		$prem = ucwords($prem);
-		$tab = rechercheTiret($prem);
-		majusculeApresTiret($prem,$tab);
+		$tab = $this->rechercheTiret($prem);
+        $this->majusculeApresTiret($prem,$tab);
 		return $prem;
 	}
 	public static function rechercheTiret($champ)
@@ -89,11 +94,10 @@ class Form {
 		}
 		return $tab;
 	}
-	public static function majusculeApresTiret($champ,$tab)
+	public function majusculeApresTiret($champ,$tab)
 	{
-		foreach ($tab as $i)
-		{
-			$champ[$tab[$i]]=mettreMajuscule($champ[$tab[$i]]);
+		foreach ($tab as $i) {
+			$champ[$tab[$i]]= $this->mettreMajuscule($champ[$tab[$i]]);
 		}
 		return $champ;
 	}
@@ -114,6 +118,28 @@ class Form {
         return preg_replace($model," ",$champ);
     }
 
+    //TO DO
+    public function verifierLesDoublesTirets($champ) {
+
+    }
+
+
+    /**
+     * Verifier si le champ contient un signe euro car interdit
+     * @param $champ
+     * @return int
+     */
+    public function verifierLeSigneEuro($champ) {
+        return preg_match('/€/',$champ);
+    }
+
+
+    /*
+     * Mettre des majuscules après les tirets
+     */
+    public static function majusculesApresTiret($champ) {
+        return implode('-', array_map('ucfirst', explode('-', $champ)));
+    }
 
     /**
      * Verifier si le champs contient des backslach -> si oui interdit

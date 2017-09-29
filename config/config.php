@@ -19,12 +19,8 @@ define('URL', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER);
 /**
  * Configuration de la base de donnée
 */
-<<<<<<< HEAD
-echo URL.
-=======
->>>>>>> 3b5f4f6de0e61faa52640e610ef007708e00eaeb
 define('BDD_TYPE',"mysql");
 define('BDD_HOST', '127.0.0.1');
 define('BDD_NAME','projetCDI');
 define('BDD_USER', 'root');
-define('BDD_PASS', '');
+define('BDD_PASS', 'root');

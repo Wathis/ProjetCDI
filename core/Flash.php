@@ -23,7 +23,7 @@ class Flash {
 	/**
 	 * Obtenir les messages flash d'un type donné
 	*/
-	public static function getFlashs($type) {
+	public static function getFlash($type) {
 
 	}
 
