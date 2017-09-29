@@ -32,24 +32,22 @@ class Form {
 		echo isset($tab[$champs]) ? $tab[$champs] : '';
 	}
 
-	public function verifierSaisieNouveauClient($champs){
-		//$erreur[]
-		//$erreur =
+    //#######################################################################################################
+    //############################## FONCTIONS DE MODIFICATIONS  ############################################
+    //#######################################################################################################
 
-
-
-		//return $erreur;
-	}
-	public function mettreMajuscule($champ)
-	{
+	public function mettreMajuscule($champ) {
 		return strtoupper($champ);
-	} 
-	public function mettreMinuscule($champ)
-	{
+	}
+
+	public function mettreMinuscule($champ) {
 		return strtolower($champ);
 	}
-	public function retirerAccent($champ)
-	{
+
+	/*
+	 * Retire les accents dans la chaine
+	 */
+	public function retirerAccent($champ) {
 		$champ = preg_replace('#Ç#', 'C', $champ);
 	    $champ = preg_replace('#ç#', 'c', $champ);
 	    $champ = preg_replace('#è|é|ê|ë#', 'e', $champ);
@@ -94,6 +92,7 @@ class Form {
 		}
 		return $tab;
 	}
+
 	public function majusculeApresTiret($champ,$tab)
 	{
 		foreach ($tab as $i) {
@@ -101,14 +100,6 @@ class Form {
 		}
 		return $champ;
 	}
-
-	public function verifierValiditeNom() {
-        if ($this->verifierLesBackSlashs() && $this->verifierTiretsEtEspaces() ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     /**
      * Transformer les multiples espaces en simple espace
@@ -119,45 +110,15 @@ class Form {
     }
 
     /*
-     * @return true
-     */
-    public function verifierLesDoublesTirets($champ) {
-        return !preg_match("/--/",$champ);
-    }
-
-
-    /**
-     * Verifier si le champ contient un signe euro car interdit
-     * @param $champ
-     * @return int
-     */
-    public function verifierLeSigneEuro($champ) {
-        return preg_match('/€/',$champ);
-    }
-
-
-    /*
-     * Mettre des majuscules sur la première lettre après les tirets et le début
-     */
+    * Mettre des majuscules sur la première lettre après les tirets et le début
+    */
     public function majusculesApresTiret($champ) {
         return implode('-', array_map('ucwords', explode('-', $champ)));
     }
 
-    /**
-     * Verifier si le champs contient des backslach -> si oui interdit
-     */
-	public static function verifierLesBackSlashs($champ) {
-        $model = "/(\\\)+/";
-        if (preg_match($model,$champ) == true) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     public function faireUnTest() {
-	    $champ = $this->supprimerTiretsEtEspacesALaFin(" qzdqzd-qzdq zd");
-	    return $this->majusculesApresTiret($champ);
+        $champ = $this->supprimerTiretsEtEspacesALaFin(" qzdqzd-qzdq zd");
+        return $this->majusculesApresTiret($champ);
     }
 
     /**
@@ -165,7 +126,7 @@ class Form {
      * @param $champ
      * @return Le champ modifié
      */
-	public function supprimerTiretsEtEspacesALaFin($champ) {
+    public function supprimerTiretsEtEspacesALaFin($champ) {
         $model = "/(^[\s-]+)|([\s-]$)/";
         if (preg_match($model,$champ)) {
             return preg_replace($model,"",$champ);
@@ -173,4 +134,72 @@ class Form {
         return $champ;
     }
 
+    //#######################################################################################################
+    //############################## FONCTIONS DE VERIFICATIONS  ############################################
+    //#######################################################################################################
+
+    /*
+     * Executer toutes les verifications qui menent à champ interdit
+     * Return true si le champ passe tous les tests ( Est donc valide )
+     */
+    private function faireToutesLesVerifications($champ){
+        if ($this->verifierLesBackSlashs($champ) &&  $this->verifierLesQuotes($champ)
+            && $this->verifierLesDoublesTirets($champ) && $this->verifierLeSigneEuro($champ)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @param $champ
+     */
+
+    /*
+     * Verifie la validité d'un nom
+     */
+    public function verifierValiditeChamp($champ) {
+        return $this->faireToutesLesVerifications($champ);
+    }
+
+    /*
+     * Verifier si la chaine contient des doubles tirets
+     * @return true si verifiation est correcte
+     */
+    private function verifierLesDoublesTirets($champ) {
+        return !preg_match("/--/",$champ);
+    }
+
+    /**
+     * Verifier si la chaine contient des doubles guillemets
+     * Return true si la verification est correcte
+     */
+    private function verifierLesGuillemets($champ) {
+        return !preg_match("/\"/",$champ);
+    }
+
+    /**
+     * Verifier si la chaine contient des quotes
+     * Return true si la verification est correcte
+     */
+    private function verifierLesQuotes($champ)  {
+        return !preg_match("/^'$/",$champ);
+    }
+
+    /**
+     * Verifier si le champ contient un signe euro car interdit
+     * @param $champ
+     * @return int
+     */
+    private function verifierLeSigneEuro($champ) {
+        return preg_match('/€/',$champ);
+    }
+
+    /**
+     * Verifier si le champs contient des backslach -> si oui interdit
+     * Return true si la chaine ne contient pas de backslash
+     */
+    private static function verifierLesBackSlashs($champ) {
+        return !preg_match("/(\\\)+/",$champ);
+    }
 }
