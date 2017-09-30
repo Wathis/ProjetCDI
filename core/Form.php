@@ -2,6 +2,11 @@
 
 class Form {
 
+    /**
+     * Charger les valeurs dans le formulaire qui sont presentes dans le tableau $_POST
+     * @param nom des formulaires
+     * @return array
+     */
 	public static function chargerValeursFormulairePost($names) {
         $informationForm = array();
         foreach ($names as $name) {
@@ -36,6 +41,31 @@ class Form {
     //############################## FONCTIONS DE MODIFICATIONS  ############################################
     //#######################################################################################################
 
+    /**
+     * Transforme un champ en nom valide
+     * Attention : Ne pas oublier à utiliser la fonction faireToutesLesVerifications() pour verifier si le nom est valide
+     * @param $champ
+     * @return string
+     */
+    public function transformerChampEnNom($champ) {
+	    $champ = $this->supprimerAccent($champ);
+	    $champ = $this->supprimerCaracteresSpeciaux($champ);
+        $champ = $this->supprimerLesEspacesEnTrop($champ);
+        $champ = $this->supprimerTiretsEtEspacesALaFin($champ);
+        return $champ = $this->mettreMajuscule($champ);
+    }
+
+    public function transformerChampEnPrenom($champ){
+        $champ = $this->supprimerLesEspacesEnTrop($champ);
+        $champ = $this->supprimerTiretsEtEspacesALaFin($champ);
+        $champ = $this->supprimerCaracteresSpeciaux($champ);
+        $champ = $this->cassePrenom($champ);
+        if ($champ == "x") {
+            $champ = strtoupper($champ);
+        }
+        return $champ;
+    }
+
 	public function mettreMajuscule($champ) {
 		return strtoupper($champ);
 	}
@@ -47,18 +77,11 @@ class Form {
 	/*
 	 * Retire les accents dans la chaine
 	 */
-	public function retirerAccent($champ) {
-		$champ = preg_replace('#Ç#', 'C', $champ);
-	    $champ = preg_replace('#ç#', 'c', $champ);
+	public function supprimerAccent($champ) {
 	    $champ = preg_replace('#è|é|ê|ë#', 'e', $champ);
 	    $champ = preg_replace('#È|É|Ê|Ë#', 'E', $champ);
 	    $champ = preg_replace('#à|á|â|ã|ä|å#', 'a', $champ);
-	    $champ = preg_replace('#@|À|Á|Â|Ã|Ä|Å#', 'A', $champ);
-	    //A tester car fait avec mon mac les symboles
-	    $champ = preg_replace('/œ/','oe',$champ);
-        $champ = preg_replace('/Œ/','OE',$champ);
-        $champ = preg_replace('/æ/','ae',$champ);
-        $champ = preg_replace('/Æ/','AE',$champ);
+	    $champ = preg_replace('#À|Á|Â|Ã|Ä|Å#', 'A', $champ);
 	    $champ = preg_replace('#ì|í|î|ï#', 'i', $champ);
 	    $champ = preg_replace('#Ì|Í|Î|Ï#', 'I', $champ);
 	    $champ = preg_replace('#ð|ò|ó|ô|õ|ö#', 'o', $champ);
@@ -67,58 +90,85 @@ class Form {
 	    $champ = preg_replace('#Ù|Ú|Û|Ü#', 'U', $champ);
 	    $champ = preg_replace('#ý|ÿ#', 'y', $champ);
 	    return preg_replace('#Ý#', 'Y', $champ);
-	}
+    }
+
+    public function supprimerCaracteresSpeciaux($champ) {
+        //A tester car fait avec mon mac les symboles
+        $champ = preg_replace('#Ç#', 'C', $champ);
+        $champ = preg_replace('#ç#', 'c', $champ);
+        $champ = preg_replace('#@#', 'A', $champ);
+        //A tester car fait avec mon mac les symboles
+        $champ = preg_replace('/ñ/','n',$champ);
+        $champ = preg_replace('/œ/','oe',$champ);
+        $champ = preg_replace('/Œ/','OE',$champ);
+        $champ = preg_replace('/æ/','ae',$champ);
+        $champ = preg_replace('/Æ/','AE',$champ);
+        $champ = preg_replace('#ø#', 'o', $champ);
+        return $champ = preg_replace('#Ø#', 'O', $champ);
+    }
+
 	public function cassePrenom($champ)
 	{
 		$champ = $this->mettreMinuscule($champ);
-		$prem = $this->retirerAccent($champ[0]);
+		$prem = $this->supprimerAccent($champ[0]);
 		for ($i=1; $i<strlen($champ); $i++) {
 			$prem= $prem.$champ[$i];
 		}
-		$prem = ucwords($prem);
-		$tab = $this->rechercheTiret($prem);
-        $this->majusculeApresTiret($prem,$tab);
+		$prem = $this->majusculesApresTiret($prem);
 		return $prem;
 	}
-	public static function rechercheTiret($champ)
-	{
-		$tab = array();
-		$i=0;
-		while (preg_match("#-#", $champ))
-		{
-			$tab[$i]=strpos($champ,"-");
-			$champ[$tab[$i]]="a";
-			$i++;
-		}
-		return $tab;
-	}
 
-	public function majusculeApresTiret($champ,$tab)
-	{
-		foreach ($tab as $i) {
-			$champ[$tab[$i]]= $this->mettreMajuscule($champ[$tab[$i]]);
-		}
-		return $champ;
-	}
+//	public static function rechercheTiret($champ)
+//	{
+//		$tab = array();
+//		$i=0;
+//		while (preg_match("#-#", $champ))
+//		{
+//			$tab[$i]=strpos($champ,"-");
+//			$champ[$tab[$i]]="a";
+//			$i++;
+//		}
+//		return $tab;
+//	}
+//
+//	public function majusculeApresTiret($champ,$tab)
+//	{
+//		foreach ($tab as $i) {
+//			$champ[$tab[$i]]= $this->mettreMajuscule($champ[$tab[$i]]);
+//		}
+//		return $champ;
+//	}
+
+    /*
+        * Mettre des majuscules sur la première lettre après les tirets et le début
+        */
+    public function majusculesApresTiret($champ) {
+        $champSepare = explode('-',$champ);
+        foreach ($champSepare as $index=>$contenu) {
+            $champSepare[$index] = ucwords($contenu);
+        }
+        return implode('-',$champSepare);
+    }
 
     /**
      * Transformer les multiples espaces en simple espace
      */
-    public function supprimerLesEspacesMultiples($champ) {
-        $model = "/(\/s)+/";
-        return preg_replace($model," ",$champ);
-    }
-
-    /*
-    * Mettre des majuscules sur la première lettre après les tirets et le début
-    */
-    public function majusculesApresTiret($champ) {
-        return implode('-', array_map('ucwords', explode('-', $champ)));
+    public function supprimerLesEspacesEnTrop($champ) {
+        //Remplace les espaces multiples par un seul espace
+        $model = "#(\s)+#";
+        $champ = preg_replace($model," ",$champ);
+        //Remplace les espaces en trop apres et avant un tiret
+        $model = "#(\s*-\s*)#";
+        return preg_replace($model,"-",$champ);
     }
 
     public function faireUnTest() {
-        $champ = $this->supprimerTiretsEtEspacesALaFin(" qzdqzd-qzdq zd");
-        return $this->majusculesApresTiret($champ);
+        $champ = "'éæé-é'Ŭé'";
+        print_r($champ);
+        if ($this->faireToutesLesVerifications($champ)) {
+            return $this->transformerChampEnPrenom($champ);
+        }
+        return "interdit";
     }
 
     /**
@@ -126,10 +176,11 @@ class Form {
      * @param $champ
      * @return Le champ modifié
      */
-    public function supprimerTiretsEtEspacesALaFin($champ) {
+    public function supprimerTiretsEtEspacesALaFin($champ)
+    {
         $model = "/(^[\s-]+)|([\s-]$)/";
-        if (preg_match($model,$champ)) {
-            return preg_replace($model,"",$champ);
+        if (preg_match($model, $champ)) {
+            return preg_replace($model, "", $champ);
         }
         return $champ;
     }
@@ -143,23 +194,9 @@ class Form {
      * Return true si le champ passe tous les tests ( Est donc valide )
      */
     private function faireToutesLesVerifications($champ){
-        if ($this->verifierLesBackSlashs($champ) &&  $this->verifierLesQuotes($champ)
-            && $this->verifierLesDoublesTirets($champ) && $this->verifierLeSigneEuro($champ)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * @param $champ
-     */
-
-    /*
-     * Verifie la validité d'un nom
-     */
-    public function verifierValiditeChamp($champ) {
-        return $this->faireToutesLesVerifications($champ);
+        return $this->verifierLesBackSlashs($champ) &&  $this->verifierLesQuotes($champ)
+            && $this->verifierLesDoublesTirets($champ) && $this->verifierLeSigneEuro($champ) &&
+            $this->verifierLesGuillemets($champ);
     }
 
     /*
@@ -192,7 +229,7 @@ class Form {
      * @return int
      */
     private function verifierLeSigneEuro($champ) {
-        return preg_match('/€/',$champ);
+        return !preg_match('/€/',$champ);
     }
 
     /**
