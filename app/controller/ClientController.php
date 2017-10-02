@@ -34,7 +34,7 @@ class ClientController extends Controller {
         require APP . 'view/client/ajouter.php';
         require APP . 'view/_templates/footer.php';
 	}
-	public function rechercherAction() {
+	public function rechercherCliAction() {
 		$this->loadModel('Client');
 		$champ = $_POST["champ"];
 		$choix = $_POST["choix"];
