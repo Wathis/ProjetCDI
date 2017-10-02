@@ -19,10 +19,10 @@ class Client {
 		return $query->fetchAll();
 	}
 
-	public function getClientsRecherche() {
-		$_POST["choix"]= htmlentities($_POST["choix"]);
-		$_POST["champ"]=htmlentities($_POST["champ"]);
-		$sql = 'SELECT * FROM cdi_client where CL_'.$_POST["choix"].' like "%'.$_POST["champ"].'%" ';
+	public function getClientsRecherche($champ,$choix) {
+		$choix= htmlspecialchars($choix);
+		$champ=htmlspecialchars($champ);
+		$sql = 'SELECT * FROM cdi_client where CL_'.$choix.' like "%'.$champ.'%" ';
 		$query = $this->db->prepare($sql);
 		$query->execute();
 		return $query->fetchAll();
