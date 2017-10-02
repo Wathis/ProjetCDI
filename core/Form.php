@@ -118,27 +118,6 @@ class Form {
 		return $prem;
 	}
 
-//	public static function rechercheTiret($champ)
-//	{
-//		$tab = array();
-//		$i=0;
-//		while (preg_match("#-#", $champ))
-//		{
-//			$tab[$i]=strpos($champ,"-");
-//			$champ[$tab[$i]]="a";
-//			$i++;
-//		}
-//		return $tab;
-//	}
-//
-//	public function majusculeApresTiret($champ,$tab)
-//	{
-//		foreach ($tab as $i) {
-//			$champ[$tab[$i]]= $this->mettreMajuscule($champ[$tab[$i]]);
-//		}
-//		return $champ;
-//	}
-
     /*
         * Mettre des majuscules sur la première lettre après les tirets et le début
         */
