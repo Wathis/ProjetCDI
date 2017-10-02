@@ -17,12 +17,14 @@ class ClientController extends Controller {
 
 		if (isset($_POST["submit"])) {
 			if (Form::champsSontRemplisPost($informations)) {
-				if (($erreurRegex = Form::verifierSaisieNouveauClient($informations)) == ""){
+				//if (($erreurRegex = Form::verifierSaisieNouveauClient($informations)) == ""){
+					$this->loadModel('Client');
+					$this->model->ajouterUnClient($_POST);
 					$erreurs[] = "Client ajouté";
-				}
-				else {
-					$erreurs[] =$erreurRegex;
-				}
+				//}
+				//else {
+				//	$erreurs[] =$erreurRegex;
+				//}
 			} else {
 				$erreurs[] = "Veuillez remplir tous les champs obligatoires (*)";
 			}

@@ -27,5 +27,49 @@ class Client {
 		$query->execute();
 		return $query->fetchAll();
 	}
+	//$informations est un tableau associatif
+	public function ajouterUnClient($informations)
+	{
+		$sql = 'SELECT max(CAST(SUBSTR(CL_NUMERO,2)as UNSIGNED INT)) as maxi FROM cdi_client ';
+		$query = $this->db->prepare($sql);
+		$query->execute();
+		$query=$query->fetch();
+		$num = 'C'.$query["maxi"];
+
+		$nom =$this->securiserChamp($informations["nom"]);
+		$prenom =$this->securiserChamp($informations["prenom"]);
+		$ville =$this->securiserChamp($informations["ville"]);
+		$pays =$this->securiserChamp($informations["pays"]);
+		$ca =$this->securiserChamp($informations["ca"]);
+		$type =$this->securiserChamp($informations["type"]);
+		$enume =$this->securiserChamp($informations["enume"]);
+
+		if ($ca='')
+		{
+			$sql = 'INSERT INTO cdi_client (CL_NUMERO,CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS,CL_TYPE,EMP_ENUME) VALUES (:CL_NUMERO,:CL_NOM,:CL_PRENOM,:CL_LOCALITE,:CL_PAYS,:CL_TYPE,:EMP_ENUME) ';
+		}
+		else
+		{
+			$sql = 'INSERT INTO cdi_client (CL_NUMERO,CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS,CL_CA,CL_TYPE,EMP_ENUME) VALUES (:CL_NUMERO,:CL_NOM,:CL_PRENOM,:CL_LOCALITE,:CL_PAYS,:CL_CA,:CL_TYPE,:EMP_ENUME) ';
+		}
+
+		$query = $this->db->prepare($sql);
+		$query->bindValue(':CL_NUMERO', $num);
+		$query->bindValue(':CL_NOM', $nom);
+		$query->bindValue(':CL_PRENOM', $prenom);
+		$query->bindValue(':CL_LOCALITE', $ville);
+		$query->bindValue(':CL_PAYS', $pays);
+		$query->bindValue(':CL_CA', $ca);
+		$query->bindValue(':CL_TYPE', $type);
+		$query->bindValue(':EMP_ENUME', $enume);
+
+		$query->execute();
+	}
+
+	private function securiserChamp($champ)
+	{
+		htmlspecialchars($champ);
+		return htmlentities($champ);
+	}
 
 }
