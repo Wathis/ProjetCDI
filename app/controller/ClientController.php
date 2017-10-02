@@ -17,12 +17,14 @@ class ClientController extends Controller {
 
 		if (isset($_POST["submit"])) {
 			if (Form::champsSontRemplisPost($informations)) {
-				if (($erreurRegex = Form::verifierSaisieNouveauClient($informations)) == ""){
+				//if (($erreurRegex = Form::verifierSaisieNouveauClient($informations)) == ""){
+					$this->loadModel('Client');
+					$this->model->ajouterUnClient($_POST);
 					$erreurs[] = "Client ajouté";
-				}
-				else {
-					$erreurs[] =$erreurRegex;
-				}
+				//}
+				//else {
+				//	$erreurs[] =$erreurRegex;
+				//}
 			} else {
 				$erreurs[] = "Veuillez remplir tous les champs obligatoires (*)";
 			}
@@ -34,10 +36,11 @@ class ClientController extends Controller {
         require APP . 'view/client/ajouter.php';
         require APP . 'view/_templates/footer.php';
 	}
-	public function rechercherAction() {
+	public function rechercherCliAction() {
 		$this->loadModel('Client');
-		$clients = $this->model->getClientsRecherche();
 		$champ = $_POST["champ"];
+		$choix = $_POST["choix"];
+		$clients = $this->model->getClientsRecherche($champ,$choix);
 		require APP . 'view/_templates/header.php';
         require APP . 'view/client/index.php';
         require APP . 'view/_templates/footer.php';

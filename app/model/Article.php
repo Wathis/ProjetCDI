@@ -26,4 +26,12 @@ class Article
         $parameters = array(':song_id' => $song_id);
         $query->execute($parameters);
     }
+    public function getArticleRecherche($champ,$choix) {
+        $choix= htmlspecialchars($choix);
+        $champ=htmlspecialchars($champ);
+        $sql = 'SELECT * FROM cdi_article where AR_'.$choix.' like "%'.$champ.'%" ';
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }

@@ -11,4 +11,13 @@ class ArticleController extends Controller
         require APP . 'view/article/index.php';
         require APP . 'view/_templates/footer.php';
     }
+    public function rechercherArtAction() {
+		$this->loadModel('Article');
+		$champ = $_POST["champ"];
+		$choix = $_POST["choix"];
+		$articles = $this->model->getArticleRecherche($champ,$choix);
+		require APP . 'view/_templates/header.php';
+        require APP . 'view/article/index.php';
+        require APP . 'view/_templates/footer.php';
+	}
 }
