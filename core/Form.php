@@ -92,6 +92,15 @@ class Form {
 	    return preg_replace('#Ý#', 'Y', $champ);
     }
 
+    public function supprimerAccentsSurMajuscules($champ) {
+        $champ = preg_replace('#È|É|Ê|Ë#', 'E', $champ);
+        $champ = preg_replace('#À|Á|Â|Ã|Ä|Å#', 'A', $champ);
+        $champ = preg_replace('#Ì|Í|Î|Ï#', 'I', $champ);
+        $champ = preg_replace('#Ò|Ó|Ô|Õ|Ö#', 'O', $champ);
+        $champ = preg_replace('#Ù|Ú|Û|Ü#', 'U', $champ);
+        return preg_replace('#Ý#', 'Y', $champ);
+    }
+
     public function supprimerCaracteresSpeciaux($champ) {
         //A tester car fait avec mon mac les symboles
         $champ = preg_replace('#Ç#', 'C', $champ);
@@ -115,18 +124,32 @@ class Form {
 			$prem= $prem.$champ[$i];
 		}
 		$prem = $this->majusculesApresTiret($prem);
+		$prem = $this->majusculesApresQuotes($prem);
+		$prem = $this->supprimerAccentsSurMajuscules($prem);
 		return $prem;
 	}
 
     /*
-        * Mettre des majuscules sur la première lettre après les tirets et le début
-        */
+     * Mettre des majuscules sur la première lettre après les tirets et le début
+    */
     public function majusculesApresTiret($champ) {
         $champSepare = explode('-',$champ);
         foreach ($champSepare as $index=>$contenu) {
-            $champSepare[$index] = ucwords($contenu);
+            $champSepare[$index] = mb_convert_case(mb_strtolower($contenu), MB_CASE_TITLE, "UTF-8");
         }
         return implode('-',$champSepare);
+    }
+
+    /*
+     * Mettre des majuscules sur la première lettre après les quote et le début
+     */
+    public function majusculesApresQuotes($champ) {
+        $champSepare = explode("'",$champ);
+        $this->supprimerCaracteresSpeciaux($champ);
+        foreach ($champSepare as $index=>$contenu) {
+            $champSepare[$index] = mb_convert_case(mb_strtolower($contenu), MB_CASE_TITLE, "UTF-8");
+        }
+        return implode("'",$champSepare);
     }
 
     /**
@@ -136,13 +159,16 @@ class Form {
         //Remplace les espaces multiples par un seul espace
         $model = "#(\s)+#";
         $champ = preg_replace($model," ",$champ);
+        //Remplace les espace apres les quote par une quote
+//        $model = "/(\s)*'\s/'(\s)*";
+//        $champ = preg_replace($model,"' '",$champ);
         //Remplace les espaces en trop apres et avant un tiret
         $model = "#(\s*-\s*)#";
         return preg_replace($model,"-",$champ);
     }
 
     public function faireUnTest() {
-        $champ = "'éæé-é'Ŭé'";
+        $champ = "A '' b";
         if ($this->faireToutesLesVerifications($champ)) {
             return $this->transformerChampEnPrenom($champ);
         }
@@ -174,7 +200,7 @@ class Form {
     private function faireToutesLesVerifications($champ){
         return $this->verifierLesBackSlashs($champ) &&  $this->verifierLesQuotes($champ)
             && $this->verifierLesDoublesTirets($champ) && $this->verifierLeSigneEuro($champ) &&
-            $this->verifierLesGuillemets($champ);
+            $this->verifierLesGuillemets($champ) && $this->verifierLesExclamations($champ) && $this->verifierLeGrandTiret($champ);
     }
 
     /*
@@ -202,6 +228,15 @@ class Form {
     }
 
     /**
+     * Verifie si la chaine contient un point d'exclamation
+     * @param $champ
+     * @return bool
+     */
+    public function verifierLesExclamations($champ) {
+        return !preg_match("/!/",$champ);
+    }
+
+    /**
      * Verifier si le champ contient un signe euro car interdit
      * @param $champ
      * @return int
@@ -216,5 +251,14 @@ class Form {
      */
     private static function verifierLesBackSlashs($champ) {
         return !preg_match("/(\\\)+/",$champ);
+    }
+
+    /**
+     * Verifier si le champ contient un grand tiret
+     * @param $champ
+     * @return bool
+     */
+    private static function verifierLeGrandTiret($champ) {
+        return !preg_match("/—/",$champ);
     }
 }
