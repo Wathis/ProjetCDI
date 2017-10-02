@@ -27,5 +27,9 @@ class Client {
 		$query->execute();
 		return $query->fetchAll();
 	}
+	public function ajouterUnClient()
+	{
+		
+	}
 
 }

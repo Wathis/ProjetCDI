@@ -142,7 +142,7 @@ class Form {
     }
 
     public function faireUnTest() {
-        $champ = "'éæé-é'Ŭé'";
+        $champ = "'é'";
         if ($this->faireToutesLesVerifications($champ)) {
             return $this->transformerChampEnPrenom($champ);
         }
