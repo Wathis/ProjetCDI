@@ -36,8 +36,9 @@ class ClientController extends Controller {
 	}
 	public function rechercherAction() {
 		$this->loadModel('Client');
-		$clients = $this->model->getClientsRecherche();
 		$champ = $_POST["champ"];
+		$choix = $_POST["choix"];
+		$clients = $this->model->getClientsRecherche($champ,$choix);
 		require APP . 'view/_templates/header.php';
         require APP . 'view/client/index.php';
         require APP . 'view/_templates/footer.php';
