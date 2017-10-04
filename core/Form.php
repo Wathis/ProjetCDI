@@ -1,6 +1,9 @@
-<?php 
+<?php
+
 
 class Form {
+
+    const TAILLE_MAX_NOM_PRENOM = 25;
 
     /**
      * Charger les valeurs dans le formulaire qui sont presentes dans le tableau $_POST
@@ -87,17 +90,18 @@ class Form {
 	    $champ = preg_replace('#ð|ò|ó|ô|õ|ö#', 'o', $champ);
 	    $champ = preg_replace('#Ò|Ó|Ô|Õ|Ö#', 'O', $champ);
 	    $champ = preg_replace('#ù|ú|û|ü#', 'u', $champ);
-	    $champ = preg_replace('#Ù|Ú|Û|Ü#', 'U', $champ);
+	    $champ = preg_replace('#Ù|Ú|Û|Ü|Ŭ#', 'U', $champ);
 	    $champ = preg_replace('#ý|ÿ#', 'y', $champ);
 	    return preg_replace('#Ý#', 'Y', $champ);
     }
 
-    public function supprimerAccentsSurMajuscules($champ) {
+    public function supprimerAccentsSurMajuscules($champ)
+    {
         $champ = preg_replace('#È|É|Ê|Ë#', 'E', $champ);
         $champ = preg_replace('#À|Á|Â|Ã|Ä|Å#', 'A', $champ);
         $champ = preg_replace('#Ì|Í|Î|Ï#', 'I', $champ);
         $champ = preg_replace('#Ò|Ó|Ô|Õ|Ö#', 'O', $champ);
-        $champ = preg_replace('#Ù|Ú|Û|Ü#', 'U', $champ);
+        $champ = preg_replace('#Ù|Ú|Û|Ü|Ŭ#', 'U', $champ);
         return preg_replace('#Ý#', 'Y', $champ);
     }
 
@@ -160,17 +164,17 @@ class Form {
         $model = "#(\s)+#";
         $champ = preg_replace($model," ",$champ);
         //Remplace les espace apres les quote par une quote
-//        $model = "/(\s)*'\s/'(\s)*";
-//        $champ = preg_replace($model,"' '",$champ);
+        $model = "/(\s)*'\s'(\s)*/";
+        $champ = preg_replace($model,"' '",$champ);
         //Remplace les espaces en trop apres et avant un tiret
         $model = "#(\s*-\s*)#";
         return preg_replace($model,"-",$champ);
     }
 
     public function faireUnTest() {
-        $champ = "A '' b";
+        $champ = "b\a";
         if ($this->faireToutesLesVerifications($champ)) {
-            return $this->transformerChampEnPrenom($champ);
+            return "Nom :" . $this->transformerChampEnNom($champ) . " Prenom : " . $this->transformerChampEnPrenom($champ);
         }
         return "interdit";
     }
@@ -200,7 +204,7 @@ class Form {
     private function faireToutesLesVerifications($champ){
         return $this->verifierLesBackSlashs($champ) &&  $this->verifierLesQuotes($champ)
             && $this->verifierLesDoublesTirets($champ) && $this->verifierLeSigneEuro($champ) &&
-            $this->verifierLesGuillemets($champ) && $this->verifierLesExclamations($champ) && $this->verifierLeGrandTiret($champ);
+            $this->verifierLesGuillemets($champ) && $this->verifierLesExclamations($champ) && $this->verifierLeGrandTiret($champ) && $this->verifierLaLongueurDuChamp($champ);
     }
 
     /*
@@ -224,7 +228,7 @@ class Form {
      * Return true si la verification est correcte
      */
     private function verifierLesQuotes($champ)  {
-        return !preg_match("/^'$/",$champ);
+        return !preg_match("/^'$/",$champ) && !preg_match("/''/",$champ);
     }
 
     /**
@@ -249,8 +253,17 @@ class Form {
      * Verifier si le champs contient des backslach -> si oui interdit
      * Return true si la chaine ne contient pas de backslash
      */
-    private static function verifierLesBackSlashs($champ) {
+    private function verifierLesBackSlashs($champ) {
         return !preg_match("/(\\\)+/",$champ);
+    }
+
+    /**
+     * Renvoie true si la chaine est inferieur à TAILLE_MAX_NOM_PRENOM
+     * @param $champ
+     * @return bool
+     */
+    private function verifierLaLongueurDuChamp($champ) {
+        return mb_strlen($champ) <= self::TAILLE_MAX_NOM_PRENOM;
     }
 
     /**
@@ -258,7 +271,7 @@ class Form {
      * @param $champ
      * @return bool
      */
-    private static function verifierLeGrandTiret($champ) {
+    private function verifierLeGrandTiret($champ) {
         return !preg_match("/—/",$champ);
     }
 }
