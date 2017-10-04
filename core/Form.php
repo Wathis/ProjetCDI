@@ -168,11 +168,7 @@ class Form {
     }
 
     public function faireUnTest() {
-<<<<<<< HEAD
         $champ = "A '' b";
-=======
-        $champ = "'é'";
->>>>>>> 96042dd472025760090d661b98aa6626e92afc22
         if ($this->faireToutesLesVerifications($champ)) {
             return $this->transformerChampEnPrenom($champ);
         }
