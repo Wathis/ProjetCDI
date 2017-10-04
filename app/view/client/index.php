@@ -5,16 +5,16 @@
 	<a href="<?php echo URL . 'client/ajouter' ?>">Ajouter un client</a><br \><br \>
 	<form action="<?php echo URL .'client/rechercherCli' ?>" method="post">
 	<label for='choix'>Recherche sur :</label>
-	<select name='choix' onchange="tri()">
-		<option value='Nom' ">Nom</option>
-		<option value='prenom' >Prenom</option>
-		<option value='Numero' >Numero</option>
+	<select name='choix' id="choix" onchange="tri(this)">
+		<option value='Nom' >Nom</option>
+		<option value='Prenom' >Prenom</option>
+		<option value='Numero' selected>Numero</option>
 		<option value='Localite'>Localité</option>
 		<option value='Pays'>Pays</option>
 	</select>
 	<input type='text' name='champ'></imput>
 	<input type='submit' value='Recherche'></input>
-	<div id="tri">
+	<div id="tri" style ="display:inline">
 	</div>
 	</form>
 	</br></br>
