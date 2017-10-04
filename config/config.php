@@ -20,7 +20,7 @@ define('URL', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER);
  * Configuration de la base de donnée
 */
 define('BDD_TYPE',"mysql");
-define('BDD_HOST', 'mysql.info.unicaen.fr');
+define('BDD_HOST', '127.0.0.1');
 define('BDD_NAME','projetCDI');
-define('BDD_USER', '21601172');
-define('BDD_PASS', 'ook0pe5Ohf7feeJ8');
+define('BDD_USER', 'root');
+define('BDD_PASS', '');

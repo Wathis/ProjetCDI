@@ -9,12 +9,14 @@ class ClientController extends Controller {
         require APP . 'view/client/index.php';
         require APP . 'view/_templates/footer.php';
 	}
+
 	
 	public function ajouterAction() {
-
+		$this->loadModel('Pays');
 		$erreurs = array();
 		$informations = ["nom","prenom","ville"];
-
+		$pays = $this->model->getAllPays();
+		
 		if (isset($_POST["submit"])) {
 			if (Form::champsSontRemplisPost($informations)) {
 				//if (($erreurRegex = Form::verifierSaisieNouveauClient($informations)) == ""){

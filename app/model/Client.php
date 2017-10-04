@@ -34,7 +34,7 @@ class Client {
 		$query = $this->db->prepare($sql);
 		$query->execute();
 		$query=$query->fetch();
-		$num = 'C'.$query["maxi"];
+		$num = 'C'.($query["maxi"]+1) ;
 
 		$nom =$this->securiserChamp($informations["nom"]);
 		$prenom =$this->securiserChamp($informations["prenom"]);
@@ -43,6 +43,14 @@ class Client {
 		$ca =$this->securiserChamp($informations["ca"]);
 		$type =$this->securiserChamp($informations["type"]);
 		$enume =$this->securiserChamp($informations["enume"]);
+
+		echo ($nom);
+		echo ($prenom);
+		echo ($ville);
+		echo ($pays);
+		echo ($ca);
+		echo ($type);
+		echo ($enume);
 
 		if ($ca='')
 		{
@@ -62,6 +70,7 @@ class Client {
 		$query->bindValue(':CL_CA', $ca);
 		$query->bindValue(':CL_TYPE', $type);
 		$query->bindValue(':EMP_ENUME', $enume);
+		echo "INSERT INTO cdi_client (CL_NUMERO,CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS,CL_TYPE,EMP_ENUME) VALUES ($num,$nom,$prenom,$ville,$pays,$type,$enume) ";
 
 		$query->execute();
 	}
