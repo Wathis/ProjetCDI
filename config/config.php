@@ -19,6 +19,12 @@ define('URL', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER);
  * Configuration de la base de donnée
 */
 define('BDD_TYPE',"mysql");
+<<<<<<< HEAD
+define('BDD_HOST', '127.0.0.1');
+define('BDD_NAME','projetCDI');
+define('BDD_USER', 'root');
+define('BDD_PASS', '');
+=======
 define('BDD_HOST', 'localhost');
 <<<<<<< HEAD
 define('BDD_NAME','projet_php');

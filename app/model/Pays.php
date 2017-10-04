@@ -14,10 +14,10 @@ class Pays
     }
 
     public function getAllPays() {
-        $sql = "SELECT * FROM pays";
+        $sql = "SELECT * FROM CDI_PAYS ORDER BY NOM";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
     }
 
-?>
+}   

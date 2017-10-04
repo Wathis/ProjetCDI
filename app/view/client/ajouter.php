@@ -18,22 +18,30 @@
 		<label for="localite">Ville* :</label>
 		<input type="text" name="ville" value="<?php Form::remplirChamp($client,"ville");?>"><br \>
 
-		<label for="pays">Pays* :</label>
+		<label for="pays">Pays :</label>
 		<select name ="pays">
-			<option value =""
-
-		</select>
-
-		<label for="ville">Ville:</label>
-		<input type="text" name="ville" value="<?php Form::remplirChamp($client,"prenom");?>"><br \>
+			<?php foreach ($pays as $val)
+			{
+				echo('<option value ="'.$val["CODE_ISO"].'">'.$val["NOM"].' </option>');
+			}
+			
+			?>
+		</select><br \>
 
 		<label for="ca">Chiffre d'affaire :</label>
 		<input type="text" name="ca" value="<?php Form::remplirChamp($client,"prenom");?>"><br \>
 
-		<label for="type">Type:</label>
-		<input type="text" name="type" value="<?php Form::remplirChamp($client,"prenom");?>"><br \>
+		<label for="type">Type de client:</label>
+		<select name="type">
+			<option selected value="Particulier">Particulier</option>
+			<option  value="Grand Compte">Grand Compte</option>
+			<option  value="PME">PME</option>
+			<option  value="Administration">Administration</option>
+			<option  value="">Autres</option>
 
-		<label for="enume">Enume* :</label>
+		</select><br />
+
+		<label for="enume">Enume :</label>
 		<input type="text" name="enume" value="<?php Form::remplirChamp($client,"prenom");?>"><br \>
 
 		<input type="submit" name="submit" value="Ajouter">
