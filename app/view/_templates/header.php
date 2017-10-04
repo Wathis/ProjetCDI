@@ -6,6 +6,8 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="<?php echo URL; ?>css/myStyle.css" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="<?php echo URL; ?>js/tri.js"></script>
 </head>
 <body>
     <header>

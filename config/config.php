@@ -22,4 +22,4 @@ define('BDD_TYPE',"mysql");
 define('BDD_HOST', '127.0.0.1');
 define('BDD_NAME','projetCDI');
 define('BDD_USER', 'root');
-define('BDD_PASS', '');
+define('BDD_PASS', 'root');
