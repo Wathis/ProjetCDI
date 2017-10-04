@@ -256,7 +256,7 @@ class Form {
     private function verifierLesBackSlashs($champ) {
         return !preg_match("/(\\\)+/",$champ);
     }
-
+//test
     /**
      * Renvoie true si la chaine est inferieur à TAILLE_MAX_NOM_PRENOM
      * @param $champ
