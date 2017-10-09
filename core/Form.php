@@ -201,7 +201,7 @@ class Form {
      * Executer toutes les verifications qui menent à champ interdit
      * Return true si le champ passe tous les tests ( Est donc valide )
      */
-    private function faireToutesLesVerifications($champ){
+    public function faireToutesLesVerifications($champ){
         return $this->verifierLesBackSlashs($champ) &&  $this->verifierLesQuotes($champ)
             && $this->verifierLesDoublesTirets($champ) && $this->verifierLeSigneEuro($champ) &&
             $this->verifierLesGuillemets($champ) && $this->verifierLesExclamations($champ) && $this->verifierLeGrandTiret($champ) && $this->verifierLaLongueurDuChamp($champ);

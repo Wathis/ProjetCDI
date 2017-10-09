@@ -28,49 +28,47 @@ class Client {
 		return $query->fetchAll();
 	}
 	//$informations est un tableau associatif
+    // Fonction pour ajouter un nouveau client dans la base
 	public function ajouterUnClient($informations)
 	{
+	    $form = new Form();
+
 		$sql = 'SELECT max(CAST(SUBSTR(CL_NUMERO,2)as UNSIGNED INT)) as maxi FROM cdi_client ';
 		$query = $this->db->prepare($sql);
 		$query->execute();
 		$query=$query->fetch();
-		$num = 'C'.($query["maxi"]+1) ;
+		$num = 'C'.($query["maxi"]+1);
 
-		$nom =$this->securiserChamp($informations["nom"]);
-		$prenom =$this->securiserChamp($informations["prenom"]);
+
+
 		$ville =$this->securiserChamp($informations["ville"]);
 		$pays =$this->securiserChamp($informations["pays"]);
 		$ca =$this->securiserChamp($informations["ca"]);
 		$type =$this->securiserChamp($informations["type"]);
 		$enume =$this->securiserChamp($informations["enume"]);
 
-		echo ($nom);
-		echo ($prenom);
-		echo ($ville);
-		echo ($pays);
-		echo ($ca);
-		echo ($type);
-		echo ($enume);
-		$debutRQT = 'INSERT INTO cdi_client (CL_NUMERO,CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS';
-		$finRQT = 'VALUES (:CL_NUMERO,:CL_NOM,:CL_PRENOM,:CL_LOCALITE,:CL_PAYS,';
-		if (!empty($ca))
-		{
-			$debutRQT = $debutRQT.',CL_CA';
-		}
+		if (empty($erreurs)) {
+            $debutRQT = 'INSERT INTO cdi_client (CL_NUMERO,CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS';
+            $finRQT = 'VALUES (:CL_NUMERO,:CL_NOM,:CL_PRENOM,:CL_LOCALITE,:CL_PAYS,';
+            if (!empty($ca))
+            {
+                $debutRQT = $debutRQT.',CL_CA';
+            }
 
-		$query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-		echo "INSERT INTO cdi_client (CL_NUMERO,CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS,CL_TYPE,EMP_ENUME) VALUES ($num,$nom,$prenom,$ville,$pays,$type,$enume) ";
+            $query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            echo "INSERT INTO cdi_client (CL_NUMERO,CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS,CL_TYPE,EMP_ENUME) VALUES ($num,$nom,$prenom,$ville,$pays,$type,$enume) ";
 
-		$query->execute(array(
-			':CL_NUMERO' => $num,
-			':CL_NOM' =>  $nom,
-			':CL_PRENOM' =>  $prenom,
-			':CL_LOCALITE' =>  $ville,
-			':CL_PAYS' =>  $pays,
-			':CL_CA' =>  $ca,
-			':CL_TYPE' =>  $type,
-			':EMP_ENUME' =>  $enume,
-		));
+            $query->execute(array(
+                ':CL_NUMERO' => $num,
+                ':CL_NOM' =>  $nom,
+                ':CL_PRENOM' =>  $prenom,
+                ':CL_LOCALITE' =>  $ville,
+                ':CL_PAYS' =>  $pays,
+                ':CL_CA' =>  $ca,
+                ':CL_TYPE' =>  $type,
+                ':EMP_ENUME' =>  $enume,
+            ));
+        }
 	}
 
 	private function securiserChamp($champ)

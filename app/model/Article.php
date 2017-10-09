@@ -23,7 +23,7 @@ class Article
     public function deleteArticle($articleId) {
         $sql = "DELETE FROM cdi_article WHERE id = :articleId";
         $query = $this->db->prepare($sql);
-        $parameters = array(':song_id' => $song_id);
+        $parameters = array(':ar_numero' => $articleId);
         $query->execute($parameters);
     }
     public function getArticleRecherche($champ,$choix,$ordre) {
