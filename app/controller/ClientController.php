@@ -42,7 +42,8 @@ class ClientController extends Controller {
 		$this->loadModel('Client');
 		$champ = $_POST["champ"];
 		$choix = $_POST["choix"];
-		$clients = $this->model->getClientsRecherche($champ,$choix);
+		$ordre = $_POST["ordre"];
+		$clients = $this->model->getClientsRecherche($champ,$choix,$ordre);
 		require APP . 'view/_templates/header.php';
         require APP . 'view/client/index.php';
         require APP . 'view/_templates/footer.php';

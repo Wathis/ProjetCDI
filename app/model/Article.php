@@ -26,10 +26,10 @@ class Article
         $parameters = array(':song_id' => $song_id);
         $query->execute($parameters);
     }
-    public function getArticleRecherche($champ,$choix) {
+    public function getArticleRecherche($champ,$choix,$ordre) {
         $choix= htmlspecialchars($choix);
         $champ=htmlspecialchars($champ);
-        $sql = 'SELECT * FROM cdi_article where AR_'.$choix.' like "%'.$champ.'%" ';
+        $sql = 'SELECT * FROM cdi_article where AR_'.$choix.' like "%'.$champ.'%" order by AR_'.$choix.' '.$ordre.'';
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
