@@ -54,24 +54,14 @@ class Client {
 
 		if (empty($ca))
 		{
-			echo ('On rentre dans le 1</br>');
 			$sql = 'INSERT INTO cdi_client (CL_NUMERO,CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS,CL_TYPE,EMP_ENUME) VALUES (:CL_NUMERO,:CL_NOM,:CL_PRENOM,:CL_LOCALITE,:CL_PAYS,:CL_TYPE,:EMP_ENUME) ';
 		}
 		else
 		{
 			$sql = 'INSERT INTO cdi_client (CL_NUMERO,CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS,CL_CA,CL_TYPE,EMP_ENUME) VALUES (:CL_NUMERO,:CL_NOM,:CL_PRENOM,:CL_LOCALITE,:CL_PAYS,:CL_CA,:CL_TYPE,:EMP_ENUME) ';
-			echo ('On rentre dans le 2</br>');
 		}
 
 		$query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-		// $query->bindValue(':CL_NUMERO', $num);
-		// $query->bindValue(':CL_NOM', $nom);
-		// $query->bindValue(':CL_PRENOM', $prenom);
-		// $query->bindValue(':CL_LOCALITE', $ville);
-		// $query->bindValue(':CL_PAYS', $pays);
-		// $query->bindValue(':CL_CA', $ca);
-		// $query->bindValue(':CL_TYPE', $type);
-		// $query->bindValue(':EMP_ENUME', $enume);
 		echo "INSERT INTO cdi_client (CL_NUMERO,CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS,CL_TYPE,EMP_ENUME) VALUES ($num,$nom,$prenom,$ville,$pays,$type,$enume) ";
 
 		$query->execute(array(
