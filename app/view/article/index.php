@@ -17,11 +17,30 @@
 	</div>
 	</form>
 	</br></br>
-	<?php foreach ($articles as $article) {
-		echo $article["AR_NUMERO"];
-		echo "       ";
-		echo $article["AR_NOM"];
-		echo '</br>';
-	}?>
+	<table>
+		<caption>Article</caption>
+		<thead>
+       		<tr>
+	           <th>Numero</th>
+	           <th>Nom</th>
+	           <th>Poids</th>
+	           <th>Couleur<th>
+	           <th>Stock<th>
+	           <th>Numero Fourniseur<th>
+       		</tr>
+   		</thead>
+   <tbody>
+	<?php foreach ($articles as $article) { ?>
+		<tr>
+		<td><?php echo $article["AR_NUMERO"]; ?></td>
+		<td><?php echo $article["AR_NOM"]; ?></td>
+		<td><?php echo $article["AR_POIDS"]; ?></td>
+		<td><?php echo $article["AR_COULEUR"]; ?></td>
+		<td><?php echo $article["AR_STOCK"]; ?></td>
+		<td><?php echo $article["FO_NUMERO"]; ?></td>
+		</tr>
+	<?php } ?>
+	</tbody>
+	</table>
 
 </div>
