@@ -29,7 +29,7 @@
 		</select><br \>
 
 		<label for="ca">Chiffre d'affaire :</label>
-		<input type="text" name="ca" value="<?php Form::remplirChamp($client,"prenom");?>"><br \>
+		<input type="text" name="ca" value="<?php Form::remplirChamp($client,"ca");?>"><br \>
 
 		<label for="type">Type de client:</label>
 		<select name="type">
@@ -42,7 +42,7 @@
 		</select><br />
 
 		<label for="enume">Enume :</label>
-		<input type="text" name="enume" value="<?php Form::remplirChamp($client,"prenom");?>"><br \>
+		<input type="text" name="enume" value="<?php Form::remplirChamp($client,"enume");?>"><br \>
 
 		<input type="submit" name="submit" value="Ajouter">
 	</form>

@@ -52,7 +52,7 @@ class Client {
 		echo ($type);
 		echo ($enume);
 
-		if ($ca='')
+		if (empty($ca))
 		{
 			$sql = 'INSERT INTO cdi_client (CL_NUMERO,CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS,CL_TYPE,EMP_ENUME) VALUES (:CL_NUMERO,:CL_NOM,:CL_PRENOM,:CL_LOCALITE,:CL_PAYS,:CL_TYPE,:EMP_ENUME) ';
 		}
@@ -61,18 +61,19 @@ class Client {
 			$sql = 'INSERT INTO cdi_client (CL_NUMERO,CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS,CL_CA,CL_TYPE,EMP_ENUME) VALUES (:CL_NUMERO,:CL_NOM,:CL_PRENOM,:CL_LOCALITE,:CL_PAYS,:CL_CA,:CL_TYPE,:EMP_ENUME) ';
 		}
 
-		$query = $this->db->prepare($sql);
-		$query->bindValue(':CL_NUMERO', $num);
-		$query->bindValue(':CL_NOM', $nom);
-		$query->bindValue(':CL_PRENOM', $prenom);
-		$query->bindValue(':CL_LOCALITE', $ville);
-		$query->bindValue(':CL_PAYS', $pays);
-		$query->bindValue(':CL_CA', $ca);
-		$query->bindValue(':CL_TYPE', $type);
-		$query->bindValue(':EMP_ENUME', $enume);
+		$query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		echo "INSERT INTO cdi_client (CL_NUMERO,CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS,CL_TYPE,EMP_ENUME) VALUES ($num,$nom,$prenom,$ville,$pays,$type,$enume) ";
 
-		$query->execute();
+		$query->execute(array(
+			':CL_NUMERO' => $num,
+			':CL_NOM' =>  $nom,
+			':CL_PRENOM' =>  $prenom,
+			':CL_LOCALITE' =>  $ville,
+			':CL_PAYS' =>  $pays,
+			':CL_CA' =>  $ca,
+			':CL_TYPE' =>  $type,
+			':EMP_ENUME' =>  $enume,
+		));
 	}
 
 	private function securiserChamp($champ)
