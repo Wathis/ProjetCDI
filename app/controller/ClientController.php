@@ -15,10 +15,11 @@ class ClientController extends Controller {
 		$this->loadModel('Pays');
 		$erreurs = array();
 		$informations = ["nom","prenom","ville","ca","enume"];
+		$informationsObligatoires = ["nom","prenom","ville"];
 		$pays = $this->model->getAllPays();
 		
 		if (isset($_POST["submit"])) {
-			if (Form::champsSontRemplisPost($informations)) {
+			if (Form::champsSontRemplisPost($informationsObligatoires)) {
 				//if (($erreurRegex = Form::verifierSaisieNouveauClient($informations)) == ""){
 					$this->loadModel('Client');
 					$this->model->ajouterUnClient($_POST);
