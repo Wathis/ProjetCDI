@@ -1,9 +1,0 @@
-<<<<<<< HEAD
-config
-=======
-.DS_Store
-.idea
-./public/.htaccess
-config/*
-config/config.php
->>>>>>> 71de59526051c4fbdc5145096ac06fdcb2d94d7f
