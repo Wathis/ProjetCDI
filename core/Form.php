@@ -10,15 +10,44 @@ class Form {
      * @param nom des formulaires
      * @return array
      */
-	public static function chargerValeursFormulairePost($names) {
+	public function chargerValeursFormulairePost($names) {
         $informationForm = array();
         foreach ($names as $name) {
             if (isset($_POST[$name])) {
-                $informationForm[$name] = htmlspecialchars(htmlentities(addslashes($_POST[$name])));
+                $informationForm[$name] = $this->decoderChampSecurise($_POST[$name]);
             }   
         }
         return $informationForm;
 	}
+
+    /**
+     * Securise un champ pour l'insertion bdd
+     * @param $champ
+     * @return string
+     */
+    public function securiserChamp($champ) {
+        htmlspecialchars($champ);
+        return htmlentities($champ);
+    }
+
+    /**
+     * Decode un champ securisé
+     * @param $champ
+     * @return string
+     */
+    public function decoderChampSecurise($champ) {
+        htmlspecialchars_decode($champ);
+        return html_entity_decode($champ);
+    }
+
+    // Renvoie null si le champ est vide
+    public function securiserLesChamps($champs) {
+        foreach ($champs as $champ) {
+            $champ = $this->securiserChamp($champ);
+        }
+        return $champs;
+    }
+
 
 	/**
 	 * Savoir si les champs d'un formulaire sont remplis
@@ -67,6 +96,23 @@ class Form {
             $champ = strtoupper($champ);
         }
         return $champ;
+    }
+
+    /**
+     * Extrait les informations du client present dans le tableau POST
+     */
+    public function extraireClientDuPost() {
+        $client = array(
+            "nom" => isset($_POST["nom"]) ? $_POST["nom"] : "",
+            "prenom" => isset($_POST["nom"]) ? $_POST["prenom"] : "",
+            "localite" => isset($_POST["localite"]) ? $_POST["localite"] : "",
+            "ville" => isset($_POST["ville"]) ? $_POST["ville"] : NULL,
+            "pays" => isset($_POST["pays"]) ? $_POST["pays"] : NULL,
+            "enume" => isset($_POST["enume"]) ? $_POST["enume"] : NULL,
+            "type" => isset($_POST["type"]) ? $_POST["type"] : NULL,
+            "ca" => isset($_POST["ca"]) ? $_POST["ca"] : NULL
+        );
+        return $client;
     }
 
 	public function mettreMajuscule($champ) {

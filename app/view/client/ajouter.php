@@ -3,8 +3,11 @@
 	<h2>Ajouter un client</h2>
 
 	<?php 
-	if (isset($erreur)) {
-		echo $erreur , "<br><br>";
+	if (isset($messages)) {
+	    foreach ($messages as $message) {
+            echo $message , "<br>";
+        }
+        echo '<br>';
 	}
 	?> 
 
