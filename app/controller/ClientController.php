@@ -14,7 +14,7 @@ class ClientController extends Controller {
 	public function ajouterAction() {
 		$this->loadModel('Pays');
 		$erreurs = array();
-		$informations = ["nom","prenom","ville"];
+		$informations = ["nom","prenom","ville","ca","enume"];
 		$pays = $this->model->getAllPays();
 		
 		if (isset($_POST["submit"])) {
@@ -32,6 +32,7 @@ class ClientController extends Controller {
 			}
 		}
 
+		// Charge les valeurs de post correspondants au name de informations dans la valeur de retour
 		$client = Form::chargerValeursFormulairePost($informations);
 
 		require APP . 'view/_templates/header.php';
