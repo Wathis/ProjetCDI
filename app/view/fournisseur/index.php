@@ -24,9 +24,9 @@
    <tbody>
 	<?php foreach ($fournisseurs as $fournisseur) { ?>
 		<tr>
-			<td><?php echo $article["FO_NUMERO"]; ?></td>
-			<td><?php echo $article["FO_NOM"]; ?></td>
-			<td><button class="w3-button"><i class="fa fa-search"></i></button></td>
+			<td><?php echo $fournisseur["FO_NUMERO"]; ?></td>
+			<td><?php echo $fournisseur["FO_NOM"]; ?></td>
+			<td><button class="w3-button" href=<?php echo '"' . URL . 'Article/index?fo_numero=' . $fournisseur["FO_NUMERO"] . '"'; ?>><i class="fa fa-search"></i></button></td>
 		</tr>
 	<?php } ?>
 	</tbody>
