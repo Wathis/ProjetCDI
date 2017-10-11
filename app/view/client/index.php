@@ -1,5 +1,6 @@
 <div class="container" >
 	<script src="<?php echo URL; ?>js/tri.js"></script>
+	<link href="<?php echo URL; ?>css/tableau.css" rel="stylesheet">
 	<h2>Clients</h2>
 
 	<a href="<?php echo URL . 'client/ajouter' ?>">Ajouter un client</a><br \><br \>
@@ -18,12 +19,26 @@
 	</div>
 	</form>
 	</br></br>
-
-	<?php foreach ($clients as $client) {
-		echo $client["CL_NOM"];
-		echo "       ";
-		echo $client["CL_PRENOM"];
-		echo '</br>';
-	}?>
-
+	<table id="keywords" cellspacing="0" cellpadding="0">
+		<thead>
+       		<tr>
+	           <th>Numero</th>
+	           <th>Nom</th>
+	           <th>Prenom</th>
+	           <th>Localité</th>
+	           <th>Pays</th>
+       		</tr>
+   		</thead>
+   <tbody>
+	<?php foreach ($clients as $client) { ?>
+		<tr>
+		<td><?php echo $client["CL_NUMERO"]; ?></td>
+		<td><?php echo $client["CL_NOM"]; ?></td>
+		<td><?php echo $client["CL_PRENOM"]; ?></td>
+		<td><?php echo $client["CL_LOCALITE"]; ?></td>
+		<td><?php echo $client["CL_PAYS"]; ?></td>
+		</tr>
+	<?php } ?>
+	</tbody>
+	</table>
 </div>
