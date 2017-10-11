@@ -22,4 +22,5 @@
         <div class="link"><a href="<?php echo URL; ?>">Accueil</a></div>
         <div class="link"><a href="<?php echo URL; ?>client">Client</a></div>
         <div class="link"><a href="<?php echo URL; ?>article">Article</a></div>
+        <div class="link"><a href="<?php echo URL; ?>fournisseur">Fournisseur</a></div>
     </nav>
