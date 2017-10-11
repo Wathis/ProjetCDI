@@ -1,6 +1,6 @@
 <div class="container">
 	
-	<h2>Ajouter un client</h2>
+	<h2>Modifier un client</h2>
 
 	<?php 
 	if (isset($messages)) {
@@ -8,9 +8,10 @@
             echo $message , "<br>";
         }
         echo '<br>';
-	} 
-        require APP . 'view/client/form.php';
+	}
+
+	require APP . 'view/client/form.php';
+	
 	?> 
 
-	
 </div>

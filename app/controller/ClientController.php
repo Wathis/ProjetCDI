@@ -70,5 +70,22 @@ class ClientController extends Controller {
         require APP . 'view/client/index.php';
         require APP . 'view/_templates/footer.php';
 	}
+	public function supprimerClientAction(){
+		$num = $_GET["CL_NUMERO"];
+		$this->loadModel('Client');
+		$this->model->supprimerClient($num);
+		header("Location:".URL."client/index");
+	}
+	public function modifierClientAction(){
+		$this->loadModel('Client');
+		$num = $_GET["CL_NUMERO"];
+		$client = $this->model->getClient($num);
+
+		$this->loadModel('Pays');
+		$pays = $this->model->getAllPays();
+		require APP . 'view/_templates/header.php';
+        require APP . 'view/client/modifier.php';
+        require APP . 'view/_templates/footer.php';
+	}
 
 }

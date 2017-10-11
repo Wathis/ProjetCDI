@@ -51,4 +51,25 @@ class Client {
 			':EMP_ENUME' =>  $client["enume"]
 		));
 	}
+	public function supprimerClient($num)
+	{
+		var_dump($num);
+		$sql = "DELETE FROM CDI_CLIENT where CL_NUMERO='$num'";
+		var_dump($sql);
+		$query = $this->db->prepare($sql);
+		$query->execute();
+	}
+	public function getClient($num)
+	{
+		$sql = "SELECT CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS FROM cdi_client where CL_NUMERO='$num'";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+		$query=$query->fetch();
+		$client["nom"]=$query["CL_NOM"];
+		$client["prenom"]=$query["CL_PRENOM"];
+		$client["ville"]=$query["CL_LOCALITE"];
+		$client["pays"]=$query["CL_PAYS"];
+
+		return $client;
+	}
 }

@@ -27,6 +27,9 @@
 	           <th>Prenom</th>
 	           <th>Localité</th>
 	           <th>Pays</th>
+	           <th>Supprimer</th>
+	           <th>Modifier</th>
+
        		</tr>
    		</thead>
    <tbody>
@@ -37,6 +40,8 @@
 		<td><?php echo $client["CL_PRENOM"]; ?></td>
 		<td><?php echo $client["CL_LOCALITE"]; ?></td>
 		<td><?php echo $client["CL_PAYS"]; ?></td>
+		<td><?php echo ('<a class="fa fa-close" style="text-decoration:none" href="' . URL . 'client/supprimerClient?CL_NUMERO=' . $client['CL_NUMERO'].'"></a>'); ?></td>
+		<td><?php echo ('<a class="fa fa-file" style="text-decoration:none;color:grey" href="' . URL . 'client/modifierClient?CL_NUMERO=' . $client['CL_NUMERO'].'"></a>'); ?></td>
 		</tr>
 	<?php } ?>
 	</tbody>
