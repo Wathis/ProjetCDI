@@ -34,5 +34,5 @@
 		<label for="enume">Enume :</label>
 		<input type="text" name="enume" value="<?php Form::remplirChamp($client,"enume");?>"><br \>
 
-		<input type="submit" name="submit" value="Ajouter">
+		<input type="submit" name="submit" value="Confirmer">
 	</form>

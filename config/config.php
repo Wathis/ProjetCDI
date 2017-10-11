@@ -20,10 +20,6 @@ define('URL', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER);
 */
 define('BDD_TYPE',"mysql");
 define('BDD_HOST', 'localhost');
-<<<<<<< HEAD
 define('BDD_NAME','projetCDI');
-=======
-define('BDD_NAME','projetcdi');
->>>>>>> 981e7faced6b4dff2823066481472a66bc79e17e
 define('BDD_USER', 'root');
-define('BDD_PASS', 'root');
+define('BDD_PASS', '');

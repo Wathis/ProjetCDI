@@ -55,9 +55,7 @@ class Client {
 	}
 	public function supprimerClient($num)
 	{
-		var_dump($num);
 		$sql = "DELETE FROM CDI_CLIENT where CL_NUMERO='$num'";
-		var_dump($sql);
 		$query = $this->db->prepare($sql);
 		$query->execute();
 	}
