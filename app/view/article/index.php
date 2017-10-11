@@ -1,6 +1,4 @@
 <div class="container">
-	<script src="<?php echo URL; ?>js/tri.js"></script>
-	<link href="<?php echo URL; ?>css/tableau.css" rel="stylesheet">
     <h2>Page article</h2>
 
 	<form action="<?php echo URL .'article/rechercherArt' ?>" method="post">
@@ -27,6 +25,7 @@
 	           <th>Couleur</th>
 	           <th>Stock</th>
 	           <th>Numero Fourniseur</th>
+
        		</tr>
    		</thead>
    <tbody>
@@ -38,8 +37,19 @@
 		<td><?php echo $article["AR_COULEUR"]; ?></td>
 		<td><?php echo $article["AR_STOCK"]; ?></td>
 		<td><?php echo $article["FO_NUMERO"]; ?></td>
+		<td><div class="w3-container">
+		  <div class="w3-dropdown-hover">
+		    <button class="w3-button"><i class="fa fa-bars"></i></button>
+		    <div class="w3-dropdown-content w3-bar-block w3-border">
+		      <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Fourniseur/index?ar_numero=' . $article["AR_NUMERO"] . '"'; ?>>Fournisseurs</a>
+		      <a href="#" class="w3-bar-item w3-button">Commandes</a>
+		    </div>
+		  </div>
+		</div></td>
 		</tr>
 	<?php } ?>
 	</tbody>
 	</table>
+	<style>
+	</style>
 </div>
