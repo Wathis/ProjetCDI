@@ -26,7 +26,7 @@ class Form {
      * @return string
      */
     public function securiserChamp($champ) {
-        htmlspecialchars($champ);
+        $champ = htmlspecialchars($champ);
         return htmlentities($champ);
     }
 
@@ -36,14 +36,14 @@ class Form {
      * @return string
      */
     public function decoderChampSecurise($champ) {
-        htmlspecialchars_decode($champ);
+        $champ = htmlspecialchars_decode($champ);
         return html_entity_decode($champ);
     }
 
     // Renvoie null si le champ est vide
     public function securiserLesChamps($champs) {
-        foreach ($champs as $champ) {
-            $champ = $this->securiserChamp($champ);
+        foreach ($champs as $id => $champ) {
+            $champs[$id] = $this->securiserChamp($champ);
         }
         return $champs;
     }

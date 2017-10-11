@@ -5,7 +5,7 @@ body {
 
 /* ########################## HEADER ##########################  */
 
-nav {
+.navigation {
 	display: flex;
 	background-color: #f1c40f;
 	height: 50px;
@@ -14,7 +14,7 @@ nav {
 	border-right: none;
 }
 
-.link {
+.linkCDI {
 	flex-grow: 25;
 	text-align:  center;
 	align-self: center;
@@ -25,12 +25,12 @@ a:hover {
 	color : orange;
 }
 
-.link a:visited, .link a:link {
+.linkCDI a:visited, .linkCDI a:link {
 	text-decoration: none;
 	color:#2c3e50;
 }
 
-header {
+.titleTDF {
 	font-size: 3em;
 	height: 18vh;
 	color: #2c3e50;
