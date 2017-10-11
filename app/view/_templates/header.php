@@ -15,12 +15,12 @@
 </head>
 <body>
     <header>
-        <div>Tour de france</div>
+        <div class="titleTDF">Tour de france</div>
     </header>
 
-    <nav>
-        <div class="link"><a href="<?php echo URL; ?>">Accueil</a></div>
-        <div class="link"><a href="<?php echo URL; ?>client">Client</a></div>
-        <div class="link"><a href="<?php echo URL; ?>commande">Commande</a></div>
-        <div class="link"><a href="<?php echo URL; ?>article">Article</a></div>
+    <nav class="navigation">
+        <div class="linkCDI"><a href="<?php echo URL; ?>">Accueil</a></div>
+        <div class="linkCDI"><a href="<?php echo URL; ?>client">Client</a></div>
+        <div class="linkCDI"><a href="<?php echo URL; ?>commande">Commande</a></div>
+        <div class="linkCDI"><a href="<?php echo URL; ?>article">Article</a></div>
     </nav>
