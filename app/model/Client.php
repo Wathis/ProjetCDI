@@ -44,13 +44,13 @@ class Client {
 
 		$query->execute(array(
 			':CL_NUMERO' => $num,
-			':CL_NOM' =>  $client["nom"],
-			':CL_PRENOM' =>  $client["prenom"],
-			':CL_LOCALITE' =>  $client["ville"],
-			':CL_PAYS' =>  $client["pays"],
-			':CL_CA' =>  $client["ca"],
-			':CL_TYPE' =>  $client["type"],
-			':EMP_ENUME' =>  $client["enume"]
+			':CL_NOM' =>  $client["cl_nom"],
+			':CL_PRENOM' =>  $client["cl_prenom"],
+			':CL_LOCALITE' =>  $client["cl_ville"],
+			':CL_PAYS' =>  $client["cl_pays"],
+			':CL_CA' =>  $client["cl_ca"],
+			':CL_TYPE' =>  $client["cl_type"],
+			':EMP_ENUME' =>  $client["emp_enume"]
 		));
 	}
 	public function supprimerClient($num)
@@ -61,15 +61,9 @@ class Client {
 	}
 	public function getClient($num)
 	{
-		$sql = "SELECT CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS FROM cdi_client where CL_NUMERO='$num'";
+		$sql = "SELECT * FROM cdi_client where CL_NUMERO='$num'";
 		$query = $this->db->prepare($sql);
 		$query->execute();
-		$query=$query->fetch();
-		$client["nom"]=$query["CL_NOM"];
-		$client["prenom"]=$query["CL_PRENOM"];
-		$client["ville"]=$query["CL_LOCALITE"];
-		$client["pays"]=$query["CL_PAYS"];
-
-		return $client;
+		return $query->fetch(PDO::FETCH_ASSOC);
 	}
 }

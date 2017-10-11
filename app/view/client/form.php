@@ -1,28 +1,28 @@
 <form method="POST" action="">
 		<label for="nom">Nom* :</label>
-		<input type="text" name="nom" value="<?php Form::remplirChamp($client,"nom");?>"><br \>
+		<input type="text" name="cl_nom" value="<?php Form::remplirChamp($client,"cl_nom");?>"><br \>
 
 		<label for="prenom">Prenom* :</label>
-		<input type="text" name="prenom" value="<?php Form::remplirChamp($client,"prenom");?>"><br \>
+		<input type="text" name="cl_prenom" value="<?php Form::remplirChamp($client,"cl_prenom");?>"><br \>
 
 		<label for="localite">Ville* :</label>
-		<input type="text" name="ville" value="<?php Form::remplirChamp($client,"ville");?>"><br \>
+		<input type="text" name="cl_localite" value="<?php Form::remplirChamp($client,"cl_localite");?>"><br \>
 
 		<label for="pays">Pays :</label>
-		<select name ="pays">
+		<select name ="cl_pays">
 			<?php foreach ($pays as $val)
 			{
-				echo('<option value ="'.$val["CODE_ISO"].'">'.$val["NOM"]); if ($val["CODE_ISO"] == $client["pays"]){echo ('selected');}echo'</option>';
+				echo('<option value ="'.$val["CODE_ISO"].'">'.$val["NOM"]); if ($val["CODE_ISO"] == $client["CL_PAYS"]){echo ('selected');}echo'</option>';
 			}
 			
 			?>
 		</select><br \>
 
 		<label for="ca">Chiffre d'affaire :</label>
-		<input type="text" name="ca" value="<?php Form::remplirChamp($client,"ca");?>"><br \>
+		<input type="text" name="cl_ca" value="<?php Form::remplirChamp($client,"CL_CA");?>"><br \>
 
 		<label for="type">Type de client:</label>
-		<select name="type">
+		<select name="cl_type">
 			<option selected value="Particulier">Particulier</option>
 			<option  value="Grand Compte">Grand Compte</option>
 			<option  value="PME">PME</option>
@@ -32,7 +32,7 @@
 		</select><br />
 
 		<label for="enume">Enume :</label>
-		<input type="text" name="enume" value="<?php Form::remplirChamp($client,"enume");?>"><br \>
+		<input type="text" name="cl_enume" value="<?php Form::remplirChamp($client,"emp_enume");?>"><br \>
 
 		<input type="submit" name="submit" value="Confirmer">
 	</form>

@@ -65,8 +65,8 @@ class Form {
 	/**
 	 * Permet de remplir un champ d'un formulaire si il a déjà été rempli 
 	*/
-	public static function remplirChamp($tab,$champs) {
-		echo isset($tab[$champs]) ? $tab[$champs] : '';
+	public static function remplirChamp($tab,$champ) {
+		echo isset($tab[strtoupper($champ)]) ? $tab[strtoupper($champ)] : '';
 	}
 
     //#######################################################################################################

@@ -17,6 +17,6 @@ class Magasin {
         $query = $this->db->prepare($sql);
         $query->bindParam(':numero', $numero);
         $query->execute();
-        return $query->fetchAll();
+        return $query->fetch();
     }
 }

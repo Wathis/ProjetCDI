@@ -1,6 +1,6 @@
 <div class="container">
 	
-	<h2>Modifier un client</h2>
+	<h2>Modifier un client : <?php Form::remplirChamp($client,"CL_NUMERO"); ?></h2>
 
 	<?php 
 	if (isset($messages)) {

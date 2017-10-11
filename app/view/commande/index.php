@@ -38,8 +38,8 @@
                         <div class="w3-dropdown-hover">
                             <button class="w3-button"><i class="fa fa-bars"></i></button>
                             <div class="w3-dropdown-content w3-bar-block w3-border">
-                                <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Magasin/index?ar_numero=' . $commande["MA_NUMERO"] . '"'; ?>>Magasin</a>
-                                <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Client/index?cl_numero=' . $commande["CL_NUMERO"] . '"'; ?>>Client</a>
+                                <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Magasin/index?ma_numero=' . $commande["MA_NUMERO"] . '"'; ?>>Magasin</a>
+                                <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Client/consulter?cl_numero=' . $commande["CL_NUMERO"] . '"'; ?>>Client</a>
                             </div>
                         </div>
                     </div>

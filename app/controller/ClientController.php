@@ -15,8 +15,8 @@ class ClientController extends Controller {
 	public function ajouterAction() {
 		$this->loadModel('Pays');
         $messages = array();
-		$informations = ["nom","prenom","ville","ca","enume"];
-		$informationsObligatoires = ["nom","prenom","ville"];
+		$informations = ["cl_nom","cl_prenom","cl_localite","cl_ca","emp_enume"];
+		$informationsObligatoires = ["cl_nom","cl_prenom","cl_ville"];
 		//On charge les pays pour la vue
 		$pays = $this->model->getAllPays();
 		$form = new Form();
@@ -24,17 +24,17 @@ class ClientController extends Controller {
 			if (Form::champsSontRemplisPost($informationsObligatoires)) {
 			        //Faire les verifications avant d'ajouter le client
                     $client = $form->extraireClientDuPost();
-                    if ($form->faireToutesLesVerifications($client["nom"])){
-                        $client["nom"] = $form->transformerChampEnNom($client["nom"]);
+                    if ($form->faireToutesLesVerifications($client["cl_nom"])){
+                        $client["cl_nom"] = $form->transformerChampEnNom($client["cl_nom"]);
                     } else {
                         $messages[] = "Champ nom invalide";
                     }
-                    if ($form->faireToutesLesVerifications($client["prenom"])){
-                        $client["prenom"] = $form->transformerChampEnPrenom($client["prenom"]);
+                    if ($form->faireToutesLesVerifications($client["cl_prenom"])){
+                        $client["cl_prenom"] = $form->transformerChampEnPrenom($client["cl_prenom"]);
                     } else {
                         $messages[] = "Champ prenom invalide";
                     }
-                    if (empty($client["ville"]) || !isset($client["ville"])){
+                    if (empty($client["cl_localite"]) || !isset($client["cl_localite"])){
                         $messages[] = "Vous devez entrer une ville";
                     }
                     //On securise les champs avant l'insertion en base de donnée
@@ -59,6 +59,29 @@ class ClientController extends Controller {
         require APP . 'view/_templates/footer.php';
 	}
 
+	//Action permettant de consulter les informations sur un client 
+	//dont l'id est passé en GET
+	public function consulterAction() {
+
+		$this->loadModel('Client');
+        $form = new Form();
+        if (isset($_GET)) {
+        	if (isset($_GET["cl_numero"]) && !empty($_GET["cl_numero"])){
+        		$num = $_GET["cl_numero"];
+        		$num = $form->securiserChamp($num);
+        		$client = $this->model->getClient($num);
+        	} else { //Alors aucun magasin choisi
+        		$messages[] = "Vous n'avez pas fourni de numero de client";
+        	}
+        } else {
+        	$messages[] = "Vous n'avez pas fourni de numero de client";
+        }
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/client/consulter.php';
+        require APP . 'view/_templates/footer.php';
+
+	}
+
 	//Action permettant de rechercher un client en fonction de differents parametres
 	public function rechercherCliAction() {
 		$this->loadModel('Client');
@@ -80,7 +103,6 @@ class ClientController extends Controller {
 		$this->loadModel('Client');
 		$num = $_GET["CL_NUMERO"];
 		$client = $this->model->getClient($num);
-
 		$this->loadModel('Pays');
 		$pays = $this->model->getAllPays();
 		require APP . 'view/_templates/header.php';
