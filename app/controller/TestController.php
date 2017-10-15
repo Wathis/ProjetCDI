@@ -3,10 +3,14 @@
 class TestController extends Controller {
 
     public function indexAction()  {
+    	require APP . 'view/_templates/header.php';
         $form = new Form();
-        $test =  $form->faireUnTest();
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/test/index.php';
+        $nom = "éÉé-Ébé";
+        if ($form->faireToutesLesVerifications($form->transformerChampEnNom($nom))) {
+        	echo "validé";
+        } else {
+        	echo "non validé";
+        }
         require APP . 'view/_templates/footer.php';
     }
 }

@@ -4,6 +4,7 @@
 class Form {
 
     const TAILLE_MAX_NOM_PRENOM = 25;
+    const AUTHORIZED_SPECIALS_CHARS = "éèêëàâäôö";
 
     /**
      * Charger les valeurs dans le formulaire qui sont presentes dans le tableau $_POST
@@ -243,66 +244,55 @@ class Form {
     //############################## FONCTIONS DE VERIFICATIONS  ############################################
     //#######################################################################################################
 
-    /*
-     * Executer toutes les verifications qui menent à champ interdit
-     * Return true si le champ passe tous les tests ( Est donc valide )
-     */
-    public function faireToutesLesVerifications($champ){
-        return $this->verifierLesBackSlashs($champ) &&  $this->verifierLesQuotes($champ)
-            && $this->verifierLesDoublesTirets($champ) && $this->verifierLeSigneEuro($champ) &&
-            $this->verifierLesGuillemets($champ) && $this->verifierLesExclamations($champ) && $this->verifierLeGrandTiret($champ) && $this->verifierLaLongueurDuChamp($champ);
-    }
 
-    /*
-     * Verifier si la chaine contient des doubles tirets
-     * @return true si verifiation est correcte
-     */
-    private function verifierLesDoublesTirets($champ) {
-        return !preg_match("/--/",$champ);
+    /**
+     *  Autorise ce genre de modèle : Ébé-ébé
+    */ 
+    public function verifierChampAvecTiret($champ){
+        return preg_match("/^[a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]+-[a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]+$/", $champ);
+    } 
+    /**
+     *  Autorise ce genre de modèle : Péron-De-La Branche
+    */ 
+    public function verifierChampAvecTiretEtEspaces($champ){
+        return preg_match("/^([a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]+-[a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]+){2}\s[a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]+[a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]$/", $champ);
+    } 
+
+    /**
+     *  Autorise ce genre de modèle : Pierre
+    */ 
+    public function verifierChampNormale($champ) {
+        return preg_match("/^[a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS ."]+$/", $champ);
     }
 
     /**
-     * Verifier si la chaine contient des doubles guillemets
-     * Return true si la verification est correcte
-     */
-    private function verifierLesGuillemets($champ) {
-        return !preg_match("/\"/",$champ);
+     *  Autorise ce genre de modèle : Pierre' 'Jean
+    */ 
+    public function verifierChampAvecQuotes($champ) {
+        return preg_match("/^[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+'\s'[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+$/",$champ);
     }
 
     /**
-     * Verifier si la chaine contient des quotes
-     * Return true si la verification est correcte
-     */
-    private function verifierLesQuotes($champ)  {
-        return !preg_match("/^'$/",$champ) && !preg_match("/''/",$champ);
+     *  Autorise ce genre de modèle : Pierre Jean
+    */ 
+    public function verifierChampAvecEspace($champ) {
+        return preg_match("/^[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+\s[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+$/",$champ);
     }
 
     /**
-     * Verifie si la chaine contient un point d'exclamation
-     * @param $champ
-     * @return bool
-     */
-    public function verifierLesExclamations($champ) {
-        return !preg_match("/!/",$champ);
+     *  Autorise ce genre de modèle : Pierre'
+    */ 
+    public function verifierChampAvecQuote($champ) {
+        return preg_match("/^[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+'$/",$champ);
     }
 
     /**
-     * Verifier si le champ contient un signe euro car interdit
-     * @param $champ
-     * @return int
-     */
-    private function verifierLeSigneEuro($champ) {
-        return !preg_match('/€/',$champ);
+     *  Autorise ce genre de modèle : 'éÉ'é-É'bé'
+    */ 
+    public function verifierChampAvecQuoteEtTirets($champ) {
+        return preg_match("/^'[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+('|)[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+-[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+('|)[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+'$/",$champ);
     }
 
-    /**
-     * Verifier si le champs contient des backslach -> si oui interdit
-     * Return true si la chaine ne contient pas de backslash
-     */
-    private function verifierLesBackSlashs($champ) {
-        return !preg_match("/(\\\)+/",$champ);
-    }
-//test
     /**
      * Renvoie true si la chaine est inferieur à TAILLE_MAX_NOM_PRENOM
      * @param $champ
@@ -312,12 +302,26 @@ class Form {
         return mb_strlen($champ) <= self::TAILLE_MAX_NOM_PRENOM;
     }
 
-    /**
-     * Verifier si le champ contient un grand tiret
-     * @param $champ
-     * @return bool
+    /*
+     * Execute toutes les verifications et si au moins une des vérifications match, renvoie true et c'est une entrée valide
+     * Return true si le champ passe tous les tests
+     *  ATTENTION : Il faut transformer le champ en nom ou prenom avant de passer les vérifications
      */
-    private function verifierLeGrandTiret($champ) {
-        return !preg_match("/—/",$champ);
+    public function faireToutesLesVerifications($champ) {
+        $this->debugVerifications($champ);
+        return  $this->verifierLaLongueurDuChamp($champ) && ($this->verifierChampAvecQuoteEtTirets($champ)
+            || $this->verifierChampAvecQuote($champ) || $this->verifierChampAvecEspace($champ) ||
+            $this->verifierChampAvecQuotes($champ) || $this->verifierChampNormale($champ) || $this->verifierChampAvecTiretEtEspaces($champ) || $this->verifierChampAvecTiret($champ) );
+    }
+
+    public function debugVerifications($champ) {
+        echo $this->verifierLaLongueurDuChamp($champ) . " => verifierLaLongueurDuChamp<br \>";
+        echo $this->verifierChampAvecQuoteEtTirets($champ) . " => verifierChampAvecQuoteEtTirets<br \>";
+        echo $this->verifierChampAvecQuote($champ) . " => verifierChampAvecQuote<br \>";
+        echo $this->verifierChampAvecEspace($champ) . " => verifierChampAvecEspace<br \>";
+        echo $this->verifierChampAvecQuotes($champ) . " => verifierChampAvecQuotes<br \>";
+        echo $this->verifierChampNormale($champ) . " => verifierChampNormale<br \>";
+        echo $this->verifierChampAvecTiretEtEspaces($champ) . " => verifierChampAvecTiretEtEspaces<br \>";
+        echo $this->verifierChampAvecTiret($champ) . " => verifierChampAvecTiret<br \>";
     }
 }

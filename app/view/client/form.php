@@ -9,13 +9,21 @@
 		<input type="text" name="cl_localite" value="<?php Form::remplirChamp($client,"cl_localite");?>"><br \>
 
 		<label for="pays">Pays :</label>
+
 		<select name ="cl_pays">
-			<?php foreach ($pays as $val)
+			<?php 
+			foreach ($pays as $val)
 			{
-				echo('<option value ="'.$val["CODE_ISO"].'">'.$val["NOM"]); if ($val["CODE_ISO"] == $client["CL_PAYS"]){echo ('selected');}echo'</option>';
+				echo('<option value ="'.$val["CODE_ISO"].'">'.$val["NOM"]); 
+				if (isset($client["CL_PAYS"])) {
+					if ($val["CODE_ISO"] == $client["CL_PAYS"]){
+						echo ('selected');
+					}
+				}
+				echo'</option>';
 			}
-			
-			?>
+		
+			?>	
 		</select><br \>
 
 		<label for="ca">Chiffre d'affaire :</label>
