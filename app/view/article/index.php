@@ -41,8 +41,8 @@
 		  <div class="w3-dropdown-hover">
 		    <button class="w3-button"><i class="fa fa-bars"></i></button>
 		    <div class="w3-dropdown-content w3-bar-block w3-border">
-		      <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Fourniseur/index?ar_numero=' . $article["AR_NUMERO"] . '"'; ?>>Fournisseurs</a>
-		      <a href="#" class="w3-bar-item w3-button">Commandes</a>
+		      <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Fournisseur/consulter?fo_numero=' . $article["FO_NUMERO"] . '"'; ?>>Fournisseurs</a>
+		      <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'commande/consulterDepuisArticle?ar_numero=' . $article["AR_NUMERO"] . '"'; ?>>Commandes</a>
 		    </div>
 		  </div>
 		</div></td>

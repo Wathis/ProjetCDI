@@ -27,4 +27,11 @@ class Fournisseur
         $query->execute();
         return $query->fetchAll();
     }
+        public function getFournisseur($num)
+    {
+        $sql = "SELECT * FROM cdi_fournisseur where FO_NUMERO='$num'";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
 }
