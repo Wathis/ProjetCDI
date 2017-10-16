@@ -9,15 +9,15 @@
 		<input type="text" name="CL_LOCALITE" value="<?php Form::remplirChamp($client,"CL_LOCALITE");?>"><br \>
 
 		<label for="pays">Pays :</label>
-
 		<select name ="CL_PAYS">
 			<?php 
 			foreach ($pays as $val)
 			{
-				echo('<option value ="'.$val["CODE_ISO"].'" '); 
+				$code = str_replace(' ', '', $val["CODE_ISO"]);
+				echo('<option value ="' . $code . '"'); 
 				if (isset($client["CL_PAYS"])) {
-					if ($val["CODE_ISO"] == $client["CL_PAYS"]){
-						echo ('selected');
+					if ($code == $client["CL_PAYS"]){
+						echo (' selected');
 					}
 				}
 				echo ('>' . $val["NOM"]);
@@ -32,10 +32,11 @@
 
 		<label for="type">Type de client:</label>
 		<select name="CL_TYPE">
-			<option selected value="Particulier">Particulier</option>
-			<option  value="Grand Compte">Grand Compte</option>
-			<option  value="PME">PME</option>
-			<option  value="Administration">Administration</option>
+			<?php if (isset($client["CL_TYPE"])){ $type = $client["CL_TYPE"];} else { $type='0'; } ?>
+			<option <?php if ($type=='Particulier') echo ('selected'); ?> value="Particulier">Particulier</option>
+			<option <?php if ($type=='Grand compte') echo ('selected'); ?> value="Grand Compte">Grand Compte</option>
+			<option <?php if ($type=='PME') echo ('selected'); ?> value="PME">PME</option>
+			<option <?php if ($type=='Administration') echo ('selected'); ?> value="Administration">Administration</option>
 			<option  value="">Autres</option>
 
 		</select><br />
