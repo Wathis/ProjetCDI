@@ -100,11 +100,42 @@ class ClientController extends Controller {
 		header("Location:".URL."client/index");
 	}
 	public function modifierClientAction(){
+		$this->loadModel('Pays');
+		$pays = $this->model->getAllPays();
+		$informations = ["CL_NOM","CL_PRENOM","CL_LOCALITE","CL_CA","EMP_ENUME"];
+		$informationsObligatoires = ["CL_NOM","CL_PRENOM","CL_LOCALITE"];
+		$form = new Form();
+
 		$this->loadModel('Client');
 		$num = $_GET["CL_NUMERO"];
 		$client = $this->model->getClient($num);
-		$this->loadModel('Pays');
-		$pays = $this->model->getAllPays();
+
+		if (isset($_POST["submit"])) {
+			if (Form::champsSontRemplisPost($informationsObligatoires)) {
+                $client = $form->extraireClientDuPost();
+       
+ 				if ($form->faireToutesLesVerifications($client["CL_NOM"])){
+                    $client["CL_NOM"] = $form->transformerChampEnNom($client["CL_NOM"]);
+                } else {
+                    $messages[] = "Champ nom invalide";
+                }
+                if ($form->faireToutesLesVerifications($client["CL_PRENOM"])){
+                    $client["CL_PRENOM"] = $form->transformerChampEnPrenom($client["CL_PRENOM"]);
+                } else {
+                    $messages[] = "Champ prenom invalide";
+                }
+                if (empty($client["CL_LOCALITE"]) || !isset($client["CL_LOCALITE"])){
+                    $messages[] = "Vous devez entrer une ville";
+                }
+                    //On securise les champs avant l'insertion en base de donnée
+                $client = $form->securiserLesChamps($client);
+                if (empty($messages))
+                {
+					$this->model->modifierClient($client,$num);
+                }
+			}
+
+		}
 		require APP . 'view/_templates/header.php';
         require APP . 'view/client/modifier.php';
         require APP . 'view/_templates/footer.php';

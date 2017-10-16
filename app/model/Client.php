@@ -37,7 +37,6 @@ class Client {
 		$query=$query->fetch();
 		$num = 'C'.($query["maxi"]+1);
 
-		var_dump($client);
 
 		$sql = 'INSERT INTO cdi_client (CL_NUMERO,CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS,CL_CA,CL_TYPE,EMP_ENUME) VALUES (:CL_NUMERO,:CL_NOM,:CL_PRENOM,:CL_LOCALITE,:CL_PAYS,:CL_CA,:CL_TYPE,:EMP_ENUME)';
 		$query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
@@ -65,5 +64,22 @@ class Client {
 		$query = $this->db->prepare($sql);
 		$query->execute();
 		return $query->fetch(PDO::FETCH_ASSOC);
+	}
+	public function modifierClient($client,$num)
+	{
+		$sql = 'UPDATE cdi_client set CL_NOM= :CL_NOM,CL_PRENOM= :CL_PRENOM,CL_LOCALITE= :CL_LOCALITE,CL_PAYS= :CL_PAYS,CL_CA= :CL_CA,CL_TYPE= :CL_TYPE,EMP_ENUME= :EMP_ENUME where CL_NUMERO= :CL_NUMERO';
+		$query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+		$query->execute(array(
+			':CL_NUMERO' => $num,
+			':CL_NOM' =>  $client["CL_NOM"],
+			':CL_PRENOM' =>  $client["CL_PRENOM"],
+			':CL_LOCALITE' =>  $client["CL_LOCALITE"],
+			':CL_PAYS' =>  $client["CL_PAYS"],
+			':CL_CA' =>  $client["CL_CA"],
+			':CL_TYPE' =>  $client["CL_TYPE"],
+			':EMP_ENUME' =>  $client["EMP_ENUME"] !=''?  $client['EMP_ENUME'] : null
+		));
+		var_dump($client);
+		var_dump($num);
 	}
 }
