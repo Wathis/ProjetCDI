@@ -104,14 +104,13 @@ class Form {
      */
     public function extraireClientDuPost() {
         $client = array(
-            "nom" => isset($_POST["nom"]) ? $_POST["nom"] : "",
-            "prenom" => isset($_POST["nom"]) ? $_POST["prenom"] : "",
-            "localite" => isset($_POST["localite"]) ? $_POST["localite"] : "",
-            "ville" => isset($_POST["ville"]) ? $_POST["ville"] : NULL,
-            "pays" => isset($_POST["pays"]) ? $_POST["pays"] : NULL,
-            "enume" => isset($_POST["enume"]) ? $_POST["enume"] : NULL,
-            "type" => isset($_POST["type"]) ? $_POST["type"] : NULL,
-            "ca" => isset($_POST["ca"]) ? $_POST["ca"] : NULL
+            "CL_NOM" => isset($_POST["CL_NOM"]) ? $_POST["CL_NOM"] : "",
+            "CL_PRENOM" => isset($_POST["CL_PRENOM"]) ? $_POST["CL_PRENOM"] : "",
+            "CL_LOCALITE" => isset($_POST["CL_LOCALITE"]) ? $_POST["CL_LOCALITE"] : "",
+            "CL_PAYS" => isset($_POST["CL_PAYS"]) ? $_POST["CL_PAYS"] : "",
+            "EMP_ENUME" => isset($_POST["EMP_ENUME"]) ? $_POST["EMP_ENUME"] : NULL,
+            "CL_TYPE" => isset($_POST["CL_TYPE"]) ? $_POST["CL_TYPE"] : NULL,
+            "CL_CA" => isset($_POST["CL_CA"]) ? $_POST["CL_CA"] : NULL
         );
         return $client;
     }
@@ -308,7 +307,7 @@ class Form {
      *  ATTENTION : Il faut transformer le champ en nom ou prenom avant de passer les vérifications
      */
     public function faireToutesLesVerifications($champ) {
-        $this->debugVerifications($champ);
+        //$this->debugVerifications($champ);
         return  $this->verifierLaLongueurDuChamp($champ) && ($this->verifierChampAvecQuoteEtTirets($champ)
             || $this->verifierChampAvecQuote($champ) || $this->verifierChampAvecEspace($champ) ||
             $this->verifierChampAvecQuotes($champ) || $this->verifierChampNormale($champ) || $this->verifierChampAvecTiretEtEspaces($champ) || $this->verifierChampAvecTiret($champ) );
