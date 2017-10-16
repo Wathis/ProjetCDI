@@ -1,7 +1,7 @@
 <div class="container">
     <script src="<?php echo URL; ?>js/tri.js"></script>
     <link href="<?php echo URL; ?>css/tableau.css" rel="stylesheet">
-    <h2>Page article</h2>
+    <h2>Page commande</h2>
 
     <form action="<?php echo URL .'commande/rechercherCommande' ?>" method="post">
         <label for='choix'>Recherche sur :</label>
@@ -40,6 +40,7 @@
                             <div class="w3-dropdown-content w3-bar-block w3-border">
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Magasin/index?ma_numero=' . $commande["MA_NUMERO"] . '"'; ?>>Magasin</a>
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Client/consulter?cl_numero=' . $commande["CL_NUMERO"] . '"'; ?>>Client</a>
+                                <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Commande/consulterArticles?co_numero=' . $commande["CO_NUMERO"] . '"'; ?>>Consulter articles</a>
                             </div>
                         </div>
                     </div>

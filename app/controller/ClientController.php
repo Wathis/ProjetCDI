@@ -70,7 +70,7 @@ class ClientController extends Controller {
         		$num = $_GET["cl_numero"];
         		$num = $form->securiserChamp($num);
         		$client = $this->model->getClient($num);
-        	} else { //Alors aucun magasin choisi
+        	} else { //Alors aucun client choisi
         		$messages[] = "Vous n'avez pas fourni de numero de client";
         	}
         } else {
