@@ -45,6 +45,9 @@ class Client extends Model {
 			':EMP_ENUME' =>  $client["emp_enume"]
 		));
 	}
+
+	//Fonction qui supprime un client si celui-ci n'a pas de commande 
+	//La fonction renvoie true si le delete a été efféctué
 	public function supprimerClient($num)
 	{
 		$sql = "SELECT count(*) FROM CDI_COMMANDE WHERE CL_NUMERO = '$num'"; 
