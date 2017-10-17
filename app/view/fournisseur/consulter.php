@@ -20,7 +20,8 @@
 		
 		}
 
-		echo ('<a style="text-decoration:none;color:grey" href="' . URL . 'fournisseur/modifierFournisseur?FO_NUMERO=' . $fournisseur['FO_NUMERO'].'">Modifier le fournisseur</a>'); 
+        //à faire si on a le temps
+		//echo ('<a style="text-decoration:none;color:grey" href="' . URL . 'fournisseur/modifierFournisseur?FO_NUMERO=' . $fournisseur['FO_NUMERO'].'">Modifier le fournisseur</a>'); 
 
 	?>
 
