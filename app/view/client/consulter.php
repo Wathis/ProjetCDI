@@ -11,7 +11,7 @@
     		}
     	}
     
-    	if (isset($client)) {
+    	if (isset($client) && count($messages) == 0){
     ?>
     	<div>Numero : <?php echo $client["CL_NUMERO"] ?></div>
     	<div>Nom : <?php echo $client["CL_NOM"] ?></div>
@@ -23,11 +23,9 @@
     	<div>Enume : <?php echo $client["EMP_ENUME"] ?></div>
 
     <?php 
-		
-		}
 
-		echo ('<a style="text-decoration:none;color:grey" href="' . URL . 'client/modifierClient?CL_NUMERO=' . $client['CL_NUMERO'].'">Modifier le client</a>'); 
-
+		  echo ('<a style="text-decoration:none;color:grey" href="' . URL . 'client/modifierClient?CL_NUMERO=' . $client['CL_NUMERO'].'"><br \>Modifier le client</a>'); 
+        }
 	?>
 
 

@@ -27,4 +27,12 @@ class Article extends Model
         $query->execute();
         return $query->fetchAll();
     }
+    //Permet de recuperer les articles d'une livraison
+    public function getArticlesPourLivraison($li_numero) {
+        $sql = 'SELECT * FROM CDI_ARTICLE JOIN CDI_LIGLIV USING (ar_numero) WHERE LI_NUMERO = :li_numero;';
+        $query = $this->db->prepare($sql);
+        $parameters = array(':li_numero' => $li_numero);
+        $query->execute($parameters);
+        return $query->fetchAll();
+    }
 }

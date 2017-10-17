@@ -32,9 +32,9 @@ class Commande extends Model {
 
     //Permet de recuperer les commandes concerné par le numero de client envoyé en parametre
     public function getCommandeClient($cl_numero) {
-        $sql = 'SELECT * FROM CDI_COMMANDE JOIN CL_NUMERO = :CL_NUMERO;';
+        $sql = 'SELECT * FROM CDI_COMMANDE WHERE CL_NUMERO = :cl_numero;';
         $query = $this->db->prepare($sql);
-        $parameters = array(':CL_NUMERO' => $cl_numero);
+        $parameters = array(':cl_numero' => $cl_numero);
         $query->execute($parameters);
         return $query->fetchAll();
     }

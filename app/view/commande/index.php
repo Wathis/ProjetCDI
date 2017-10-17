@@ -41,6 +41,7 @@
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Magasin/index?ma_numero=' . $commande["MA_NUMERO"] . '"'; ?>>Magasin</a>
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Client/consulter?cl_numero=' . $commande["CL_NUMERO"] . '"'; ?>>Client</a>
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Commande/consulterArticles?co_numero=' . $commande["CO_NUMERO"] . '"'; ?>>Consulter articles</a>
+                                <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Livraison/commandes?co_numero=' . $commande["CO_NUMERO"] . '"'; ?>>Livraisons</a>
                             </div>
                         </div>
                     </div>

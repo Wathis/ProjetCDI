@@ -21,4 +21,24 @@ class ArticleController extends Controller
         require APP . 'view/article/index.php';
         require APP . 'view/_templates/footer.php';
 	}
+
+    //permet de rechercher les articles d'une livraisons donnée en GET
+    public function articlesDeLivraisonAction() {
+        $this->loadModel('Article');
+        $form = new Form();
+        if (isset($_GET)) {
+            if (isset($_GET["li_numero"]) && !empty($_GET["li_numero"])){
+                $li_numero = $_GET["li_numero"];
+                $li_numero = $form->securiserChamp($li_numero);
+                $articles = $this->model->getArticlesPourLivraison($li_numero);
+            } else { //Alors aucun client choisi
+                $messages[] = "Vous n'avez pas fourni de numero de client";
+            }
+        } else {
+            $messages[] = "Vous n'avez pas fourni de numero de client";
+        }
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/article/livraisons.php';
+        require APP . 'view/_templates/footer.php';
+    }
 }

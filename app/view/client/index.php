@@ -48,6 +48,7 @@
 	                    <button class="w3-button"><i class="fa fa-bars"></i></button>
 	                    <div class="w3-dropdown-content w3-bar-block w3-border">
 	                        <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Commande/consulterDepuisClient?CL_NUMERO=' . $client["CL_NUMERO"] . '"'; ?>>Voir commandes</a>
+	                        <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Livraison/consulterLivraisonsClient?cl_numero=' . $client["CL_NUMERO"] . '"'; ?>>Voir livraisons</a>
 	                    </div>
 	                </div>
 	            </div>

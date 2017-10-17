@@ -70,6 +70,10 @@ class ClientController extends Controller {
         		$num = $_GET["cl_numero"];
         		$num = $form->securiserChamp($num);
         		$client = $this->model->getClient($num);
+                //Si client == false => Le client n'existe pas
+                if ($client == false) {
+                    $messages[] = "Ce client " . $num . " n'existe plus <br /> Regler problème => Impossible de supprimer un client si il a des commandes";
+                }
         	} else { //Alors aucun client choisi
         		$messages[] = "Vous n'avez pas fourni de numero de client";
         	}
