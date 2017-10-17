@@ -1,16 +1,9 @@
 <?php
 
-class Article
+class Article extends Model
 {
-    private $db;
-
-    function __construct($db)
-    {
-        try {
-            $this->db = $db;
-        } catch (PDOException $e) {
-            exit('Connexion à la base de donnée impossible');
-        }
+    public function __construct($db) {
+        parent::__construct($db);
     }
 
     public function getAllArticles() {

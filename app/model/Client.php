@@ -1,16 +1,9 @@
 <?php 
-class Client {
-
-	private $db;
+class Client extends Model {
 
 	public function __construct($db) {
-
-		try {	
-			$this->db = $db;
-		} catch (PDOException $e) {
-			exit('Connexion à la base de donnée impossible');
-		}
-	}
+        parent::__construct($db);
+    }
 
 	public function getAllClients() {
 		$sql = 'SELECT * FROM cdi_client';

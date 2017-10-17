@@ -33,17 +33,19 @@ class CommandeController extends Controller {
         require APP . 'view/commande/articles.php';
         require APP . 'view/_templates/footer.php';
     }
+
+    //Consulter les commandes disponibles concernée par l'article passé en GET
     public function consulterDepuisArticleAction() {
         $this->loadModel('Commande');
         $form = new Form();
         if (isset($_GET)) {
             //Faire un recherche sur un article donnée passer en $GET
             if (isset($_GET["ar_numero"]) && !empty($_GET["ar_numero"])){
-                $num = $_GET["ar_numero"];
-                $num = $form->securiserChamp($num);
-                $commandes = $this->model->getCommande($num);
+                $ar_numero = $_GET["ar_numero"];
+                $ar_numero = $form->securiserChamp($ar_numero);
+                $commandes = $this->model->getCommandeArticle($ar_numero);
             } else { //Alors aucun magasin choisi
-                $messages[] = "Vous n'avez pas fourni de numero de client";
+                $messages[] = "Vous n'avez pas fourni de numero d'article";
             }
         } else {
             //Sur tous les articles
@@ -53,4 +55,27 @@ class CommandeController extends Controller {
         require APP . 'view/commande/index.php';
         require APP . 'view/_templates/footer.php';
     }
+
+    // Consulter les commandes depuis un client 
+    // Permet de voir les commandes en cours ou terminées 
+    public function consulterDepuisClientAction() {
+        $this->loadModel('Commande');
+        $form = new Form();
+        if (isset($_GET)) {
+            //Faire un recherche sur un article donnée passer en $GET
+            if (isset($_GET["CL_NUMERO"]) && !empty($_GET["CL_NUMERO"])){
+                $num = $_GET["CL_NUMERO"];
+                $num = $form->securiserChamp($num);
+                $commandes = $this->model->getCommandeClient($num);
+            } else { //Alors aucun magasin choisi
+                $messages[] = "Vous n'avez pas fourni de numero de client";
+            }
+        } else {
+            $messages[] = "Vous n'avez pas fourni de numero de client";
+        }
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/commande/index.php';
+        require APP . 'view/_templates/footer.php';
+    }
+
 }

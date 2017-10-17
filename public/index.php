@@ -13,6 +13,7 @@ require_once CONFIG . 'config.php';
 require_once CORE . 'Router.php';
 require_once APP . 'App.php';
 require_once CORE . 'Controller.php';
+require_once CORE . 'Model.php';
 require_once CORE . 'Form.php';
 
 //salut

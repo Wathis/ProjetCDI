@@ -1,17 +1,11 @@
 <?php
-class Commande {
-
-    private $db;
+class Commande extends Model {
 
     public function __construct($db) {
-
-        try {
-            $this->db = $db;
-        } catch (PDOException $e) {
-            exit('Connexion à la base de donnée impossible');
-        }
+        parent::__construct($db);
     }
 
+    //Recuperer les articles d'une commande donnée en parametre
     public function getArticles($co_numero) {
         $sql = 'SELECT * FROM CDI_LIGCDE JOIN CDI_ARTICLE using (AR_NUMERO) WHERE CO_NUMERO = :co_numero;';
         $query = $this->db->prepare($sql);
@@ -20,16 +14,28 @@ class Commande {
         return $query->fetchAll();
     }
 
+    //Recuperer toutes les commandes de la base de donnée
     public function getAllCommandes() {
         $sql = "SELECT * FROM CDI_COMMANDE;";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
     }
-    public function getCommande($num){
-        $sql = "SELECT * FROM CDI_COMMANDE join cdi_ligcde using(co_numero) join cdi_article using(ar_numero) where ar_numero = '$num';";
+
+    //Recuper les commandes qui ont pour numero article $ar_article
+    public function getCommandeArticle($ar_numero){
+        $sql = "SELECT * FROM CDI_COMMANDE join cdi_ligcde using(co_numero) join cdi_article using(ar_numero) where ar_numero = '$ar_numero';";
         $query = $this->db->prepare($sql);
         $query->execute();
+        return $query->fetchAll();
+    }
+
+    //Permet de recuperer les commandes concerné par le numero de client envoyé en parametre
+    public function getCommandeClient($cl_numero) {
+        $sql = 'SELECT * FROM CDI_COMMANDE JOIN CL_NUMERO = :CL_NUMERO;';
+        $query = $this->db->prepare($sql);
+        $parameters = array(':CL_NUMERO' => $cl_numero);
+        $query->execute($parameters);
         return $query->fetchAll();
     }
 }

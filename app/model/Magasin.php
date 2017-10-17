@@ -1,15 +1,8 @@
 <?php
-class Magasin {
-
-    private $db;
+class Magasin extends Model {
 
     public function __construct($db) {
-
-        try {
-            $this->db = $db;
-        } catch (PDOException $e) {
-            exit('Connexion à la base de donnée impossible');
-        }
+        parent::__construct($db);
     }
 
     public function getMagasin($numero) {
