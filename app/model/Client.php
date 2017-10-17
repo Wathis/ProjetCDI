@@ -47,9 +47,18 @@ class Client extends Model {
 	}
 	public function supprimerClient($num)
 	{
-		$sql = "DELETE FROM CDI_CLIENT where CL_NUMERO='$num'";
-		$query = $this->db->prepare($sql);
-		$query->execute();
+		$sql = "SELECT count(*) FROM CDI_COMMANDE WHERE CL_NUMERO = '$num'"; 
+		$query = $this->db->prepare($sql); 
+		$query->execute(); 
+		$nbr = $query->fetchColumn(); 
+		if ($nbr == 0 ) {
+			$sql = "DELETE FROM CDI_CLIENT where CL_NUMERO='$num'";
+			$query = $this->db->prepare($sql);
+			$query->execute();
+			return true;
+		} else {
+			return false;
+		}
 	}
 	public function getClient($num)
 	{

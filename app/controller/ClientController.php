@@ -97,11 +97,18 @@ class ClientController extends Controller {
         require APP . 'view/client/index.php';
         require APP . 'view/_templates/footer.php';
 	}
+
+    //Action pour supprimer un client passé en get
 	public function supprimerClientAction(){
 		$num = $_GET["CL_NUMERO"];
 		$this->loadModel('Client');
-		$this->model->supprimerClient($num);
-		header("Location:".URL."client/index");
+        $supprimé = $this->model->supprimerClient($num);
+        if ($supprimé == false) {
+            $messages[] = "Impossible de supprimer ce client, il détient des commandes";
+            require APP . 'view/error/errorMessage.php';
+        } else {
+            header("Location:".URL."client/index");
+        }
 	}
 	public function modifierClientAction(){
 		$this->loadModel('Pays');
