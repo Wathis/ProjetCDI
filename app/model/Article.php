@@ -22,7 +22,7 @@ class Article extends Model
     public function getArticleRecherche($champ,$choix,$ordre) {
         $choix= htmlspecialchars($choix);
         $champ=htmlspecialchars($champ);
-        $sql = 'SELECT * FROM cdi_article where AR_'.$choix.' like "%'.$champ.'%" order by AR_'.$choix.' '.$ordre.'';
+        $sql = 'SELECT * FROM cdi_article where '.$choix.' like "%'.$champ.'%" order by '.$choix.' '.$ordre.'';
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

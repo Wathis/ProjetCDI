@@ -5,7 +5,16 @@ class ArticleController extends Controller
     public function indexAction()
     {
     	$this->loadModel('Article');
-    	$articles = $this->model->getAllArticles();
+        if (isset($_GET["fo_numero"]))
+        {
+            $num = trim ($_GET["fo_numero"]);
+            echo $num;
+            $articles = $this->model->getArticleRecherche($num,'FO_NUMERO','asc');
+        }
+    	else
+        {
+            $articles = $this->model->getAllArticles();
+        }
         //Import des vues
         require APP . 'view/_templates/header.php';
         require APP . 'view/article/index.php';
