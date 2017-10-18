@@ -10,6 +10,12 @@
         ?>
     </h2>
 
+    <?php  
+        if (count($livraisonsEnRetardIds) > 0) {
+            echo '<div style="color:red">Des livraisons sont en retard</div>';
+        }
+    ?>
+
     <table id="keywords" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
@@ -24,7 +30,16 @@
         <?php foreach ($livraisons as $livraison) { ?>
             <tr>
                 <td><?php echo $livraison["LI_NUMERO"]; ?></td>
-                <td><?php echo $livraison["DATE_LIV"]; ?></td>
+                <td>
+                    <?php 
+                        //Alors c'est un retard
+                        if (in_array($livraison["LI_NUMERO"],$livraisonsEnRetardIds)) {
+                            echo '<span style="color:red">' . $livraison["DATE_LIV"] . '</span>';
+                        } else {
+                            echo $livraison["DATE_LIV"]; 
+                        }   
+                    ?>
+                </td>
                 <td><?php echo $livraison["CL_NUMERO"]; ?></td>
                 <td><?php echo $livraison["MA_NUMERO"]; ?></td>
                 <td><?php echo $livraison["CO_NUMERO"]; ?></td>
