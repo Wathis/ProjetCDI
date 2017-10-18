@@ -3,12 +3,12 @@
     <link href="<?php echo URL; ?>css/tableau.css" rel="stylesheet">
     <h2>Page commande</h2>
 
-    <form action="<?php echo URL .'commande/rechercherCommande' ?>" method="post">
+    <form action="<?php echo URL .'commande/rechercherCo' ?>" method="post">
         <label for='choix'>Recherche sur :</label>
         <select name='choix' id="choix" onchange="tri(this)">
-            <option value='Numero' selected>Numero</option>
-            <option value='Date'>Date</option>
-            <option value='Client'>Client</option>
+            <option value='CO_Numero' selected>Numero</option>
+            <option value='CO_Date'>Date</option>
+            <option value='CL_Numero'>Numero Client</option>
         </select>
         <input type='text' name='champ'></imput>
         <input type='submit' value='Recherche'>

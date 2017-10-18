@@ -9,6 +9,26 @@
             }
         ?>
     </h2>
+    <form action="<?php echo URL .'livraison/rechercherLi' ?>" method="post">
+        <label for='choix'>Recherche sur :</label>
+        <select name='choix' id="choix" onchange="tri(this)">
+            <option value='LI_Numero' selected>Numero</option>
+            <option value='DATE_LIV'>Date</option>
+            <option value='CL_Numero'>Numero Client</option>
+            <option value='CO_Numero'>Numero Commande</option>
+            <option value='MA_Numero'>Numero Magasin</option>
+        </select>
+        <input type='text' name='champ'></imput>
+        <input type='submit' value='Recherche'>
+        <div id="tri" style ="display:inline">
+        </div>
+    </form>
+
+    <?php  
+        if (count($livraisonsEnRetardIds) > 0) {
+            echo '<div style="color:red">Des livraisons sont en retard</div>';
+        }
+    ?>
 
     <table id="keywords" cellspacing="0" cellpadding="0">
         <thead>
@@ -24,7 +44,16 @@
         <?php foreach ($livraisons as $livraison) { ?>
             <tr>
                 <td><?php echo $livraison["LI_NUMERO"]; ?></td>
-                <td><?php echo $livraison["DATE_LIV"]; ?></td>
+                <td>
+                    <?php 
+                        //Alors c'est un retard
+                        if (in_array($livraison["LI_NUMERO"],$livraisonsEnRetardIds)) {
+                            echo '<span style="color:red">' . $livraison["DATE_LIV"] . '</span>';
+                        } else {
+                            echo $livraison["DATE_LIV"]; 
+                        }   
+                    ?>
+                </td>
                 <td><?php echo $livraison["CL_NUMERO"]; ?></td>
                 <td><?php echo $livraison["MA_NUMERO"]; ?></td>
                 <td><?php echo $livraison["CO_NUMERO"]; ?></td>

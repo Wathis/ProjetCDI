@@ -10,7 +10,6 @@
 		<option value='AR_Couleur'>Couleur</option>
 		<option value='AR_Stock'>Stock</option>
 		<option value='FO_NUMERO'>Fournisseur</option>
-
 	</select>
 	<input type='text' name='champ'></imput>
 	<input type='submit' value='Recherche'></input>

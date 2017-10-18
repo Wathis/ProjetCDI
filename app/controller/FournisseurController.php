@@ -41,4 +41,14 @@ class FournisseurController extends Controller
         require APP . 'view/_templates/footer.php';
 
     }
+    public function rechercherFoAction() {
+        $this->loadModel('Fournisseur');
+        $champ = $_POST["champ"];
+        $choix = $_POST["choix"];
+        $ordre = $_POST["ordre"];
+        $fournisseurs = $this->model->getFournisseurRecherche($champ,$choix,$ordre);
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/fournisseur/index.php';
+        require APP . 'view/_templates/footer.php';
+    }
 }
