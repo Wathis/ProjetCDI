@@ -7,11 +7,11 @@
 	<form action="<?php echo URL .'client/rechercherCli' ?>" method="post">
 	<label for='choix'>Recherche sur :</label>
 	<select name='choix' id="choix" onchange="tri(this)">
-		<option value='Nom' >Nom</option>
-		<option value='Prenom' >Prenom</option>
-		<option value='Numero' selected>Numero</option>
-		<option value='Localite'>Localité</option>
-		<option value='Pays'>Pays</option>
+		<option value='CL_Nom' >Nom</option>
+		<option value='CL_Prenom' >Prenom</option>
+		<option value='CL_Numero' selected>Numero</option>
+		<option value='CL_Localite'>Localité</option>
+		<option value='CL_Pays'>Pays</option>
 	</select>
 	<input type='text' name='champ'></imput>
 	<input type='submit' value='Recherche'></input>

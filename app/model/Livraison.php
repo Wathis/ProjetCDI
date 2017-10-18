@@ -30,4 +30,12 @@ class Livraison extends Model {
         $query->execute($parameters);
         return $query->fetchAll();
     }
+    public function getLivraisonRecherche($champ,$choix,$ordre) {
+        $choix= htmlspecialchars($choix);
+        $champ=htmlspecialchars($champ);
+        $sql = 'SELECT * FROM CDI_LIVRAISON where '.$choix.' like "%'.$champ.'%" order by '.$choix.' '.$ordre.'';
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }

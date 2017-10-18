@@ -38,4 +38,12 @@ class Commande extends Model {
         $query->execute($parameters);
         return $query->fetchAll();
     }
+    public function getCommandeRecherche($champ,$choix,$ordre) {
+        $choix= htmlspecialchars($choix);
+        $champ=htmlspecialchars($champ);
+        $sql = 'SELECT * FROM CDI_COMMANDE where '.$choix.' like "%'.$champ.'%" order by '.$choix.' '.$ordre.'';
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }
