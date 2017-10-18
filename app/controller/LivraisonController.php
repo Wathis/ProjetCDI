@@ -54,5 +54,15 @@ class LivraisonController extends Controller {
         require APP . 'view/livraison/index.php';
         require APP . 'view/_templates/footer.php';
     }
+    public function rechercherLiAction() {
+        $this->loadModel('Livraison');
+        $champ = $_POST["champ"];
+        $choix = $_POST["choix"];
+        $ordre = $_POST["ordre"];
+        $livraisons = $this->model->getLivraisonRecherche($champ,$choix,$ordre);
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/livraison/index.php';
+        require APP . 'view/_templates/footer.php';
+    }
 
 }

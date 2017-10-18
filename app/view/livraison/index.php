@@ -9,6 +9,20 @@
             }
         ?>
     </h2>
+    <form action="<?php echo URL .'livraison/rechercherLi' ?>" method="post">
+        <label for='choix'>Recherche sur :</label>
+        <select name='choix' id="choix" onchange="tri(this)">
+            <option value='LI_Numero' selected>Numero</option>
+            <option value='DATE_LIV'>Date</option>
+            <option value='CL_Numero'>Numero Client</option>
+            <option value='CO_Numero'>Numero Commande</option>
+            <option value='MA_Numero'>Numero Magasin</option>
+        </select>
+        <input type='text' name='champ'></imput>
+        <input type='submit' value='Recherche'>
+        <div id="tri" style ="display:inline">
+        </div>
+    </form>
 
     <?php  
         if (count($livraisonsEnRetardIds) > 0) {

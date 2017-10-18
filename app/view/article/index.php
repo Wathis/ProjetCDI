@@ -4,11 +4,12 @@
 	<form action="<?php echo URL .'article/rechercherArt' ?>" method="post">
 	<label for='choix'>Recherche sur :</label>
 	<select name='choix' id="choix" onchange="tri(this)">
-		<option value='Numero' selected>Numero</option>
-		<option value='Nom'>Nom</option>
-		<option value='Poids'>Poids</option>
-		<option value='Couleur'>Couleur</option>
-		<option value='Stock'>Stock</option>
+		<option value='AR_Numero' selected>Numero</option>
+		<option value='AR_Nom'>Nom</option>
+		<option value='AR_Poids'>Poids</option>
+		<option value='AR_Couleur'>Couleur</option>
+		<option value='AR_Stock'>Stock</option>
+		<option value='FO_NUMERO'>Fournisseur</option>
 	</select>
 	<input type='text' name='champ'></imput>
 	<input type='submit' value='Recherche'></input>

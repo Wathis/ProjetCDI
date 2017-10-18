@@ -1,11 +1,11 @@
 <div class="container">
     <h2>Page fournisseur</h2>
 
-	<form action="<?php echo URL .'fournisseur/rechercherFournisseur' ?>" method="post">
+	<form action="<?php echo URL .'fournisseur/rechercherFo' ?>" method="post">
 	<label for='choix'>Recherche sur :</label>
 	<select name='choix' id="choix" onchange="tri(this)">
-		<option value='Numero' selected>Numero</option>
-		<option value='Nom'>Nom</option>
+		<option value='FO_Numero' selected>Numero</option>
+		<option value='FO_Nom'>Nom</option>
 	</select>
 	<input type='text' name='champ'></imput>
 	<input type='submit' value='Recherche'></input>
@@ -26,7 +26,7 @@
 		<tr>
 			<td><?php echo $fournisseur["FO_NUMERO"]; ?></td>
 			<td><?php echo $fournisseur["FO_NOM"]; ?></td>
-			<td><button class="w3-button" href=<?php echo '"' . URL . 'Article/index?fo_numero=' . $fournisseur["FO_NUMERO"] . '"'; ?>><i class="fa fa-search"></i></button></td>
+			<td><a class="w3-button" href=<?php echo '"' . URL . 'Article/index?fo_numero=' . $fournisseur["FO_NUMERO"] . '"'; ?>><i class="fa fa-search"></i></a></td>
 		</tr>
 	<?php } ?>
 	</tbody>
