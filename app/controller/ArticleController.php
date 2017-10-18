@@ -8,7 +8,6 @@ class ArticleController extends Controller
         if (isset($_GET["fo_numero"]))
         {
             $num = trim ($_GET["fo_numero"]);
-            echo $num;
             $articles = $this->model->getArticleRecherche($num,'FO_NUMERO','asc');
         }
     	else
