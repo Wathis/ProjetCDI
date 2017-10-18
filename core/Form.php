@@ -4,7 +4,7 @@
 class Form {
 
     const TAILLE_MAX_NOM_PRENOM = 25;
-    const AUTHORIZED_SPECIALS_CHARS = "éèêëàâäôö";
+    const AUTHORIZED_SPECIALS_CHARS = "àâäéèêëïîôöùûüÿçœæ";
 
     /**
      * Charger les valeurs dans le formulaire qui sont presentes dans le tableau $_POST
