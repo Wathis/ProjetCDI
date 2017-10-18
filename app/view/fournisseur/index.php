@@ -26,7 +26,7 @@
 		<tr>
 			<td><?php echo $fournisseur["FO_NUMERO"]; ?></td>
 			<td><?php echo $fournisseur["FO_NOM"]; ?></td>
-			<td><button class="w3-button" href=<?php echo '"' . URL . 'Article/index?fo_numero=' . $fournisseur["FO_NUMERO"] . '"'; ?>><i class="fa fa-search"></i></button></td>
+			<td><a class="w3-button" href=<?php echo '"' . URL . 'Article/index?fo_numero=' . $fournisseur["FO_NUMERO"] . '"'; ?>><i class="fa fa-search"></i></a></td>
 		</tr>
 	<?php } ?>
 	</tbody>
