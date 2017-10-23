@@ -46,7 +46,7 @@ class CommandeController extends Controller {
     }
 
     //Consulter les commandes disponibles concernée par l'article passé en GET
-    public function consulterDepuisArticleAction() {
+    public function consulterAction() {
         $this->loadModel('Commande');
         $form = new Form();
         if (isset($_GET)) {
@@ -63,7 +63,7 @@ class CommandeController extends Controller {
             $commandes = $this->model->getAllCommandes();
         }
         require APP . 'view/_templates/header.php';
-        require APP . 'view/commande/index.php';
+        require APP . 'view/commande/consulter.php';
         require APP . 'view/_templates/footer.php';
     }
 

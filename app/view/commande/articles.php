@@ -11,7 +11,6 @@
             <th>Prix Achat</th>
             <th>Prix Vente</th>
             <th>En stock</th>
-            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -24,14 +23,6 @@
                 <td><?php echo $article["AR_PA"] . ' €'; ?></td>
                 <td><?php echo $article["AR_PV"]. ' €'; ?></td>
                  <td><?php echo $article["AR_STOCK"]; ?></td>
-                <td><div class="w3-container">
-                        <div class="w3-dropdown-hover">
-                            <button class="w3-button"><i class="fa fa-bars"></i></button>
-                            <div class="w3-dropdown-content w3-bar-block w3-border">
-                            </div>
-                        </div>
-                    </div>
-                </td>
             </tr>
         <?php } ?>
         </tbody>
