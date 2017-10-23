@@ -21,8 +21,8 @@ class Fournisseur extends Model
         $query->execute();
         return $query->fetchAll();
     }
-        public function getFournisseur($num)
-    {
+    
+    public function getFournisseur($num) {
         $sql = "SELECT * FROM cdi_fournisseur where FO_NUMERO='$num'";
         $query = $this->db->prepare($sql);
         $query->execute();
