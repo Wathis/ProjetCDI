@@ -33,6 +33,23 @@ class LivraisonController extends Controller {
         require APP . 'view/_templates/footer.php';
     }
 
+    //Action pour afficher les livraisons d'une commande
+    public function ajouterQuantiteAction() {
+        $this->loadModel('Livraison');
+        $form = new Form();
+        if (isset($_GET)) {
+            if (isset($_GET["ar_numero"]) && isset($_GET["li_numero"]) && isset($_GET["quantite"])){
+                $li_numero = $_GET["li_numero"];
+                $li_numero = $form->securiserChamp($li_numero);
+                $quantite = $_GET["quantite"];
+                $quantite = $form->securiserChamp($li_numero);
+                $ar_numero = $_GET["ar_numero"];
+                $ar_numero = $form->securiserChamp($ar_numero);
+                $this->model->ajouterUneQuantiteArticleLivre($ar_numero,$li_numero,$quantite);
+            }
+        }
+        header("Location:".URL."livraison/index");
+    }
 
     //Action pour afficher les livraisons d'un client
     public function consulterLivraisonsClientAction() {
