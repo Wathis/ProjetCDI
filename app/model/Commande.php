@@ -21,6 +21,13 @@ class Commande extends Model {
         $query->execute();
         return $query->fetchAll();
     }
+    public function getCommandeOrder($choix,$ordre){
+        $choix= htmlspecialchars($choix);
+        $sql = 'SELECT * FROM cdi_commande order by '.$choix.' '.$ordre.'';
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
 
     //Recuper les commandes qui ont pour numero article $ar_article
     public function getCommandeArticle($ar_numero){

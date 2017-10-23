@@ -28,4 +28,11 @@ class Fournisseur extends Model
         $query->execute();
         return $query->fetch(PDO::FETCH_ASSOC);
     }
+    public function getFournisseurOrder($choix,$ordre){
+        $choix= htmlspecialchars($choix);
+        $sql = 'SELECT * FROM cdi_fournisseur order by '.$choix.' '.$ordre.'';
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }

@@ -38,4 +38,11 @@ class Livraison extends Model {
         $query->execute();
         return $query->fetchAll();
     }
+    public function getLivraisonOrder($choix,$ordre){
+        $choix= htmlspecialchars($choix);
+        $sql = 'SELECT * FROM CDI_LIVRAISON order by '.$choix.' '.$ordre.'';
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }

@@ -11,6 +11,15 @@ class CommandeController extends Controller {
         require APP . 'view/commande/index.php';
         require APP . 'view/_templates/footer.php';
     }
+    public function trieCoAction() {
+        $this->loadModel('Commande');
+        $choix = $_POST["tris"];
+        $ordre = $_POST["ordre1"];
+        $commandes = $this->model->getCommandeOrder($choix,$ordre);
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/commande/index.php';
+        require APP . 'view/_templates/footer.php';
+        }
 
     /**
      * Consulter les articles d'une commande dont le numero est passé en GET

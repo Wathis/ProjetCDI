@@ -97,6 +97,15 @@ class ClientController extends Controller {
         require APP . 'view/client/index.php';
         require APP . 'view/_templates/footer.php';
 	}
+    public function trieCliAction() {
+        $this->loadModel('Client');
+        $choix = $_POST["tris"];
+        $ordre = $_POST["ordre1"];
+        $clients = $this->model->getClientOrder($choix,$ordre);
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/client/index.php';
+        require APP . 'view/_templates/footer.php';
+        }
 
     //Action pour supprimer un client passé en get
 	public function supprimerClientAction(){

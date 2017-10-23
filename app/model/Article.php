@@ -35,4 +35,11 @@ class Article extends Model
         $query->execute($parameters);
         return $query->fetchAll();
     }
+    public function getArticleOrder($choix,$ordre){
+        $choix= htmlspecialchars($choix);
+        $sql = 'SELECT * FROM cdi_article order by '.$choix.' '.$ordre.'';
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }

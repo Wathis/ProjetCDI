@@ -20,6 +20,13 @@ class Client extends Model {
 		$query->execute();
 		return $query->fetchAll();
 	}
+	public function getClientOrder($choix,$ordre){
+        $choix= htmlspecialchars($choix);
+        $sql = 'SELECT * FROM cdi_client order by '.$choix.' '.$ordre.'';
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetchAll();
+    }
 
     // Fonction pour ajouter un nouveau client dans la base
     // Client est tableau associatif des informations du client

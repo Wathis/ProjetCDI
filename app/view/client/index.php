@@ -18,6 +18,18 @@
 	<div id="tri" style ="display:inline">
 	</div>
 	</form>
+	<form action="<?php echo URL .'client/trieCli' ?>" method="post">
+		<label for='tris'>Triée par :</label>
+		<select name='tris' id="tris" onchange="tri(this)">
+			<option value='CL_Nom' >Nom</option>
+			<option value='CL_Prenom' >Prenom</option>
+			<option value='CL_Numero' selected>Numero</option>
+			<option value='CL_Localite'>Localité</option>
+			<option value='CL_Pays'>Pays</option>
+		</select>
+		<div id="tris1" style ="display:inline"></div>
+		<input type='submit' value='OK'></input>
+	</form>
 	</br></br>
 	<table id="keywords" cellspacing="0" cellpadding="0">
 		<thead>

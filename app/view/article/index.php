@@ -16,6 +16,19 @@
 	<div id="tri" style ="display:inline">
 	</div>
 	</form>
+	<form action="<?php echo URL .'article/trieArt' ?>" method="post">
+		<label for='tris'>Triée par :</label>
+		<select name='tris' id="tris" onchange="tri(this)">
+			<option value='AR_Numero' selected>Numero</option>
+			<option value='AR_Nom'>Nom</option>
+			<option value='AR_Poids'>Poids</option>
+			<option value='AR_Couleur'>Couleur</option>
+			<option value='AR_Stock'>Stock</option>
+			<option value='FO_NUMERO'>Fournisseur</option>
+		</select>
+		<div id="tris1" style ="display:inline"></div>
+		<input type='submit' value='OK'></input>
+	</form>
 	</br></br>
 	<table id="keywords" cellspacing="0" cellpadding="0">
 		<thead>
