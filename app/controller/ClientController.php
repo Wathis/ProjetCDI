@@ -15,8 +15,8 @@ class ClientController extends Controller {
 	public function ajouterAction() {
 		$this->loadModel('Pays');
         $messages = array();
-		$informations = ["cl_nom","cl_prenom","cl_localite","cl_ca","emp_enume"];
-		$informationsObligatoires = ["cl_nom","cl_prenom","cl_ville"];
+		$informations = ["CL_NOM","CL_PRENOM","CL_LOCALITE","CL_CA"];
+		$informationsObligatoires = ["CL_NOM","CL_PRENOM","CL_LOCALITE"];
 		//On charge les pays pour la vue
 		$pays = $this->model->getAllPays();
 		$form = new Form();
@@ -24,18 +24,21 @@ class ClientController extends Controller {
 			if (Form::champsSontRemplisPost($informationsObligatoires)) {
 			        //Faire les verifications avant d'ajouter le client
                     $client = $form->extraireClientDuPost();
-                    if ($form->faireToutesLesVerifications($client["cl_nom"])){
-                        $client["cl_nom"] = $form->transformerChampEnNom($client["cl_nom"]);
+                    if ($form->verifierLeNom($client["CL_NOM"])){
+                        $client["CL_NOM"] = $form->transformerChampEnNom($client["CL_NOM"]);
                     } else {
                         $messages[] = "Champ nom invalide";
                     }
-                    if ($form->faireToutesLesVerifications($client["cl_prenom"])){
-                        $client["cl_prenom"] = $form->transformerChampEnPrenom($client["cl_prenom"]);
+                    if ($form->verifierLePrenom($client["CL_PRENOM"])){
+                        $client["CL_PRENOM"] = $form->transformerChampEnPrenom($client["CL_PRENOM"]);
                     } else {
                         $messages[] = "Champ prenom invalide";
                     }
-                    if (empty($client["cl_localite"]) || !isset($client["cl_localite"])){
+                    if (empty($client["CL_LOCALITE"]) || !isset($client["CL_LOCALITE"])){
                         $messages[] = "Vous devez entrer une ville";
+                    }
+                    if (!empty($client["CL_CA"]) && $client["CL_TYPE"] === "Particulier") {
+                        $messages[] = "Un particulier ne peut avoir de chiffre d'affaire";
                     }
                     //On securise les champs avant l'insertion en base de donnée
                     $client = $form->securiserLesChamps($client);
@@ -122,7 +125,7 @@ class ClientController extends Controller {
 	public function modifierClientAction(){
 		$this->loadModel('Pays');
 		$pays = $this->model->getAllPays();
-		$informations = ["CL_NOM","CL_PRENOM","CL_LOCALITE","CL_CA","EMP_ENUME"];
+		$informations = ["CL_NOM","CL_PRENOM","CL_LOCALITE","CL_CA"];
 		$informationsObligatoires = ["CL_NOM","CL_PRENOM","CL_LOCALITE"];
 		$form = new Form();
 
@@ -134,12 +137,12 @@ class ClientController extends Controller {
 			if (Form::champsSontRemplisPost($informationsObligatoires)) {
                 $client = $form->extraireClientDuPost();
        
- 				if ($form->faireToutesLesVerifications($client["CL_NOM"])){
+ 				if ($form->verifierLeNom($client["CL_NOM"])){
                     $client["CL_NOM"] = $form->transformerChampEnNom($client["CL_NOM"]);
                 } else {
                     $messages[] = "Champ nom invalide";
                 }
-                if ($form->faireToutesLesVerifications($client["CL_PRENOM"])){
+                if ($form->verifierLePrenom($client["CL_PRENOM"])){
                     $client["CL_PRENOM"] = $form->transformerChampEnPrenom($client["CL_PRENOM"]);
                 } else {
                     $messages[] = "Champ prenom invalide";
@@ -147,11 +150,15 @@ class ClientController extends Controller {
                 if (empty($client["CL_LOCALITE"]) || !isset($client["CL_LOCALITE"])){
                     $messages[] = "Vous devez entrer une ville";
                 }
-                    //On securise les champs avant l'insertion en base de donnée
+                if (!empty($client["CL_CA"]) && $client["CL_TYPE"] === "Particulier") {
+                    $messages[] = "Un particulier ne peut avoir de chiffre d'affaire";
+                }
+                //On securise les champs avant l'insertion en base de donnée
                 $client = $form->securiserLesChamps($client);
                 if (empty($messages))
                 {
 					$this->model->modifierClient($client,$num);
+                    $messages[] = "Client modifié";
                 }
 			}
 

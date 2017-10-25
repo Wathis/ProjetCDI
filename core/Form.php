@@ -88,6 +88,7 @@ class Form {
         return $champ = $this->mettreMajuscule($champ);
     }
 
+    //Transforme un champ en prenom
     public function transformerChampEnPrenom($champ){
         $champ = $this->supprimerLesEspacesEnTrop($champ);
         $champ = $this->supprimerTiretsEtEspacesALaFin($champ);
@@ -126,7 +127,7 @@ class Form {
 	/*
 	 * Retire les accents dans la chaine
 	 */
-	public function supprimerAccent($champ) {
+	private function supprimerAccent($champ) {
 	    $champ = preg_replace('#è|é|ê|ë#', 'e', $champ);
 	    $champ = preg_replace('#È|É|Ê|Ë#', 'E', $champ);
 	    $champ = preg_replace('#à|á|â|ã|ä|å#', 'a', $champ);
@@ -141,7 +142,7 @@ class Form {
 	    return preg_replace('#Ý#', 'Y', $champ);
     }
 
-    public function supprimerAccentsSurMajuscules($champ)
+    private function supprimerAccentsSurMajuscules($champ)
     {
         $champ = preg_replace('#È|É|Ê|Ë#', 'E', $champ);
         $champ = preg_replace('#À|Á|Â|Ã|Ä|Å#', 'A', $champ);
@@ -151,7 +152,7 @@ class Form {
         return preg_replace('#Ý#', 'Y', $champ);
     }
 
-    public function supprimerCaracteresSpeciaux($champ) {
+    private function supprimerCaracteresSpeciaux($champ) {
         //A tester car fait avec mon mac les symboles
         $champ = preg_replace('#Ç#', 'C', $champ);
         $champ = preg_replace('#ç#', 'c', $champ);
@@ -166,7 +167,7 @@ class Form {
         return $champ = preg_replace('#Ø#', 'O', $champ);
     }
 
-	public function cassePrenom($champ)
+	private function cassePrenom($champ)
 	{
 		$champ = $this->mettreMinuscule($champ);
 		$prem = $this->supprimerAccent($champ[0]);
@@ -182,7 +183,7 @@ class Form {
     /*
      * Mettre des majuscules sur la première lettre après les tirets et le début
     */
-    public function majusculesApresTiret($champ) {
+    private function majusculesApresTiret($champ) {
         $champSepare = explode('-',$champ);
         foreach ($champSepare as $index=>$contenu) {
             $champSepare[$index] = mb_convert_case(mb_strtolower($contenu), MB_CASE_TITLE, "UTF-8");
@@ -193,7 +194,7 @@ class Form {
     /*
      * Mettre des majuscules sur la première lettre après les quote et le début
      */
-    public function majusculesApresQuotes($champ) {
+    private function majusculesApresQuotes($champ) {
         $champSepare = explode("'",$champ);
         $this->supprimerCaracteresSpeciaux($champ);
         foreach ($champSepare as $index=>$contenu) {
@@ -205,7 +206,7 @@ class Form {
     /**
      * Transformer les multiples espaces en simple espace
      */
-    public function supprimerLesEspacesEnTrop($champ) {
+    private function supprimerLesEspacesEnTrop($champ) {
         //Remplace les espaces multiples par un seul espace
         $model = "#(\s)+#";
         $champ = preg_replace($model," ",$champ);
@@ -217,20 +218,12 @@ class Form {
         return preg_replace($model,"-",$champ);
     }
 
-    public function faireUnTest() {
-        $champ = "b\a";
-        if ($this->faireToutesLesVerifications($champ)) {
-            return "Nom :" . $this->transformerChampEnNom($champ) . " Prenom : " . $this->transformerChampEnPrenom($champ);
-        }
-        return "interdit";
-    }
-
     /**
      * Verifier si le champ n'a pas de tiret  ( fin et début )
      * @param $champ
      * @return Le champ modifié
      */
-    public function supprimerTiretsEtEspacesALaFin($champ)
+    private function supprimerTiretsEtEspacesALaFin($champ)
     {
         $model = "/(^[\s-]+)|([\s-]$)/";
         if (preg_match($model, $champ)) {
@@ -247,41 +240,41 @@ class Form {
     /**
      *  Autorise ce genre de modèle : Ébé-ébé
     */ 
-    public function verifierChampAvecTiret($champ){
+    private function verifierChampAvecTiret($champ){
         return preg_match("/^[a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]+-[a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]+$/", $champ);
     } 
     /**
      *  Autorise ce genre de modèle : Péron-De-La Branche et Branche peron-de-la et Brance-de peron-de et Pierre Jean 
     */ 
-    public function verifierChampAvecTiretEtEspaces($champ){
+    private function verifierChampAvecTiretEtEspaces($champ){
         return preg_match("/^([a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]+(-|)[a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]+)+\s([a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]+(-|)[a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]*)+$/", $champ);
     } 
 
     /**
      *  Autorise ce genre de modèle : Pierre
     */ 
-    public function verifierChampNormale($champ) {
+    private function verifierChampNormale($champ) {
         return preg_match("/^[a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS ."]+$/", $champ);
     }
 
     /**
      *  Autorise ce genre de modèle : Pierre' 'Jean
     */ 
-    public function verifierChampAvecQuotes($champ) {
+    private function verifierChampAvecQuotes($champ) {
         return preg_match("/^[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+'\s'[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+$/",$champ);
     }
 
     /**
      *  Autorise ce genre de modèle : Pierre'
     */ 
-    public function verifierChampAvecQuote($champ) {
+    private function verifierChampAvecQuote($champ) {
         return preg_match("/^[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+'$/",$champ);
     }
 
     /**
      *  Autorise ce genre de modèle : 'éÉ'é-É'bé'
     */ 
-    public function verifierChampAvecQuoteEtTirets($champ) {
+    private function verifierChampAvecQuoteEtTirets($champ) {
         return preg_match("/^'[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+('|)[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+-[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+('|)[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+'$/",$champ);
     }
 
@@ -294,16 +287,49 @@ class Form {
         return mb_strlen($champ) <= self::TAILLE_MAX_NOM_PRENOM;
     }
 
-    /*
-     * Execute toutes les verifications et si au moins une des vérifications match, renvoie true et c'est donc une entrée valide car elle est connue comme étant un modèle valide
-     * Return true si le champ passe tous les tests
-     *  ATTENTION : Il faut transformer le champ en nom ou prenom avant de passer les vérifications
-     */
-    public function faireToutesLesVerifications($champ) {
+    /**
+     * Autorise ce genre de modèle : Delaunay--Gouet Lebrun   OU   Delaunay Gouet--Lebrun
+    */
+    private function verifierChampAvecUnDoubleTiret($champ) {
+        return preg_match("/^('|)(([a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+('|)[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+--[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+('|)[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+(\s[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+('|)[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+)*)|([a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+('|)[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+\s[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+('|)[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+(--[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+('|)[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+)*))('|)$/",$champ);
+    }
+
+    /**
+     * Verifie si un prenom est bien formaté 
+     * Return true si le nom passe au moins un des test requis
+    */
+    public function verifierLePrenom($prenom) {
         //$this->debugVerifications($champ);
-        return  $this->verifierLaLongueurDuChamp($champ) && ($this->verifierChampAvecQuoteEtTirets($champ)
-            || $this->verifierChampAvecQuote($champ) || $this->verifierChampAvecEspace($champ) ||
-            $this->verifierChampAvecQuotes($champ) || $this->verifierChampNormale($champ) || $this->verifierChampAvecTiretEtEspaces($champ) || $this->verifierChampAvecTiret($champ) );
+        $prenom = $this->transformerChampEnPrenom($prenom);
+        return  $this->verifierLaLongueurDuChamp($prenom) 
+                && 
+                ( 
+                    $this->verifierChampAvecQuoteEtTirets($prenom)
+                    || $this->verifierChampAvecQuote($prenom) 
+                    || $this->verifierChampAvecQuotes($prenom) 
+                    || $this->verifierChampNormale($prenom) 
+                    || $this->verifierChampAvecTiretEtEspaces($prenom) 
+                    || $this->verifierChampAvecTiret($prenom) 
+                );
+    }
+
+    /**
+     * Verifie si un nom est bien formaté 
+     * Return true si le nom passe au moins un des test requis
+    */
+    public function verifierLeNom($nom){
+        $nom = $this->transformerChampEnNom($nom);
+        return  $this->verifierLaLongueurDuChamp($nom) 
+                && 
+                ( 
+                    $this->verifierChampAvecQuoteEtTirets($nom)
+                    || $this->verifierChampAvecQuote($nom) 
+                    || $this->verifierChampAvecQuotes($nom) 
+                    || $this->verifierChampNormale($nom) 
+                    || $this->verifierChampAvecTiretEtEspaces($nom) 
+                    || $this->verifierChampAvecTiret($nom)
+                    || $this->verifierChampAvecUnDoubleTiret($nom) 
+                );
     }
 
     //Permet de debuger pour voir quelle verification est passée à true
@@ -313,6 +339,7 @@ class Form {
         echo $this->verifierChampAvecQuote($champ) . " => verifierChampAvecQuote<br \>";
         echo $this->verifierChampAvecQuotes($champ) . " => verifierChampAvecQuotes<br \>";
         echo $this->verifierChampNormale($champ) . " => verifierChampNormale<br \>";
+        echo $this->verifierChampAvecUnDoubleTiret($champ) . " => verifierChampAvecUnDoubleTiret<br \>";
         echo $this->verifierChampAvecTiretEtEspaces($champ) . " => verifierChampAvecTiretEtEspaces<br \>";
         echo $this->verifierChampAvecTiret($champ) . " => verifierChampAvecTiret<br \>";
     }
