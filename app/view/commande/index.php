@@ -1,8 +1,6 @@
 <div class="container">
-    <script src="<?php echo URL; ?>js/tri.js"></script>
-    <link href="<?php echo URL; ?>css/tableau.css" rel="stylesheet">
     <h2>Page commande</h2>
-
+    <a href="<?php echo URL . 'commande/ajouter' ?>">Ajouter une commande</a><br \><br \>
     <form action="<?php echo URL .'commande/rechercherCo' ?>" method="post">
         <label for='choix'>Recherche sur :</label>
         <select name='choix' id="choix" onchange="tri(this)">

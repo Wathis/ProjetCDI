@@ -13,6 +13,35 @@ class CommandeController extends Controller {
 
 
     }
+    public function ajouterAction() {
+        $this->loadModel('Commande');
+        $commande = array(
+            "CO_Date" => isset($_POST["CO_Date"]) ? $_POST["CL_Date"] : "",
+            "CL_Numero" => isset($_POST["CL_Numero"]) ? $_POST["CL_Numero"] : "",
+            "MA_Numero" => isset($_POST["MA_Numero"]) ? $_POST["MA_Numero"] : "",
+        );
+        $info = ["co_date","cl_numero","ma_numero"];
+        if (isset($_POST["submit"])) {
+            if (Form::champsSontRemplisPost($info)) {
+                if(preg_match("^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$",$commande["CO_Date"])){
+                }else {
+                        $messages[] = "Champ Date invalide";
+            }
+                $cli = $this->model->clientExiste($commande["CL_Numero"]);
+                if($cli["num"] == 0){
+                    $messages[] = "Champ Client invalide";
+                }
+                $mag = $this->model->magasinExiste($commande["MA_Numero"]);
+                if($mag["num"] == 0){
+                    $messages[] = "Champ Magasin invalide";
+                }
+        }
+
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/commande/ajouter.php';
+        require APP . 'view/_templates/footer.php';
+    }
+}
     public function trieCoAction() {
         $this->loadModel('Commande');
         $choix = $_POST["tris"];
