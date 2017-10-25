@@ -21,7 +21,17 @@ class FournisseurController extends Controller
         require APP . 'view/Fournisseur/index.php';
         require APP . 'view/_templates/footer.php';
 	}
-        public function consulterAction() {
+    public function trieFoAction() {
+        $this->loadModel('Fournisseur');
+        $choix = $_POST["tris"];
+        $ordre = $_POST["ordre1"];
+        $fournisseurs = $this->model->getFournisseurOrder($choix,$ordre);
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/Fournisseur/index.php';
+        require APP . 'view/_templates/footer.php';
+        }
+
+    public function consulterAction() {
 
         $this->loadModel('Fournisseur');
         $form = new Form();

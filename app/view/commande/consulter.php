@@ -9,8 +9,8 @@
     		}
     	}
     
-    	if (isset($commande)) {
-            foreach($commande as $value){
+    	if (isset($commandes)) {
+            foreach($commandes as $value){
     ?>
     	<div>Numero : <?php echo $value["CO_NUMERO"] ?></div>
     	<div>Date : <?php echo $value["CO_DATE"] ?></div>

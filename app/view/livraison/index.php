@@ -23,7 +23,19 @@
         <div id="tri" style ="display:inline">
         </div>
     </form>
-
+    <form action="<?php echo URL .'livraison/trieLi' ?>" method="post">
+        <label for='tris'>Triée par :</label>
+        <select name='tris' id="tris" onchange="tri(this)">
+            <option value='LI_Numero' selected>Numero</option>
+            <option value='DATE_LIV'>Date</option>
+            <option value='CL_Numero'>Numero Client</option>
+            <option value='CO_Numero'>Numero Commande</option>
+            <option value='MA_Numero'>Numero Magasin</option>
+        </select>
+        <div id="tris1" style ="display:inline"></div>
+        <input type='submit' value='OK'></input>
+    </form>
+    </br></br>
     <?php  
         foreach ($livraisons as $livraison) {
             if (in_array($livraison["LI_NUMERO"],$livraisonsEnRetardIds)){
@@ -32,7 +44,6 @@
             }
         }
     ?>
-
     <table id="keywords" cellspacing="0" cellpadding="0">
         <thead>
         <tr>

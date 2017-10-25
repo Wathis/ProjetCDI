@@ -29,6 +29,15 @@ class ArticleController extends Controller
         require APP . 'view/article/index.php';
         require APP . 'view/_templates/footer.php';
 	}
+    public function trieArtAction() {
+        $this->loadModel('Article');
+        $choix = $_POST["tris"];
+        $ordre = $_POST["ordre1"];
+        $articles = $this->model->getArticleOrder($choix,$ordre);
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/article/index.php';
+        require APP . 'view/_templates/footer.php';
+        }
 
     //permet de rechercher les articles d'une livraisons donnée en GET
     public function articlesDeLivraisonAction() {

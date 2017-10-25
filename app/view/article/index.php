@@ -16,6 +16,19 @@
 	<div id="tri" style ="display:inline">
 	</div>
 	</form>
+	<form action="<?php echo URL .'article/trieArt' ?>" method="post">
+		<label for='tris'>Triée par :</label>
+		<select name='tris' id="tris" onchange="tri(this)">
+			<option value='AR_Numero' selected>Numero</option>
+			<option value='AR_Nom'>Nom</option>
+			<option value='AR_Poids'>Poids</option>
+			<option value='AR_Couleur'>Couleur</option>
+			<option value='AR_Stock'>Stock</option>
+			<option value='FO_NUMERO'>Fournisseur</option>
+		</select>
+		<div id="tris1" style ="display:inline"></div>
+		<input type='submit' value='OK'></input>
+	</form>
 	</br></br>
 	<table id="keywords" cellspacing="0" cellpadding="0">
 		<thead>
@@ -43,7 +56,7 @@
 		    <button class="w3-button"><i class="fa fa-bars"></i></button>
 		    <div class="w3-dropdown-content w3-bar-block w3-border">
 		      <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Fournisseur/consulter?fo_numero=' . $article["FO_NUMERO"] . '"'; ?>>Fournisseurs</a>
-		      <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'commande/consulterDepuisArticle?ar_numero=' . $article["AR_NUMERO"] . '"'; ?>>Commandes</a>
+		      <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'commande/consulter?ar_numero=' . $article["AR_NUMERO"] . '"'; ?>>Commandes</a>
 		    </div>
 		  </div>
 		</div></td>
