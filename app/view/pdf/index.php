@@ -20,12 +20,33 @@
 
 	$pdf->Rect(5, 135, $pdf->GetPageWidth()-10,  2);
 	$pdf->Cell(0,40,'',0,1,'L');
-
+	$somme = 0;
+	$taille = 0;
 	foreach ($articles as $val)
 	{
-		$pdf->Cell(60,5,'Numero article : ' . $val["AR_NUMERO"],0,0,'L');						
-		$pdf->Cell(70,5,'Nom article : ' . $val["AR_NOM"],0,0,'L');						
-		$pdf->Cell(0,5,'Quantite : ' . $val["LIC_QTLIVREE"],0,1,'L');						
+		$pdf->Cell(50,5,'N article : ' . $val["AR_NUMERO"],0,0,'L');						
+		$pdf->Cell(110,5,'Nom article : ' . $val["AR_NOM"] . ' ( ' . $val["AR_PV"] . ' euros )',0,0,'L');						
+		$pdf->Cell(0,5,'Quantite : ' . $val["LIC_QTCMDEE"],0,1,'L');
+		$somme=$somme + $val["AR_PV"]*$val["LIC_QTCMDEE"];
+		$taille+=1;			
 	}
+	$pdf->SetFont('Arial','B',13);
+	$pdf->Cell(0,30,'Prix : ' . $somme . ' euros',0,1,'C');
+	$pdf->SetFont('Arial','',13);
+
+	$pdf->Rect(5, 175+5*$taille, $pdf->GetPageWidth()-10,  2);
+
+	$pdf->Cell(0,40,'Article(s) en attente de livraison :',0,1,'L');
+	$pdf->Cell(0,-22,'',0,1,'L');
+	foreach ($articles as $val)
+	{
+		if ($val["LIC_QTCMDEE"] != $val["LIC_QTLIVREE"])
+		{
+			$pdf->Cell(80,0,'',0,0,'L');
+			$pdf->Cell(0,5,' - manque ' . ($val["LIC_QTCMDEE"]-$val["LIC_QTLIVREE"]) . ' article(s) ' . $val["AR_NUMERO"],0,1,'L');														
+		}
+		
+	}
+
 	$pdf->Output();
 ?>
