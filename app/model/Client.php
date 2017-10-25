@@ -43,13 +43,13 @@ class Client extends Model {
 
 		$query->execute(array(
 			':CL_NUMERO' => $num,
-			':CL_NOM' =>  $client["cl_nom"],
-			':CL_PRENOM' =>  $client["cl_prenom"],
-			':CL_LOCALITE' =>  $client["cl_ville"],
-			':CL_PAYS' =>  $client["cl_pays"],
-			':CL_CA' =>  $client["cl_ca"],
-			':CL_TYPE' =>  $client["cl_type"],
-			':EMP_ENUME' =>  $client["emp_enume"]
+			':CL_NOM' =>  $client["CL_NOM"],
+			':CL_PRENOM' =>  $client["CL_PRENOM"],
+			':CL_LOCALITE' =>  $client["CL_LOCALITE"],
+			':CL_PAYS' =>  $client["CL_PAYS"],
+			':CL_CA' =>  $client["CL_CA"],
+			':CL_TYPE' =>  $client["CL_TYPE"],
+			':EMP_ENUME' =>  null
 		));
 	}
 
@@ -89,9 +89,7 @@ class Client extends Model {
 			':CL_PAYS' =>  $client["CL_PAYS"],
 			':CL_CA' =>  $client["CL_CA"],
 			':CL_TYPE' =>  $client["CL_TYPE"],
-			':EMP_ENUME' =>  $client["EMP_ENUME"] !=''?  $client['EMP_ENUME'] : null
+			':EMP_ENUME' =>  null
 		));
-		var_dump($client);
-		var_dump($num);
 	}
 }

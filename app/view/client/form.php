@@ -1,12 +1,12 @@
 <form method="POST" action="">
 		<label for="nom">Nom* :</label>
-		<input type="text" name="CL_NOM" value="<?php Form::remplirChamp($client,"CL_NOM");?>"><br \>
+		<input id="nom" type="text" name="CL_NOM" value="<?php Form::remplirChamp($client,"CL_NOM");?>"><br \>
 
 		<label for="prenom">Prenom* :</label>
-		<input type="text" name="CL_PRENOM" value="<?php Form::remplirChamp($client,"CL_PRENOM");?>"><br \>
+		<input id="prenom" type="text" name="CL_PRENOM" value="<?php Form::remplirChamp($client,"CL_PRENOM");?>"><br \>
 
-		<label for="localite">Ville* :</label>
-		<input type="text" name="CL_LOCALITE" value="<?php Form::remplirChamp($client,"CL_LOCALITE");?>"><br \>
+		<label for="ville">Ville* :</label>
+		<input id="ville" type="text" name="CL_LOCALITE" value="<?php Form::remplirChamp($client,"CL_LOCALITE");?>"><br \>
 
 		<label for="pays">Pays :</label>
 		<select name ="CL_PAYS">
@@ -40,9 +40,6 @@
 			<option  value="">Autres</option>
 
 		</select><br />
-
-		<label for="enume">Enume :</label>
-		<input type="text" name="EMP_ENUME" value="<?php Form::remplirChamp($client,"EMP_ENUME");?>"><br \>
 
 		<input type="submit" name="submit" value="Confirmer">
 	</form>
