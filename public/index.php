@@ -15,7 +15,7 @@ require_once APP . 'App.php';
 require_once CORE . 'Controller.php';
 require_once CORE . 'Model.php';
 require_once CORE . 'Form.php';
-
+require_once(RACINE. 'fpdf.php');
 //salut
 $app = new App();
 $app->run();
