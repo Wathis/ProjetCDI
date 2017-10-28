@@ -40,8 +40,11 @@ class ClientController extends Controller {
                     if (!empty($client["CL_CA"]) && $client["CL_TYPE"] === "Particulier") {
                         $messages[] = "Un particulier ne peut avoir de chiffre d'affaire";
                     }
-                    //On securise les champs avant l'insertion en base de donnée
-                    $client = $form->securiserLesChamps($client);
+                    if (!preg_match('/^[0-9]+$/', $client["CL_CA"])) {
+                         $client["CL_CA"] = null;
+                    }
+                    // //On securise les champs avant l'insertion en base de donnée
+                    // $client = $form->securiserLesChamps($client);
                     //Si il y a aucune erreur, on peut ajouter le client
                     if (empty($messages)) {
                         //on charge le modele client pour acceder aux connexions avec la base de donnée
@@ -153,8 +156,11 @@ class ClientController extends Controller {
                 if (!empty($client["CL_CA"]) && $client["CL_TYPE"] === "Particulier") {
                     $messages[] = "Un particulier ne peut avoir de chiffre d'affaire";
                 }
-                //On securise les champs avant l'insertion en base de donnée
-                $client = $form->securiserLesChamps($client);
+                if (!preg_match('/^[0-9]+$/', $client["CL_CA"])) {
+                    $client["CL_CA"] = null;
+                }
+                // //On securise les champs avant l'insertion en base de donnée
+                // $client = $form->securiserLesChamps($client);
                 if (empty($messages))
                 {
 					$this->model->modifierClient($client,$num);

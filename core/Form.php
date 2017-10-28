@@ -251,24 +251,17 @@ class Form {
     } 
 
     /**
-     *  Autorise ce genre de modèle : Pierre
-    */ 
-    private function verifierChampNormale($champ) {
-        return preg_match("/^[a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS ."]+$/", $champ);
-    }
-
-    /**
      *  Autorise ce genre de modèle : Pierre' 'Jean
     */ 
     private function verifierChampAvecQuotes($champ) {
-        return preg_match("/^[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+'\s'[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+$/",$champ);
+        return preg_match("/^('|)[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+'\s'[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+('|)$/",$champ);
     }
 
     /**
-     *  Autorise ce genre de modèle : Pierre'
+     *  Autorise ce genre de modèle : Pierre' ou 'Pierre ou Pierre
     */ 
     private function verifierChampAvecQuote($champ) {
-        return preg_match("/^[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+'$/",$champ);
+        return preg_match("/^('|)[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+('|)$/",$champ);
     }
 
     /**
@@ -307,7 +300,6 @@ class Form {
                     $this->verifierChampAvecQuoteEtTirets($prenom)
                     || $this->verifierChampAvecQuote($prenom) 
                     || $this->verifierChampAvecQuotes($prenom) 
-                    || $this->verifierChampNormale($prenom) 
                     || $this->verifierChampAvecTiretEtEspaces($prenom) 
                     || $this->verifierChampAvecTiret($prenom) 
                 );
@@ -324,8 +316,7 @@ class Form {
                 ( 
                     $this->verifierChampAvecQuoteEtTirets($nom)
                     || $this->verifierChampAvecQuote($nom) 
-                    || $this->verifierChampAvecQuotes($nom) 
-                    || $this->verifierChampNormale($nom) 
+                    || $this->verifierChampAvecQuotes($nom)
                     || $this->verifierChampAvecTiretEtEspaces($nom) 
                     || $this->verifierChampAvecTiret($nom)
                     || $this->verifierChampAvecUnDoubleTiret($nom) 
