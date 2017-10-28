@@ -247,7 +247,7 @@ class Form {
      *  Autorise ce genre de modèle : Péron-De-La Branche et Branche peron-de-la et Brance-de peron-de et Pierre Jean 
     */ 
     private function verifierChampAvecTiretEtEspaces($champ){
-        return preg_match("/^([a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]+(-|)[a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]+)+\s([a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]+(-|)[a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]*)+$/", $champ);
+        return preg_match("/^(([a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]+(-|)[a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]*)+\s([a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]+(-|)[a-zA-Z" . self::AUTHORIZED_SPECIALS_CHARS . "]+)*)+$/", $champ);
     } 
 
     /**
@@ -292,7 +292,7 @@ class Form {
      * Return true si le nom passe au moins un des test requis
     */
     public function verifierLePrenom($prenom) {
-        //$this->debugVerifications($champ);
+        //$this->debugVerifications($prenom);
         $prenom = $this->transformerChampEnPrenom($prenom);
         return  $this->verifierLaLongueurDuChamp($prenom) 
                 && 
@@ -310,6 +310,7 @@ class Form {
      * Return true si le nom passe au moins un des test requis
     */
     public function verifierLeNom($nom){
+        // $this->debugVerifications($nom);
         $nom = $this->transformerChampEnNom($nom);
         return  $this->verifierLaLongueurDuChamp($nom) 
                 && 
@@ -329,7 +330,6 @@ class Form {
         echo $this->verifierChampAvecQuoteEtTirets($champ) . " => verifierChampAvecQuoteEtTirets<br \>";
         echo $this->verifierChampAvecQuote($champ) . " => verifierChampAvecQuote<br \>";
         echo $this->verifierChampAvecQuotes($champ) . " => verifierChampAvecQuotes<br \>";
-        echo $this->verifierChampNormale($champ) . " => verifierChampNormale<br \>";
         echo $this->verifierChampAvecUnDoubleTiret($champ) . " => verifierChampAvecUnDoubleTiret<br \>";
         echo $this->verifierChampAvecTiretEtEspaces($champ) . " => verifierChampAvecTiretEtEspaces<br \>";
         echo $this->verifierChampAvecTiret($champ) . " => verifierChampAvecTiret<br \>";

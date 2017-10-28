@@ -48,9 +48,12 @@ class ClientController extends Controller {
                     //Si il y a aucune erreur, on peut ajouter le client
                     if (empty($messages)) {
                         //on charge le modele client pour acceder aux connexions avec la base de donnée
-                        $this->loadModel('Client');
-                        $this->model->ajouterUnClient($client);
+                        // $this->loadModel('Client');
+                        // $this->model->ajouterUnClient($client);
                         $messages[] = "Client ajouté";
+                        echo "CL_NOM : ",$client["CL_NOM"],"<br \>";
+                        echo "CL_PRENOM : ",$client["CL_PRENOM"],"<br \>";
+                        echo "CL_LOCALITE : ",$client["CL_LOCALITE"],"<br \>";
                     }
 			} else {
                 $messages[] = "Veuillez remplir tous les champs obligatoires (*)";

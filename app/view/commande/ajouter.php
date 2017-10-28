@@ -11,6 +11,4 @@
 	} 
         require APP . 'view/commande/form.php';
 	?> 
-
-	
 </div>
