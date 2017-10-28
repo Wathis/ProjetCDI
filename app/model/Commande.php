@@ -13,6 +13,18 @@ class Commande extends Model {
         $query->execute($parameters);
         return $query->fetchAll();
     }
+    public function clientExiste($num){
+        $sql = 'SELECT count(CL_NUMERO)as num FROM CDI_CLIENT where CL_NUMERO = '.$num.'';
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetch();
+    }
+    public function magasinExiste($num){
+        $sql = 'SELECT count(MA_NUMERO)as num FROM CDI_MAGASIN where MA_NUMERO = '.$num.'';
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        return $query->fetch();
+    }
 
     //Recuperer toutes les commandes de la base de donnée
     public function getAllCommandes() {

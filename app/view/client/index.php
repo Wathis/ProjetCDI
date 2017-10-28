@@ -1,6 +1,4 @@
 <div class="container" >
-	<script src="<?php echo URL; ?>js/tri.js"></script>
-	<link href="<?php echo URL; ?>css/tableau.css" rel="stylesheet">
 	<h2>Clients</h2>
 
 	<a href="<?php echo URL . 'client/ajouter' ?>">Ajouter un client</a><br \><br \>
@@ -15,8 +13,7 @@
 	</select>
 	<input type='text' name='champ'></imput>
 	<input type='submit' value='Recherche'></input>
-	<div id="tri" style ="display:inline">
-	</div>
+	<div id="tri" style ="display:inline"></div>
 	</form>
 	<form action="<?php echo URL .'client/trieCli' ?>" method="post">
 		<label for='tris'>Triée par :</label>
