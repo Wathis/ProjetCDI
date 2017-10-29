@@ -8,22 +8,72 @@ class Livraison extends Model {
     //Recuperer toutes les livraisons de la base de donnée
     public function getAllLivraisons() {
         $sql = "SELECT * FROM CDI_LIVRAISON 
-                JOIN CDI_LIGLIV USING (li_numero) 
-                JOIN CDI_CLIENT USING (CL_NUMERO)
-                JOIN CDI_ARTICLE USING (ar_numero)
-                JOIN (select * from CDI_LIGCDE) as test USING (ar_numero,co_numero);";
+                JOIN CDI_CLIENT USING (CL_NUMERO)";
         $query = $this->db->prepare($sql);      
         $query->execute();
         return $query->fetchAll();
     }
 
+    //Donne le nombre d'article commandé
+    public function getNombreCommandéPourArticle($ar_numero, $co_numero) {
+        $sql = 'SELECT LIC_QTCMDEE - LIC_QTLIVREE as restant FROM CDI_LIGCDE WHERE AR_NUMERO = :AR_NUMERO AND CO_NUMERO = :CO_NUMERO;';
+        $query = $this->db->prepare($sql);
+        $query->execute(array(
+            ":AR_NUMERO" => $ar_numero,
+            ":CO_NUMERO" => $co_numero
+        ));
+        $query = $query->fetch();
+        return (int) $query["restant"];
+    }
+
+    //Insere une nouvelle livraison et ligne de livraison
+    public function insererNouvelleLivraison($co_numero,$articlesLivres) {
+        $sql = 'SELECT max(CAST(SUBSTR(LI_NUMERO,2)as UNSIGNED INT)) as maxi FROM CDI_LIVRAISON ';
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        $query=$query->fetch();
+        $li_numero_max = 'L'.($query["maxi"]+1);
+
+        $sql = 'INSERT INTO CDI_LIVRAISON (LI_NUMERO,CO_NUMERO,DATE_LIV, MA_NUMERO, CL_NUMERO) VALUES (:LI_NUMERO,:CO_NUMERO,:DATE_LIV,
+            (
+                SELECT MA_NUMERO FROM CDI_COMMANDE WHERE CO_NUMERO = :CO_NUMERO
+            ),
+            (
+                SELECT CL_NUMERO FROM CDI_COMMANDE WHERE CO_NUMERO = :CO_NUMERO
+            ))';
+        $query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $dateLiv = date("Y-m-d H:i:s");
+
+        $query->execute(array(
+            ':LI_NUMERO' => $li_numero_max,
+            ':CO_NUMERO' =>  $co_numero,
+            ':DATE_LIV' =>  $dateLiv
+        ));
+
+        foreach ($articlesLivres as $article) {
+            $sql = 'INSERT INTO CDI_LIGLIV (LI_NUMERO,AR_NUMERO,LIL_QTLIVREE) VALUES (:LI_NUMERO,:AR_NUMERO,:LIL_QTLIVREE)';
+            $query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            $query->execute(array(
+                ':LI_NUMERO' => $li_numero_max,
+                ':AR_NUMERO' =>  $article["AR_NUMERO"],
+                ':LIL_QTLIVREE' => $article["QUANTITE"]
+            ));
+            $sql = "UPDATE CDI_LIGCDE SET DATE_LIV = :DATE_LIV, LIC_QTLIVREE = (SELECT LIC_QTLIVREE FROM (select * from CDI_LIGCDE) as test WHERE AR_NUMERO = :AR_NUMERO AND CO_NUMERO = :CO_NUMERO ) + :LIC_QTLIVREE WHERE AR_NUMERO = :AR_NUMERO AND CO_NUMERO = :CO_NUMERO;";
+            $this->db->prepare($sql)->execute(array(
+                ':CO_NUMERO' => $co_numero,
+                ':AR_NUMERO' =>  $article["AR_NUMERO"],
+                ':LIC_QTLIVREE' => $article["QUANTITE"],
+                ':DATE_LIV' => $dateLiv
+            ));
+        }
+
+    }
+
     //Permet de recuperer les livraisons concerné par le numero de commande envoyé en parametre
     public function getLivraisonsCommande($co_numero) {
         $sql = 'SELECT * FROM CDI_LIVRAISON  
-                JOIN CDI_LIGLIV USING (li_numero) 
                 JOIN CDI_CLIENT USING (CL_NUMERO)
-                JOIN CDI_ARTICLE USING (ar_numero)
-                JOIN (select * from CDI_LIGCDE) as test USING (ar_numero,co_numero) 
                 WHERE CO_NUMERO = :co_numero;'
             ;
         $query = $this->db->prepare($sql);
@@ -34,9 +84,15 @@ class Livraison extends Model {
 
     //Renvoie les ids des commandes 
     public function getLivraisonsEnRetard(){
-        $sql = "SELECT LI_NUMERO FROM CDI_LIVRAISON WHERE CO_NUMERO IN ( 
+        $sql = "SELECT LI_NUMERO FROM CDI_LIVRAISON as LIV WHERE CO_NUMERO IN 
+                ( 
                     SELECT CO_NUMERO FROM CDI_LIGCDE WHERE LIC_QTCMDEE > LIC_QTLIVREE 
-                ) AND DATE_LIV <= NOW()";
+                ) 
+                AND 
+                ( 
+                    DATE_ADD((SELECT CO_DATE FROM CDI_COMMANDE WHERE CO_NUMERO = LIV.CO_NUMERO), INTERVAL 5 DAY) <= NOW()
+                    OR DATE_LIV is null
+                )";
         $query = $this->db->prepare($sql);
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_ASSOC); 
@@ -80,10 +136,7 @@ class Livraison extends Model {
     //Permet de recuperer les livraisons concerné par le numero de client envoyé en parametre
     public function getLivraisonsDuClient($cl_numero) {
         $sql = 'SELECT * FROM CDI_LIVRAISON  
-                JOIN CDI_LIGLIV USING (li_numero) 
                 JOIN CDI_CLIENT USING (CL_NUMERO)
-                JOIN CDI_ARTICLE USING (ar_numero)
-                JOIN (select * from CDI_LIGCDE) as test USING (ar_numero,co_numero)
                 WHERE CL_NUMERO = :cl_numero';
         $query = $this->db->prepare($sql);
         $parameters = array(':cl_numero' => $cl_numero);

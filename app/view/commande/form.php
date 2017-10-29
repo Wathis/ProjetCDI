@@ -11,8 +11,8 @@
 			?>
 		</select><br \>
 
-		<label for="datePicker">Date :</label>
-		<input type="date" name="CO_DATE" id="datePicker"><br \>
+		<!-- <label for="datePicker">Date :</label>
+		<input type="date" name="CO_DATE" id="datePicker"><br \> -->
 
 		<label for="magasin">Magasin</label>
 		<select id="magasin" name="MA_NUMERO">
@@ -34,8 +34,9 @@
 					}
 				?>
 			</select>
-			<label for="quantity">Quantité : </label>
+			<label for="quantity">Qté : </label>
 			<input class="quantity" name="quantity1" value="1" type="number" min="1" max="100">
+
 			<label for="reduction">Reduction (%) : </label>
 			<input class="reduction" name="reduction1" type="number" min="1" max="100">
 		</div>

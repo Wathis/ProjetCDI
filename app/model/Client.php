@@ -12,6 +12,20 @@ class Client extends Model {
 		return $query->fetchAll();
 	}
 
+	//Recupere les numeros des clients qui ont des commandes en retard ( 5 jours )
+	public function getClientRetards() {
+
+		$sql = 'SELECT CL_NUMERO FROM CDI_CLIENT WHERE CL_NUMERO IN ( SELECT CL_NUMERO FROM CDI_COMMANDE WHERE CO_NUMERO IN ( SELECT CO_NUMERO FROM CDI_LIGCDE WHERE LIC_QTCMDEE > LIC_QTLIVREE ) AND DATE_ADD(CO_DATE, INTERVAL 5 DAY) < NOW() )';
+		$query = $this->db->prepare($sql);
+		$query->execute();
+		$results = $query->fetchAll();
+		$clients = array();
+		foreach ($results as $result) {
+			$clients[] = $result["CL_NUMERO"];
+		}
+		return $clients;
+	}
+
 	public function getClientsRecherche($champ,$choix,$ordre) {
 		$choix= htmlspecialchars($choix);
 		$champ=htmlspecialchars($champ);

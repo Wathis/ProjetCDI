@@ -14,8 +14,9 @@
 	<input type='text' name='champ'></imput>
 	<input type='submit' value='Recherche'></input>
 	<div id="tri" style ="display:inline"></div>
+
 	</form>
-	<form action="<?php echo URL .'client/trieCli' ?>" method="post">
+	<!-- <form action="<?php echo URL .'client/trieCli' ?>" method="post">
 		<label for='tris'>Triée par :</label>
 		<select name='tris' id="tris" onchange="tri(this)">
 			<option value='CL_Nom' >Nom</option>
@@ -26,8 +27,19 @@
 		</select>
 		<div id="tris1" style ="display:inline"></div>
 		<input type='submit' value='OK'></input>
-	</form>
-	</br></br>
+	</form> -->
+	</br>
+
+	<?php  
+        foreach ($clients as $client) {
+            if (in_array($client["CL_NUMERO"],$clientAvecRetard)){
+                echo '<div style="color:red">Des clients ont des commandes en retard</div>';
+                break;
+            }
+        }
+    ?>
+
+	</br>
 	<table id="keywords" cellspacing="0" cellpadding="0">
 		<thead>
        		<tr>
@@ -44,7 +56,16 @@
    <tbody>
 	<?php foreach ($clients as $client) { ?>
 		<tr>
-			<td><?php echo $client["CL_NUMERO"]; ?></td>
+			<td>
+                    <?php 
+                        //Alors c'est un retard
+                        if (in_array($client["CL_NUMERO"],$clientAvecRetard)) {
+                            echo '<span style="color:red">' . $client["CL_NUMERO"] . '</span>';
+                        } else {
+                            echo $client["CL_NUMERO"]; 
+                        }   
+                    ?>
+                </td>
 			<td><?php echo $client["CL_NOM"]; ?></td>
 			<td><?php echo $client["CL_PRENOM"]; ?></td>
 			<td><?php echo $client["CL_LOCALITE"]; ?></td>

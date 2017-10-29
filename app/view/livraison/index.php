@@ -23,7 +23,7 @@
         <div id="tri" style ="display:inline">
         </div>
     </form>
-    <form action="<?php echo URL .'livraison/trieLi' ?>" method="post">
+   <!--  <form action="<?php echo URL .'livraison/trieLi' ?>" method="post">
         <label for='tris'>Triée par :</label>
         <select name='tris' id="tris" onchange="tri(this)">
             <option value='LI_Numero' selected>Numero</option>
@@ -34,12 +34,12 @@
         </select>
         <div id="tris1" style ="display:inline"></div>
         <input type='submit' value='OK'></input>
-    </form>
+    </form> -->
     </br></br>
     <?php  
         foreach ($livraisons as $livraison) {
             if (in_array($livraison["LI_NUMERO"],$livraisonsEnRetardIds)){
-                echo '<div style="color:red">Des livraisons sont en retard</div>';
+                echo '<div style="color:red">Des commandes sont en retard de plus de 5 jours</div>';
                 break;
             }
         }
@@ -52,36 +52,31 @@
             <th>Nom client</th>
             <th>Numero magasin</th>
             <th>Numero commande</th>
-            <th>Nom article</th>
-            <th>Reste à livrer</th>
         </tr>
         </thead>
         <tbody>
         <?php foreach ($livraisons as $livraison) { ?>
             <tr>
                 <td><?php echo $livraison["LI_NUMERO"]; ?></td>
+                <td> <?php echo $livraison["DATE_LIV"];?> </td>
+                <td><?php echo $livraison["CL_NOM"]; ?></td>
+                <td><?php echo $livraison["MA_NUMERO"]; ?></td>
                 <td>
                     <?php 
                         //Alors c'est un retard
                         if (in_array($livraison["LI_NUMERO"],$livraisonsEnRetardIds)) {
-                            echo '<span style="color:red">' . $livraison["DATE_LIV"] . '</span>';
+                            echo '<span style="color:red">' . $livraison["CO_NUMERO"] . '</span>';
                         } else {
-                            echo $livraison["DATE_LIV"]; 
+                            echo $livraison["CO_NUMERO"]; 
                         }   
                     ?>
                 </td>
-                <td><?php echo $livraison["CL_NOM"]; ?></td>
-                <td><?php echo $livraison["MA_NUMERO"]; ?></td>
-                <td><?php echo $livraison["CO_NUMERO"]; ?></td>
-                <td><?php echo $livraison["AR_NOM"]; ?></td>
-                <td><?php echo $livraison["LIC_QTCMDEE"] - $livraison["LIL_QTLIVREE"]; ?></td>
                 <td><div class="w3-container">
                         <div class="w3-dropdown-hover">
                             <button class="w3-button"><i class="fa fa-bars"></i></button>
                             <div class="w3-dropdown-content w3-bar-block w3-border">
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Magasin/index?ma_numero=' . $livraison["MA_NUMERO"] . '"'; ?>>Magasin</a>
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Article/articlesDeLivraison?li_numero=' . $livraison["LI_NUMERO"] . '"'; ?>>Voir articles</a>
-                                <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Livraison/ajouterQuantite?li_numero=' . $livraison["LI_NUMERO"] . '&ar_numero=' . $livraison["AR_NUMERO"] . '&quantite=1'. '"'; ?>>Nouvel article livré</a>
                             </div>
                         </div>
                     </div>

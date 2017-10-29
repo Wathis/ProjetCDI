@@ -5,6 +5,7 @@ class ClientController extends Controller {
     //Action de l'index
 	public function indexAction() {
 		$this->loadModel('Client');
+        $clientAvecRetard = $this->model->getClientRetards();
 		$clients = $this->model->getAllClients();
 		require APP . 'view/_templates/header.php';
         require APP . 'view/client/index.php';

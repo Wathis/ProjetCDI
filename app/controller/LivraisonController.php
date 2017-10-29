@@ -12,6 +12,55 @@ class LivraisonController extends Controller {
         require APP . 'view/_templates/footer.php';
 	}
 
+    //Creer une livraison 
+    public function ajouterAction() {
+        $messages = array();
+        if (isset($_GET["co_numero"])) {
+            $co_numero = $_GET["co_numero"];
+        } else {
+            $messages[] = "Aucune commande selectionné";
+        }
+        //On charge les articles de la commande
+        $this->loadModel('Commande');
+        $articles = $this->model->getArticles($co_numero);
+
+        $this->loadModel('Livraison');
+        if (isset($_POST["submit"])){
+            $articlesLivres = array();
+            if (isset($_POST["CO_NUMERO"])){
+                $co_numero = $_POST["CO_NUMERO"];
+            }
+            //On charge les numero des articles selectionnés
+            foreach ($articles as $article) {
+                if (isset($_POST[$article["AR_NUMERO"]])) {
+                    if (isset($_POST["quantity" . $article["AR_NUMERO"]]) && !empty($_POST["quantity" . $article["AR_NUMERO"]])) {
+                        $quantite = $_POST["quantity" . $article["AR_NUMERO"]];
+                        $restant = $this->model->getNombreCommandéPourArticle($article["AR_NUMERO"], $co_numero);
+                        if ($restant - $quantite >= 0) {
+                            $articlesLivres[] = array (
+                                "AR_NUMERO" => $article["AR_NUMERO"],
+                                "QUANTITE" => $quantite
+                            );
+                        } else {
+                            $messages[] = "Un article va être livré en trop";
+                        }
+                    } else {
+                        $messages[] = "Un article n'a pas eu de quantité";
+                    }
+                }
+            }
+            if (count($messages) == 0){
+                 //On insere une nouvelle commande                 
+                $this->model->insererNouvelleLivraison($co_numero,$articlesLivres);
+                $messages[] = "Livraison ajoutée";
+            }
+        } 
+
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/livraison/ajouter.php';
+        require APP . 'view/_templates/footer.php';
+    }
+
     //Action pour afficher les livraisons d'une commande
     public function commandesAction() {
         $this->loadModel('Livraison');
@@ -40,24 +89,6 @@ class LivraisonController extends Controller {
         require APP . 'view/_templates/header.php';
         require APP . 'view/livraison/index.php';
         require APP . 'view/_templates/footer.php';
-        }
-
-    //Action pour afficher les livraisons d'une commande
-    public function ajouterQuantiteAction() {
-        $this->loadModel('Livraison');
-        $form = new Form();
-        if (isset($_GET)) {
-            if (isset($_GET["ar_numero"]) && isset($_GET["li_numero"]) && isset($_GET["quantite"])){
-                $li_numero = $_GET["li_numero"];
-                $li_numero = $form->securiserChamp($li_numero);
-                $quantite = $_GET["quantite"];
-                $quantite = $form->securiserChamp($li_numero);
-                $ar_numero = $_GET["ar_numero"];
-                $ar_numero = $form->securiserChamp($ar_numero);
-                $this->model->ajouterUneQuantiteArticleLivre($ar_numero,$li_numero,$quantite);
-            }
-        }
-        header("Location:".URL."livraison/index");
     }
 
     //Action pour afficher les livraisons d'un client

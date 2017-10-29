@@ -10,7 +10,7 @@
 	           <th>Couleur</th>
 	           <th>Stock</th>
 	           <th>Numero Fourniseur</th>
-			   <th>Quantité livrée</th>
+			   <th>Quantité à livrer</th>
        		</tr>
    		</thead>
    <tbody>
@@ -22,7 +22,7 @@
 		<td><?php echo $article["AR_COULEUR"]; ?></td>
 		<td><?php echo $article["AR_STOCK"]; ?></td>
 		<td><?php echo $article["FO_NUMERO"]; ?></td>
-		<td><?php echo $article["LIL_QTLIVREE"]; ?></td>
+		<td><?php echo $article["LIC_QTCMDEE"] - $article["LIC_QTLIVREE"]; ?></td>
 		<td><div class="w3-container">
 		  <div class="w3-dropdown-hover">
 		    <button class="w3-button"><i class="fa fa-bars"></i></button>

@@ -6,11 +6,13 @@ class CommandeController extends Controller {
     public function indexAction() {
         $this->loadModel('Commande');
         $form = new Form();
+        $commandesSansLivraisons = $this->model->getCommandeSansLivraisons();
         $commandes = $this->model->getAllCommandes();
         require APP . 'view/_templates/header.php';
         require APP . 'view/commande/index.php';
         require APP . 'view/_templates/footer.php';
     }
+
 
     //Créer une commande 
     public function ajouterAction() {
@@ -18,19 +20,72 @@ class CommandeController extends Controller {
         $this->loadModel('Client');
         $clients = $this->model->getAllClients();
 
-        //On charche tous les articles pour le select
-        $this->loadModel('Article');
-        $articles = $this->model->getAllArticles();
-
         //On charche tous les magasins pour le select
         $this->loadModel('Magasin');
         $magasins = $this->model->getAllMagasins();
 
+        //On charche tous les articles pour le select
+        $this->loadModel('Article');
+        $articles = $this->model->getAllArticles();
+
+        $form = new Form();
+
         //L'utilisateur a appuyé sur "ajouter"
         if (isset($_POST["submit"])) {
-            echo "<PRE>";
-            var_dump($_POST);
-            echo "</PRE>";
+            $messages = array();
+            $articlesPost = array();
+            $co_date = date("Y-m-d H:i:s");
+            //On extrait les articles
+            //On extrait aussi les quantités correspondants aux articles
+            for ($i = 1; isset($_POST['article' . $i]) && isset($_POST['quantity' . $i]) && isset($_POST['reduction' . $i]);$i++) {
+                if (isset($_POST['reduction' . $i])) {
+                    $reduction = $_POST['reduction' . $i] == "" ? 0 : $_POST['reduction' . $i];
+                    if (!preg_match("#^[0-9]+$#", $reduction)) {
+                        $messages[] = "Erreur dans la reduction";
+                    } else {
+                        $reduction = (int) $reduction;
+                        if ($reduction > 100 || $reduction < 0) {
+                            $messages[] = "La reduction ne peut pas être superieure à 100% ou inferieur à 0%";
+                        } else {
+                            if (isset($_POST['quantity' . $i])){
+                                $article_id = $_POST['article' . $i];
+                                $quantity = $_POST['quantity' . $i];
+                                if ($this->model->estEnStock($article_id,$quantity)) {
+                                    $articlesPost[$article_id] = array(
+                                        "LIC_QTCMDEE" => $quantity,
+                                        "REDUCTION" => $reduction
+                                    );
+                                } else {
+                                    $messages[] = "Rupture de stock pour l'article : $article_id ";
+                                }
+                            } else {
+                                $messages[] = "Quantité non présente";
+                            }
+                        }  
+                    }
+                }
+            }
+
+            if (isset($_POST['CL_NUMERO'])){
+                $cl_numero = $_POST['CL_NUMERO'];   
+            } else {
+                $messages[] = "Vous n'avez pas sélectionné de client";
+            }
+
+            if (isset($_POST['MA_NUMERO'])){
+                $ma_numero = $_POST['MA_NUMERO'];   
+            } else {
+                $messages[] = "Vous n'avez pas sélectionné de magasin";
+            }
+
+            //Donc toutes les données sont récupérées, on peut inserer la commande
+            if (count($messages) == 0) {
+                //Insertion de la commande
+                $this->loadModel('Commande');
+                $this->model->nouvelleCommande($co_date,$ma_numero,$cl_numero, $articlesPost);
+                $messages[] = "Commande passée";
+            }
+
             //TODO Checker si le stock est disponible
             //TODO Faire un liens vers un pdf
 
@@ -45,6 +100,7 @@ class CommandeController extends Controller {
         $this->loadModel('Commande');
         $choix = $_POST["tris"];
         $ordre = $_POST["ordre1"];
+        $commandesSansLivraisons = $this->model->getCommandeSansLivraisons();
         $commandes = $this->model->getCommandeOrder($choix,$ordre);
         require APP . 'view/_templates/header.php';
         require APP . 'view/commande/index.php';
@@ -56,6 +112,7 @@ class CommandeController extends Controller {
     */
     public function consulterArticlesAction() {
         $this->loadModel('Commande');
+
         $form = new Form();
         if (isset($_GET)) {
             if (isset($_GET["co_numero"]) && !empty($_GET["co_numero"])){
@@ -99,6 +156,7 @@ class CommandeController extends Controller {
     // Permet de voir les commandes en cours ou terminées 
     public function consulterDepuisClientAction() {
         $this->loadModel('Commande');
+        $commandesSansLivraisons = $this->model->getCommandeSansLivraisons();
         $form = new Form();
         if (isset($_GET)) {
             //Faire un recherche sur un article donnée passer en $GET
@@ -118,6 +176,7 @@ class CommandeController extends Controller {
     }
     public function rechercherCoAction() {
         $this->loadModel('Commande');
+        $commandesSansLivraisons = $this->model->getCommandeSansLivraisons();
         $champ = $_POST["champ"];
         $choix = $_POST["choix"];
         $ordre = $_POST["ordre"];

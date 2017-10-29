@@ -13,7 +13,7 @@
         <div id="tri" style ="display:inline">
         </div>
     </form>
-    <form action="<?php echo URL .'commande/trieCo' ?>" method="post">
+    <!-- <form action="<?php echo URL .'commande/trieCo' ?>" method="post">
         <label for='tris'>Triée par :</label>
         <select name='tris' id="tris" onchange="tri(this)">
             <option value='CO_Numero' selected>Numero</option>
@@ -22,8 +22,18 @@
         </select>
         <div id="tris1" style ="display:inline"></div>
         <input type='submit' value='OK'></input>
-    </form>
-    </br></br>
+    </form> -->
+
+    </br>
+    <?php  
+        foreach ($commandes as $commande) {
+            if (in_array($commande["CO_NUMERO"],$commandesSansLivraisons)){
+                echo '<div style="color:red">Des commandes n\'ont pas de livraison</div>';
+                break;
+            }
+        }
+    ?>
+    </br>
     <table id="keywords" cellspacing="0" cellpadding="0">
         <thead>
         <tr>
@@ -37,7 +47,16 @@
         <tbody>
         <?php foreach ($commandes as $commande) { ?>
             <tr>
-                <td><?php echo $commande["CO_NUMERO"]; ?></td>
+                <td>
+                    <?php 
+                        //Alors c'est un retard
+                        if (in_array($commande["CO_NUMERO"],$commandesSansLivraisons)) {
+                            echo '<span style="color:red">' . $commande["CO_NUMERO"] . '</span>';
+                        } else {
+                            echo $commande["CO_NUMERO"]; 
+                        }   
+                    ?>
+                </td>
                 <td><?php echo $commande["CO_DATE"]; ?></td>
                 <td><?php echo $commande["CL_NUMERO"]; ?></td>
                 <td><?php echo $commande["MA_NUMERO"]; ?></td>
@@ -48,7 +67,9 @@
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Magasin/index?ma_numero=' . $commande["MA_NUMERO"] . '"'; ?>>Magasin</a>
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Client/consulter?cl_numero=' . $commande["CL_NUMERO"] . '"'; ?>>Client</a>
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Commande/consulterArticles?co_numero=' . $commande["CO_NUMERO"] . '"'; ?>>Consulter articles</a>
-                                <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Livraison/commandes?co_numero=' . $commande["CO_NUMERO"] . '"'; ?>>Livraisons</a>
+                                <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Livraison/commandes?co_numero=' . $commande["CO_NUMERO"] . '"'; ?>>Livraisons déjà faites</a>
+                                <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Article/restantALivrer?co_numero=' . $commande["CO_NUMERO"] . '"'; ?>>Restant à livrer</a>
+                                <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Livraison/ajouter?co_numero=' . $commande["CO_NUMERO"] . '"'; ?>>Ajouter nouvelle livraison</a>
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Pdf/index?co_numero=' . $commande["CO_NUMERO"] . '"'; ?>>Récupérer le pdf</a>
                             </div>
                         </div>

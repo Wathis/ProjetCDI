@@ -15,11 +15,16 @@ class Form {
         $informationForm = array();
         foreach ($names as $name) {
             if (isset($_POST[$name])) {
-                $informationForm[$name] = $this->decoderChampSecurise($_POST[$name]);
+                $informationForm[$name] = $_POST[$name];
             }   
         }
         return $informationForm;
 	}
+
+    function validerDate($date) {
+        $d = DateTime::createFromFormat('Y-m-d', $date);
+        return $d && $d->format('Y-m-d') === $date;
+    }
 
     /**
      * Securise un champ pour l'insertion bdd

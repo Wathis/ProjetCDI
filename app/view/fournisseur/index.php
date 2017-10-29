@@ -12,7 +12,7 @@
 	<div id="tri" style ="display:inline">
 	</div>
 	</form>
-	<form action="<?php echo URL .'fournisseur/trieFo' ?>" method="post">
+	<!-- <form action="<?php echo URL .'fournisseur/trieFo' ?>" method="post">
         <label for='tris'>Triée par :</label>
         <select name='tris' id="tris" onchange="tri(this)">
 			<option value='FO_Numero' selected>Numero</option>
@@ -20,7 +20,7 @@
 		</select>
         <div id="tris1" style ="display:inline"></div>
         <input type='submit' value='OK'></input>
-    </form>
+    </form> -->
 	</br></br>
 	<table id="keywords" cellspacing="0" cellpadding="0">
 		<thead>

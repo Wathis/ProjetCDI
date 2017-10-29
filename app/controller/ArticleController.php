@@ -19,6 +19,21 @@ class ArticleController extends Controller
         require APP . 'view/article/index.php';
         require APP . 'view/_templates/footer.php';
     }
+
+    //Consuler les articles qui restent a livrer
+    public function restantALivrerAction(){
+
+        $this->loadModel('Article');
+        if (isset($_GET["co_numero"])) {    
+            $co_numero = $_GET["co_numero"];
+            $articles = $this->model->getArticlesRestantALivrer($co_numero);
+        }
+
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/article/restant.php';
+        require APP . 'view/_templates/footer.php';
+    }
+
     public function rechercherArtAction() {
 		$this->loadModel('Article');
 		$champ = $_POST["champ"];
