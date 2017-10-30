@@ -82,13 +82,9 @@ class CommandeController extends Controller {
             if (count($messages) == 0) {
                 //Insertion de la commande
                 $this->loadModel('Commande');
-                $this->model->nouvelleCommande($co_date,$ma_numero,$cl_numero, $articlesPost);
+                $co_numero_ajouté = $this->model->nouvelleCommande($co_date,$ma_numero,$cl_numero, $articlesPost);
                 $messages[] = "Commande passée";
             }
-
-            //TODO Checker si le stock est disponible
-            //TODO Faire un liens vers un pdf
-
         }
 
         require APP . 'view/_templates/header.php';

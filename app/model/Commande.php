@@ -74,6 +74,7 @@ class Commande extends Model {
             $query = $this->db->prepare($sql);
             $query->execute();
         }
+        return $co_numero_max;
     }
 
     public function clientExiste($num){
