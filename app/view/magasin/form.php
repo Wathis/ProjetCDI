@@ -8,5 +8,5 @@
 		<label for="ville">Localite :</label>
 		<input id="ville" type="text" name="MA_LOCALITE" value="<?php Form::remplirChampSimple("MA_LOCALITE");?>"><br \><br \>
 
-		<input type="submit" name="submit" value="Confirmer">
+		<input class="btn btn-success" type="submit" name="submit" value="Confirmer">
 	</form>

@@ -1,7 +1,7 @@
 <div class="container">
-    <h2>Page magasin</h2>
+        <h2 class="text-center well">Magasins</h2>
 
-    <a href="<?php echo URL . 'magasin/ajouter' ?>">Ajouter un magasin</a><br \><br \>
+    <a  class="btn btn-secondary btn-sm" href="<?php echo URL . 'magasin/ajouter' ?>">Ajouter un magasin</a><br \><br \>
     <form action="<?php echo URL .'magasin/rechercherMagasin' ?>" method="post">
     <label for='choix'>Recherche sur :</label>
     <select name='choix' id="choix" onchange="tri(this)">
@@ -11,14 +11,14 @@
         <option value='MA_NOM_GERANT'>Nom</option>
     </select>
     <input type='text' name='champ'></imput>
-    <input type='submit' value='Recherche'></input>
+    <input class="btn btn-info btn-sm" type='submit' value='Recherche'></input>
     <div id="tri" style ="display:inline">
     </div>
     </form>
 
     </br></br>
-    <table id="keywords" cellspacing="0" cellpadding="0">
-        <thead>
+    <table id="keywords" class="table table-striped table-bordered table-hover" cellspacing="0" cellpadding="0">
+        <thead class="thead-light">
             <tr>
                 <th>Numero</th>
                 <th>Localite</th>

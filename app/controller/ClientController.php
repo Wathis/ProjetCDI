@@ -15,7 +15,7 @@ class ClientController extends Controller {
 	//Action correspondant à l'ajout d'un nouveau client
 	public function ajouterAction() {
 		$this->loadModel('Pays');
-        $messages = array();
+        $errors = array();
 		$informations = ["CL_NOM","CL_PRENOM","CL_LOCALITE","CL_CA"];
 		$informationsObligatoires = ["CL_NOM","CL_PRENOM","CL_LOCALITE"];
 		//On charge les pays pour la vue
@@ -28,24 +28,24 @@ class ClientController extends Controller {
                     if ($form->verifierLeNom($client["CL_NOM"])){
                         $client["CL_NOM"] = $form->transformerChampEnNom($client["CL_NOM"]);
                     } else {
-                        $messages[] = "Champ nom invalide";
+                        $errors[] = "Champ nom invalide";
                     }
                     if ($form->verifierLePrenom($client["CL_PRENOM"])){
                         $client["CL_PRENOM"] = $form->transformerChampEnPrenom($client["CL_PRENOM"]);
                     } else {
-                        $messages[] = "Champ prenom invalide";
+                        $errors[] = "Champ prenom invalide";
                     }
                     if (!empty($client["CL_LOCALITE"]) && isset($client["CL_LOCALITE"])){
                         if ($form->verifierLaVille($client["CL_LOCALITE"])) {
                             $client["CL_LOCALITE"] = $form->transformerChampEnVille($client["CL_LOCALITE"]);
                         } else {
-                            $messages[] = "Mauvais format de ville";
+                            $errors[] = "Mauvais format de ville";
                         }
                     } else {
-                        $messages[] = "Vous devez entrer une ville";
+                        $errors[] = "Vous devez entrer une ville";
                     }
                     if (!empty($client["CL_CA"]) && $client["CL_TYPE"] === "Particulier") {
-                        $messages[] = "Un particulier ne peut avoir de chiffre d'affaire";
+                        $errors[] = "Un particulier ne peut avoir de chiffre d'affaire";
                     }
                     if (!preg_match('/^[0-9]+$/', $client["CL_CA"])) {
                          $client["CL_CA"] = null;
@@ -53,17 +53,17 @@ class ClientController extends Controller {
                     // //On securise les champs avant l'insertion en base de donnée
                     // $client = $form->securiserLesChamps($client);
                     //Si il y a aucune erreur, on peut ajouter le client
-                    if (empty($messages)) {
+                    if (empty($errors)) {
                         //on charge le modele client pour acceder aux connexions avec la base de donnée
                         $this->loadModel('Client');
                         $this->model->ajouterUnClient($client);
-                        $messages[] = "Client ajouté";
+                        $success = "Client ajouté";
                         // echo "CL_NOM : ",$client["CL_NOM"],"<br \>";
                         // echo "CL_PRENOM : ",$client["CL_PRENOM"],"<br \>";
                         // echo "CL_LOCALITE : ",$client["CL_LOCALITE"],"<br \>";
                     }
 			} else {
-                $messages[] = "Veuillez remplir tous les champs obligatoires (*)";
+                $errors[] = "Veuillez remplir tous les champs obligatoires (*)";
 			}
 		}
 
@@ -88,13 +88,13 @@ class ClientController extends Controller {
         		$client = $this->model->getClient($num);
                 //Si client == false => Le client n'existe pas
                 if ($client == false) {
-                    $messages[] = "Ce client " . $num . " n'existe plus <br /> Regler problème => Impossible de supprimer un client si il a des commandes";
+                    $errors[] = "Ce client " . $num . " n'existe plus <br /> Regler problème => Impossible de supprimer un client si il a des commandes";
                 }
         	} else { //Alors aucun client choisi
-        		$messages[] = "Vous n'avez pas fourni de numero de client";
+        		$errors[] = "Vous n'avez pas fourni de numero de client";
         	}
         } else {
-        	$messages[] = "Vous n'avez pas fourni de numero de client";
+        	$errors[] = "Vous n'avez pas fourni de numero de client";
         }
         require APP . 'view/_templates/header.php';
         require APP . 'view/client/consulter.php';
@@ -129,7 +129,7 @@ class ClientController extends Controller {
 		$this->loadModel('Client');
         $supprimé = $this->model->supprimerClient($num);
         if ($supprimé == false) {
-            $messages[] = "Impossible de supprimer ce client, il détient des commandes";
+            $errors[] = "Impossible de supprimer ce client, il détient des commandes";
             require APP . 'view/error/errorMessage.php';
         } else {
             header("Location:".URL."client/index");
@@ -153,28 +153,28 @@ class ClientController extends Controller {
  				if ($form->verifierLeNom($client["CL_NOM"])){
                     $client["CL_NOM"] = $form->transformerChampEnNom($client["CL_NOM"]);
                 } else {
-                    $messages[] = "Champ nom invalide";
+                    $errors[] = "Champ nom invalide";
                 }
                 if ($form->verifierLePrenom($client["CL_PRENOM"])){
                     $client["CL_PRENOM"] = $form->transformerChampEnPrenom($client["CL_PRENOM"]);
                 } else {
-                    $messages[] = "Champ prenom invalide";
+                    $errors[] = "Champ prenom invalide";
                 }
                 if (empty($client["CL_LOCALITE"]) || !isset($client["CL_LOCALITE"])){
-                    $messages[] = "Vous devez entrer une ville";
+                    $errors[] = "Vous devez entrer une ville";
                 }
                 if (!empty($client["CL_CA"]) && $client["CL_TYPE"] === "Particulier") {
-                    $messages[] = "Un particulier ne peut avoir de chiffre d'affaire";
+                    $errors[] = "Un particulier ne peut avoir de chiffre d'affaire";
                 }
                 if (!preg_match('/^[0-9]+$/', $client["CL_CA"])) {
                     $client["CL_CA"] = null;
                 }
                 // //On securise les champs avant l'insertion en base de donnée
                 // $client = $form->securiserLesChamps($client);
-                if (empty($messages))
+                if (empty($errors))
                 {
 					$this->model->modifierClient($client,$num);
-                    $messages[] = "Client modifié";
+                    $success = "Client modifié";
                 }
 			}
 

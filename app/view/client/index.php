@@ -1,7 +1,13 @@
 <div class="container" >
-	<h2>Clients</h2>
+	<h2 class="text-center">Clients</h2>
 
-	<a href="<?php echo URL . 'client/ajouter' ?>">Ajouter un client</a><br \><br \>
+	<?php
+
+		require APP . 'view/_templates/alert.php';
+
+	?> 
+
+	<a class="btn btn-secondary btn-sm" href="<?php echo URL . 'client/ajouter' ?>">Ajouter un client</a><br \><br \>
 	<form action="<?php echo URL .'client/rechercherCli' ?>" method="post">
 	<label for='choix'>Recherche sur :</label>
 	<select name='choix' id="choix" onchange="tri(this)">
@@ -12,7 +18,7 @@
 		<option value='CL_Pays'>Pays</option>
 	</select>
 	<input type='text' name='champ'></imput>
-	<input type='submit' value='Recherche'></input>
+	<input class="btn btn-info btn-sm" type='submit' value='Recherche'></input>
 	<div id="tri" style ="display:inline"></div>
 
 	</form>
@@ -40,17 +46,17 @@
     ?>
 
 	</br>
-	<table id="keywords" cellspacing="0" cellpadding="0">
-		<thead>
+	<table id="keywords" class="table table-striped table-bordered table-hover" cellspacing="0" cellpadding="0">
+		<thead class="thead-light">
        		<tr>
-	           <th>Numero</th>
-	           <th>Nom</th>
-	           <th>Prenom</th>
-	           <th>Localité</th>
-	           <th>Pays</th>
-	           <th>Supprimer</th>
-	           <th>Modifier</th>
-	           <th></th>
+	           <th scope="col">Numero</th>
+	           <th scope="col">Nom</th>
+	           <th scope="col">Prenom</th>
+	           <th scope="col">Localité</th>
+	           <th scope="col">Pays</th>
+	           <th scope="col">Supprimer</th>
+	           <th scope="col">Modifier</th>
+	           <th scope="col"></th>
        		</tr>
    		</thead>
    <tbody>

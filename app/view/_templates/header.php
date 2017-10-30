@@ -16,18 +16,16 @@
     <link href="<?php echo URL; ?>css/tableau.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 </head>
 <body>
-    <header>
-        <div class="titleTDF">Gestion des commandes</div>
-    </header>
     
-    <nav class="navigation">
-        <div class="linkCDI"><a href="<?php echo URL; ?>">Accueil</a></div>
-        <div class="linkCDI"><a href="<?php echo URL; ?>client">Client</a></div>
-        <div class="linkCDI"><a href="<?php echo URL; ?>commande">Commande</a></div>
-        <div class="linkCDI"><a href="<?php echo URL; ?>article">Article</a></div>
-        <div class="linkCDI"><a href="<?php echo URL; ?>fournisseur">Fournisseur</a></div>
-        <div class="linkCDI"><a href="<?php echo URL; ?>magasin">Magasin</a></div>
-        <div class="linkCDI"><a href="<?php echo URL; ?>livraison">Livraisons</a></div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="<?php echo URL; ?>home">Gestionnaire de commandes</a>
+        <a class="nav-item nav-link" href="<?php echo URL; ?>client">Client</a>
+        <a class="nav-item nav-link" href="<?php echo URL; ?>commande">Commande</a>
+        <a class="nav-item nav-link" href="<?php echo URL; ?>article">Article</a>
+        <a class="nav-item nav-link" href="<?php echo URL; ?>fournisseur">Fournisseur</a>
+        <a class="nav-item nav-link" href="<?php echo URL; ?>magasin">Magasin</a>
+        <a class="nav-item nav-link" href="<?php echo URL; ?>livraison">Livraisons</a>
     </nav>

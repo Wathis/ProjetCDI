@@ -29,5 +29,5 @@
 		</tbody>
 	</table>
 	<br \>
-	<input type="submit" name="submit" value="Confirmer">
+	<input class="btn btn-success" type="submit" name="submit" value="Confirmer">
 </form>

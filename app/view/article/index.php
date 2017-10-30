@@ -1,7 +1,7 @@
 <div class="container">
-    <h2>Page article</h2>
+    <h2 class="text-center">Articles</h2>
 
-    <a href="<?php echo URL . 'article/ajouter' ?>">Ajouter un article</a><br \><br \>
+    <a  class="btn btn-secondary btn-sm" href="<?php echo URL . 'article/ajouter' ?>">Ajouter un article</a><br \><br \>
 	<form action="<?php echo URL .'article/rechercherArt' ?>" method="post">
 	<label for='choix'>Recherche sur :</label>
 	<select name='choix' id="choix" onchange="tri(this)">
@@ -13,7 +13,7 @@
 		<option value='FO_NUMERO'>Fournisseur</option>
 	</select>
 	<input type='text' name='champ'></imput>
-	<input type='submit' value='Recherche'></input>
+	<input class="btn btn-info btn-sm" type='submit' value='Recherche'></input>
 	<div id="tri" style ="display:inline">
 	</div>
 	</form>
@@ -31,8 +31,8 @@
 		<input type='submit' value='OK'></input>
 	</form> -->
 	</br></br>
-	<table id="keywords" cellspacing="0" cellpadding="0">
-		<thead>
+	<table id="keywords" class="table table-striped table-bordered table-hover" cellspacing="0" cellpadding="0">
+		<thead class="thead-light">
        		<tr>
 	           <th>Numero</th>
 	           <th>Nom</th>
@@ -40,7 +40,7 @@
 	           <th>Couleur</th>
 	           <th>Stock</th>
 	           <th>Numero Fourniseur</th>
-
+	           <th></th>
        		</tr>
    		</thead>
    <tbody>

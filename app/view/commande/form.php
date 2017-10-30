@@ -44,7 +44,7 @@
 		<br \>
 		<button id="addArticle" type="button">Ajouter un article</button><br \><br \>
 
-	<input type="submit" name="submit" value="Confirmer">
+	<input class="btn btn-success" type="submit" name="submit" value="Confirmer">
 </form>
 
 <script type="text/javascript">

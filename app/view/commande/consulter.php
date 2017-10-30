@@ -1,15 +1,17 @@
 <div class="container">
 
 	<?php ?>
-        <h2>Liste des Commandes</h2> 
+        <h2 class="text-center">Liste des Commandes</h2> 
         <?php
-    	if (isset($messages)) { 
-    		foreach ($messages as $message) {
-    			echo $message; 
-    		}
-    	}
+    	require APP . 'view/_templates/alert.php';
     
+
     	if (isset($commandes)) {
+
+            if (count($commandes) == 0){
+                echo '<div class="alert alert-warning">Pas de commandes</div>';
+            }
+ 
             foreach($commandes as $value){
     ?>
     	<div>Numero : <?php echo $value["CO_NUMERO"] ?></div>

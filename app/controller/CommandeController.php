@@ -32,7 +32,7 @@ class CommandeController extends Controller {
 
         //L'utilisateur a appuyé sur "ajouter"
         if (isset($_POST["submit"])) {
-            $messages = array();
+            $errors = array();
             $articlesPost = array();
             $co_date = date("Y-m-d H:i:s");
             //On extrait les articles
@@ -41,11 +41,11 @@ class CommandeController extends Controller {
                 if (isset($_POST['reduction' . $i])) {
                     $reduction = $_POST['reduction' . $i] == "" ? 0 : $_POST['reduction' . $i];
                     if (!preg_match("#^[0-9]+$#", $reduction)) {
-                        $messages[] = "Erreur dans la reduction";
+                        $errors[] = "Erreur dans la reduction";
                     } else {
                         $reduction = (int) $reduction;
                         if ($reduction > 100 || $reduction < 0) {
-                            $messages[] = "La reduction ne peut pas être superieure à 100% ou inferieur à 0%";
+                            $errors[] = "La reduction ne peut pas être superieure à 100% ou inferieur à 0%";
                         } else {
                             if (isset($_POST['quantity' . $i])){
                                 $article_id = $_POST['article' . $i];
@@ -56,10 +56,10 @@ class CommandeController extends Controller {
                                         "REDUCTION" => $reduction
                                     );
                                 } else {
-                                    $messages[] = "Rupture de stock pour l'article : $article_id ";
+                                    $errors[] = "Rupture de stock pour l'article : $article_id ";
                                 }
                             } else {
-                                $messages[] = "Quantité non présente";
+                                $errors[] = "Quantité non présente";
                             }
                         }  
                     }
@@ -69,21 +69,21 @@ class CommandeController extends Controller {
             if (isset($_POST['CL_NUMERO'])){
                 $cl_numero = $_POST['CL_NUMERO'];   
             } else {
-                $messages[] = "Vous n'avez pas sélectionné de client";
+                $errors[] = "Vous n'avez pas sélectionné de client";
             }
 
             if (isset($_POST['MA_NUMERO'])){
                 $ma_numero = $_POST['MA_NUMERO'];   
             } else {
-                $messages[] = "Vous n'avez pas sélectionné de magasin";
+                $errors[] = "Vous n'avez pas sélectionné de magasin";
             }
 
             //Donc toutes les données sont récupérées, on peut inserer la commande
-            if (count($messages) == 0) {
+            if (count($errors) == 0) {
                 //Insertion de la commande
                 $this->loadModel('Commande');
                 $co_numero_ajouté = $this->model->nouvelleCommande($co_date,$ma_numero,$cl_numero, $articlesPost);
-                $messages[] = "Commande passée";
+                $success = "Commande passée";
             }
         }
 
@@ -101,7 +101,7 @@ class CommandeController extends Controller {
         require APP . 'view/_templates/header.php';
         require APP . 'view/commande/index.php';
         require APP . 'view/_templates/footer.php';
-        }
+    }
 
     /**
      * Consulter les articles d'une commande dont le numero est passé en GET
@@ -116,10 +116,10 @@ class CommandeController extends Controller {
                 $co_numero = $form->securiserChamp($co_numero);
                 $articles = $this->model->getArticles($co_numero);
             } else { //Alors aucune commande choisie
-                $messages[] = "Vous n'avez pas sélectionné une commande valide";
+                $errors[] = "Vous n'avez pas sélectionné une commande valide";
             }
         } else {
-            $messages[] = "Vous n'avez pas sélectionné une commande valide";
+            $errors[] = "Vous n'avez pas sélectionné une commande valide";
         }
         require APP . 'view/_templates/header.php';
         require APP . 'view/commande/articles.php';
@@ -137,7 +137,7 @@ class CommandeController extends Controller {
                 $ar_numero = $form->securiserChamp($ar_numero);
                 $commandes = $this->model->getCommandeArticle($ar_numero);
             } else { //Alors aucun magasin choisi
-                $messages[] = "Vous n'avez pas fourni de numero d'article";
+                $errors[] = "Vous n'avez pas fourni de numero d'article";
             }
         } else {
             //Sur tous les articles
@@ -161,10 +161,10 @@ class CommandeController extends Controller {
                 $num = $form->securiserChamp($num);
                 $commandes = $this->model->getCommandeClient($num);
             } else { //Alors aucun magasin choisi
-                $messages[] = "Vous n'avez pas fourni de numero de client";
+                $errors[] = "Vous n'avez pas fourni de numero de client";
             }
         } else {
-            $messages[] = "Vous n'avez pas fourni de numero de client";
+            $errors[] = "Vous n'avez pas fourni de numero de client";
         }
         require APP . 'view/_templates/header.php';
         require APP . 'view/commande/index.php';

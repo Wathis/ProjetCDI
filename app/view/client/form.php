@@ -1,4 +1,9 @@
 <form method="POST" action="">
+		<div>
+			
+			
+
+		</div>
 		<label for="nom">Nom(*): :</label>
 		<input id="nom" type="text" name="CL_NOM" value="<?php Form::remplirChamp($client,"CL_NOM");?>"><br \>
 
@@ -41,5 +46,5 @@
 
 		</select><br />
 
-		<input type="submit" name="submit" value="Confirmer">
+		<input class="btn btn-success" type="submit" name="submit" value="Confirmer">
 	</form>

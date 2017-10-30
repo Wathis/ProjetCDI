@@ -1,14 +1,10 @@
 <div class="container">
 	
-	<h2>Modifier un client : <?php Form::remplirChamp($client,"CL_NUMERO"); ?></h2>
+	<h2 class="text-center">Modifier un client : <?php Form::remplirChamp($client,"CL_NUMERO"); ?></h2>
 
-	<?php 
-	if (isset($messages)) {
-	    foreach ($messages as $message) {
-            echo $message , "<br>";
-        }
-        echo '<br>';
-	}
+	<?php
+
+		require APP . 'view/_templates/alert.php';
 
 	require APP . 'view/client/form.php';
 	

@@ -15,35 +15,35 @@ class MagasinController extends Controller {
      //Action du controlleur pour ajouter un nouveau magasin
     public function ajouterAction() {
         $form = new Form();
-        $messages = array();
+        $errors = array();
 
         if (isset($_POST["submit"])) {
             //on fait toutes les verifications pour ajouter un magasin
             if ($form->verifierLeNom($_POST["MA_NOM_GERANT"])){
                 $nom = $form->transformerChampEnNom($_POST["MA_NOM_GERANT"]);
             } else {
-                $messages[] = "Champ nom invalide";
+                $errors[] = "Champ nom invalide";
             }
             if ($form->verifierLePrenom($_POST["MA_PRENOM_GERANT"])){
                 $prenom = $form->transformerChampEnPrenom($_POST["MA_PRENOM_GERANT"]);
             } else {
-                $messages[] = "Champ prenom invalide";
+                $errors[] = "Champ prenom invalide";
             }
             if (!empty($_POST["MA_LOCALITE"]) && isset($_POST["MA_LOCALITE"])){
                 if ($form->verifierLaVille($_POST["MA_LOCALITE"])) {
                     $localite = $form->transformerChampEnVille($_POST["MA_LOCALITE"]);
                 } else {
-                    $messages[] = "Mauvais format de ville";
+                    $errors[] = "Mauvais format de ville";
                 }
             } else {
-                $messages[] = "Vous devez entrer une ville";
+                $errors[] = "Vous devez entrer une ville";
             }
         
             //Si il y a pas de messages erreur, on peut inserer le client
-            if (count($messages) == 0) {
+            if (count($errors) == 0) {
                 $this->loadModel('Magasin');
                 $this->model->insererNouveauMagasin($nom,$prenom,$localite);
-                $messages[] = "Magasin ajouté";
+                $success = "Magasin ajouté";
             }
 
         }
@@ -77,13 +77,13 @@ class MagasinController extends Controller {
         		$numMagasin = $form->securiserChamp($numMagasin);
         		$magasin = $this->model->getMagasin($numMagasin);
         	} else { //Alors aucun magasin choisi
-        		$messages[] = "Vous n'avez pas fourni de numero de magasin";
+        		$errors[] = "Vous n'avez pas fourni de numero de magasin";
         	}
         } else {
-        	$messages[] = "Vous n'avez pas fourni de numero de magasin";
+        	$errors[] = "Vous n'avez pas fourni de numero de magasin";
         }
         require APP . 'view/_templates/header.php';
-        require APP . 'view/magasin/index.php';
+        require APP . 'view/magasin/consulter.php';
         require APP . 'view/_templates/footer.php';
     }
 

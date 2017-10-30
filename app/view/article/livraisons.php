@@ -1,8 +1,8 @@
 <div class="container">
-    <h2>Articles de la livraison <?php echo isset($li_numero) ? $li_numero : "" ?></h2>
+    <h2  class="text-center">Articles de la livraison <?php echo isset($li_numero) ? $li_numero : "" ?></h2>
 	</br></br>
-	<table id="keywords" cellspacing="0" cellpadding="0">
-		<thead>
+	<table id="keywords" class="table table-striped table-bordered table-hover" cellspacing="0" cellpadding="0">
+		<thead class="thead-light">
        		<tr>
 	           <th>Numero</th>
 	           <th>Nom</th>
@@ -11,6 +11,7 @@
 	           <th>Stock</th>
 	           <th>Numero Fourniseur</th>
 			   <th>Quantité livrée</th>
+			   <th></th>
        		</tr>
    		</thead>
    <tbody>

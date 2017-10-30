@@ -2,14 +2,8 @@
 	
 	<h2>Ajouter une commande</h2>
 
-	<?php 
-
-	if (isset($messages)) {
-	    foreach ($messages as $message) {
-            echo $message , "<br>";
-        }
-        echo '<br>';
-	} 
+	<?php
+require APP . 'view/_templates/alert.php';
 
 	if (isset($co_numero_ajouté)) {
 		?>

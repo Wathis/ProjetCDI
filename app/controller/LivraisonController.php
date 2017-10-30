@@ -17,13 +17,13 @@ class LivraisonController extends Controller {
 
         $this->loadModel('Commande');
         $commandes = $this->model->getAllCommandes();
-        $messages = array();
+        $errors = array();
 
         if (isset($_POST["submit"])) {
             if (isset($_POST["CO_NUMERO"]) && !empty($_POST["CO_NUMERO"])){
                 header("Location:".URL."livraison/ajouter?co_numero=" . $_POST["CO_NUMERO"]);
             } else {
-                $messages[] = "Vous devez choisir une commande";
+                $errors[] = "Vous devez choisir une commande";
             }
         }
 
@@ -35,11 +35,11 @@ class LivraisonController extends Controller {
 
     //Creer une livraison 
     public function ajouterAction() {
-        $messages = array();
+        $errors = array();
         if (isset($_GET["co_numero"])) {
             $co_numero = $_GET["co_numero"];
         } else {
-            $messages[] = "Aucune commande selectionné";
+            $errors[] = "Aucune commande selectionné";
         }
         //On charge les articles de la commande
         $this->loadModel('Commande');
@@ -63,17 +63,17 @@ class LivraisonController extends Controller {
                                 "QUANTITE" => $quantite
                             );
                         } else {
-                            $messages[] = "Un article va être livré en trop";
+                            $errors[] = "Un article va être livré en trop";
                         }
                     } else {
-                        $messages[] = "Un article n'a pas eu de quantité";
+                        $errors[] = "Un article n'a pas eu de quantité";
                     }
                 }
             }
-            if (count($messages) == 0){
+            if (count($errors) == 0){
                  //On insere une nouvelle commande                 
                 $this->model->insererNouvelleLivraison($co_numero,$articlesLivres);
-                $messages[] = "Livraison ajoutée";
+                $success = "Livraison ajoutée";
             }
         } 
 
@@ -93,10 +93,10 @@ class LivraisonController extends Controller {
                 $co_numero = $form->securiserChamp($co_numero);
                 $livraisons = $this->model->getLivraisonsCommande($co_numero);
             } else { //Alors aucun magasin choisi
-                $messages[] = "Vous n'avez pas fourni de numero de commande";
+                $errors[] = "Vous n'avez pas fourni de numero de commande";
             }
         } else {
-            $messages[] = "Vous n'avez pas fourni de numero de commande";
+            $errors[] = "Vous n'avez pas fourni de numero de commande";
         }
         require APP . 'view/_templates/header.php';
         require APP . 'view/livraison/index.php';
@@ -123,10 +123,10 @@ class LivraisonController extends Controller {
                 $cl_numero = $form->securiserChamp($cl_numero);
                 $livraisons = $this->model->getLivraisonsDuClient($cl_numero);
             } else { //Alors aucun magasin choisi
-                $messages[] = "Vous n'avez pas fourni de numero de client";
+                $errors[] = "Vous n'avez pas fourni de numero de client";
             }
         } else {
-            $messages[] = "Vous n'avez pas fourni de numero de client";
+            $errors[] = "Vous n'avez pas fourni de numero de client";
         }
         require APP . 'view/_templates/header.php';
         require APP . 'view/livraison/index.php';

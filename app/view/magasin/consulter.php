@@ -1,13 +1,8 @@
 <div class="container">
-    <h2>Informations du magasin</h2>
+    <h2 class="text-center">Informations du magasin</h2>
 
     <?php 
-    	if (isset($messages)) { 
-    		foreach ($messages as $message) {
-    			echo $message; 
-    		}
-    	}
-    
+        require APP . 'view/_templates/alert.php';
     	if (isset($magasin)) {
     ?>
     	<div>Numero du magasin : <?php echo $magasin["MA_NUMERO"] ?></div>

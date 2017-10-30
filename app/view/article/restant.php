@@ -1,5 +1,5 @@
 <div class="container">
-    <h2>Articles de la livraison <?php echo isset($li_numero) ? $li_numero : "" ?></h2>
+    <h2  class="text-center">Articles de la livraison <?php echo isset($li_numero) ? $li_numero : "" ?></h2>
 	</br></br>
 	<table id="keywords" cellspacing="0" cellpadding="0">
 		<thead>

@@ -5,11 +5,7 @@
 			echo '<h2>' . $fournisseur["FO_NOM"] . '</h2>'; 
 		}
 
-    	if (isset($messages)) { 
-    		foreach ($messages as $message) {
-    			echo $message; 
-    		}
-    	}
+    	require APP . 'view/_templates/alert.php';
     
     	if (isset($fournisseur)) {
     ?>

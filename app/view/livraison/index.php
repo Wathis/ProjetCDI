@@ -1,5 +1,5 @@
 <div class="container">
-    <h2>Livraisons
+    <h2 class="text-center">Livraisons
         <?php 
             if (isset($cl_numero)) {
                 echo "du client " . $cl_numero;
@@ -9,7 +9,7 @@
             }
         ?>
     </h2>
-    <a href="<?php echo URL . 'livraison/choisirCommande' ?>">Ajouter une livraison</a><br \><br \>
+    <a class="btn btn-secondary btn-sm" href="<?php echo URL . 'livraison/choisirCommande' ?>">Ajouter une livraison</a><br \><br \>
     <form action="<?php echo URL .'livraison/rechercherLi' ?>" method="post">
         <label for='choix'>Recherche sur :</label>
         <select name='choix' id="choix" onchange="tri(this)">
@@ -20,7 +20,7 @@
             <option value='MA_Numero'>Numero Magasin</option>
         </select>
         <input type='text' name='champ'></imput>
-        <input type='submit' value='Recherche'>
+        <input class="btn btn-info btn-sm" type='submit' value='Recherche'>
         <div id="tri" style ="display:inline">
         </div>
     </form>
@@ -45,14 +45,15 @@
             }
         }
     ?>
-    <table id="keywords" cellspacing="0" cellpadding="0">
-        <thead>
+    <table id="keywords" class="table table-striped table-bordered table-hover" cellspacing="0" cellpadding="0">
+        <thead class="thead-light">
         <tr>
             <th>Numero</th>
             <th>Date de livraison</th>
             <th>Nom client</th>
             <th>Numero magasin</th>
             <th>Numero commande</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -76,7 +77,7 @@
                         <div class="w3-dropdown-hover">
                             <button class="w3-button"><i class="fa fa-bars"></i></button>
                             <div class="w3-dropdown-content w3-bar-block w3-border">
-                                <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Magasin/index?ma_numero=' . $livraison["MA_NUMERO"] . '"'; ?>>Magasin</a>
+                                <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Magasin/consulter?ma_numero=' . $livraison["MA_NUMERO"] . '"'; ?>>Magasin</a>
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Article/articlesDeLivraison?li_numero=' . $livraison["LI_NUMERO"] . '"'; ?>>Voir articles</a>
                             </div>
                         </div>

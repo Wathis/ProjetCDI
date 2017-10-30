@@ -1,6 +1,6 @@
 <div class="container">
-    <h2>Page commande</h2>
-    <a href="<?php echo URL . 'commande/ajouter' ?>">Ajouter une commande</a><br \><br \>
+    <h2 class="text-center">Commandes</h2>
+    <a  class="btn btn-secondary btn-sm" href="<?php echo URL . 'commande/ajouter' ?>">Ajouter une commande</a><br \><br \>
     <form action="<?php echo URL .'commande/rechercherCo' ?>" method="post">
         <label for='choix'>Recherche sur :</label>
         <select name='choix' id="choix" onchange="tri(this)">
@@ -9,7 +9,7 @@
             <option value='CL_Numero'>Numero Client</option>
         </select>
         <input type='text' name='champ'></imput>
-        <input type='submit' value='Recherche'>
+        <input class="btn btn-info btn-sm" type='submit' value='Recherche'>
         <div id="tri" style ="display:inline">
         </div>
     </form>
@@ -24,8 +24,8 @@
         }
     ?>
     </br>
-    <table id="keywords" cellspacing="0" cellpadding="0">
-        <thead>
+   <table id="keywords" class="table table-striped table-bordered table-hover" cellspacing="0" cellpadding="0">
+        <thead class="thead-light">
         <tr>
             <th>Numero</th>
             <th>Date</th>

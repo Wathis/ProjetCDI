@@ -1,15 +1,10 @@
 <div class="container">
 	
-	<h2>Ajouter un client</h2>
+	<h2 class="text-center">Ajouter un client</h2>
 
 	<?php 
-	if (isset($messages)) {
-	    foreach ($messages as $message) {
-            echo $message , "<br>";
-        }
-        echo '<br>';
-	} 
-        require APP . 'view/client/form.php';
+	require APP . 'view/_templates/alert.php';
+    require APP . 'view/client/form.php';
 	?> 
 
 	

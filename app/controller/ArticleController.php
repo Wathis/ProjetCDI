@@ -27,7 +27,7 @@ class ArticleController extends Controller
         $this->loadModel('Fournisseur');
         $fournisseurs = $this->model->getAllFournisseurs();
 
-        $messages = array();
+        $erros = array();
         $form = new Form();
 
         //L'utilisateur a appuyé sur "ajouter"
@@ -37,27 +37,27 @@ class ArticleController extends Controller
             if (isset($_POST['AR_NOM']) && !empty($_POST['AR_NOM'])){
                 $articleInformations["AR_NOM"] = strtoupper($_POST['AR_NOM']);   
             } else {
-                $messages[] = "Vous n'avez pas entré de nom d'article";
+                $erros[] = "Vous n'avez pas entré de nom d'article";
             }
 
             if (isset($_POST['AR_PV'])){
                 if (!preg_match("#^[0-9]+$#", $_POST['AR_PV'])) {
-                    $messages[] = "Le prix de vente doit être un nombre";
+                    $erros[] = "Le prix de vente doit être un nombre";
                 } else {
                     $articleInformations["AR_PV"] = $_POST['AR_PV'];   
                 }
             } else {
-                $messages[] = "Vous n'avez pas entré de prix de vente";
+                $erros[] = "Vous n'avez pas entré de prix de vente";
             }
 
             if (isset($_POST['AR_PA'])){
                 if (!preg_match("#^[0-9]+$#", $_POST['AR_PA'])) {
-                    $messages[] = "Le prix d'achat doit être un nombre";
+                    $erros[] = "Le prix d'achat doit être un nombre";
                 } else {
                     $articleInformations["AR_PA"] = $_POST['AR_PA'];   
                 }
             } else {
-                $messages[] = "Vous n'avez pas entré de prix d'achat";
+                $erros[] = "Vous n'avez pas entré de prix d'achat";
             }
 
             //On extrait les données facultatives
@@ -66,25 +66,25 @@ class ArticleController extends Controller
             //le isset et empty permettent de rendre les champs facultatifs
             if (isset($_POST['AR_POIDS']) && !empty($_POST['AR_POIDS'])) {
                 if (!preg_match("#^[0-9]+$#", $_POST['AR_POIDS'])) {
-                    $messages[] = "Le poids est invalide";
+                    $erros[] = "Le poids est invalide";
                 } else {
                     $articleInformations["AR_POIDS"] = $_POST['AR_POIDS'];   
                 }
             }
             if (isset($_POST['AR_STOCK']) && !empty($_POST['AR_STOCK'])) {
                 if (!preg_match("#^[0-9]+$#", $_POST['AR_STOCK'])) {
-                    $messages[] = "Le stock est invalide";
+                    $erros[] = "Le stock est invalide";
                 } else {
                     $articleInformations["AR_STOCK"] = $_POST['AR_STOCK'];   
                 }
             }
 
             //Donc toutes les données sont récupérées, on peut inserer l'article
-            if (count($messages) == 0) {
+            if (count($erros) == 0) {
                 //Insertion de l'article
                 $this->loadModel('Article');
                 $this->model->ajouterArticle($articleInformations);
-                $messages[] = "Article ajouté";
+                $success = "Article ajouté";
                 echo "<PRE>";
                 print_r($articleInformations);
                 echo "</PRE>";
@@ -139,10 +139,10 @@ class ArticleController extends Controller
                 $li_numero = $form->securiserChamp($li_numero);
                 $articles = $this->model->getArticlesPourLivraison($li_numero);
             } else { //Alors aucun client choisi
-                $messages[] = "Vous n'avez pas fourni de numero de client";
+                $erros[] = "Vous n'avez pas fourni de numero de client";
             }
         } else {
-            $messages[] = "Vous n'avez pas fourni de numero de client";
+            $erros[] = "Vous n'avez pas fourni de numero de client";
         }
         require APP . 'view/_templates/header.php';
         require APP . 'view/article/livraisons.php';

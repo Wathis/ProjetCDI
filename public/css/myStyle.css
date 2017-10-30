@@ -1,11 +1,11 @@
-body {
+/*body {
 	font-family: 'Helvetica';
 	margin : 0px;
 }
 
 /* ########################## HEADER ##########################  */
 
-.navigation {
+/*.navigation {
 	display: flex;
 	background-color: #f1c40f;
 	height: 50px;
@@ -42,19 +42,38 @@ a:hover {
 header div {
 	align-self: center;
 }
-
+*/
 /*  ########################## CONTAINERS ########################## */
 
-.container {
+/*.container {
 	margin: 30px;
 	padding : 15px;
 	border : 1px solid black;
 	background-color: #ecf0f1;
-}
+}*/
 
 /*  ########################## FOOTER ########################## */
 
-footer {
+/*footer {
 	margin: 30px;
 	text-align: center;
+}*/
+
+nav > a:visited {
+	text-decoration: none;
+	color : white;
+}
+
+.spacerRight-Left {
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+/*.well {
+	background-color: grey;
+	border-radius: 10px;
+}*/
+
+.container {
+	margin-top: 30px;
 }

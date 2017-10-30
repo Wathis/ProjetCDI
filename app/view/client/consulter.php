@@ -4,16 +4,9 @@
 		if (isset($client)) {
 			echo '<h2>' . $client["CL_NOM"] . ' ' . $client["CL_PRENOM"] . '</h2>'; 
 		}
-
-    	if (isset($messages)) { 
-    		foreach ($messages as $message) {
-    			echo $message; 
-    		}
-    	}
-        else
-        {
+        require APP . 'view/_templates/alert.php';
         if (isset($client)){
-        ?>
+    ?>
             <div>Numero : <?php echo $client["CL_NUMERO"] ?></div>
             <div>Nom : <?php echo $client["CL_NOM"] ?></div>
             <div>Prenom : <?php echo $client["CL_PRENOM"] ?></div>
@@ -26,8 +19,8 @@
         <?php 
 
             echo ('<a style="text-decoration:none;color:grey" href="' . URL . 'client/modifierClient?CL_NUMERO=' . $client['CL_NUMERO'].'"><br \>Modifier le client</a>'); 
-            }
         }
+    }
     
 
 	?>

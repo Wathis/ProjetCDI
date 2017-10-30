@@ -15,19 +15,19 @@ class FournisseurController extends Controller
     //Action du controlleur pour ajouter un nouveau fournisseur
     public function ajouterAction() {
         $form = new Form();
-        $messages = array();
+        $errors = array();
         if (isset($_POST["submit"])) {
             if (isset($_POST["FO_NOM"]) && !empty($_POST["FO_NOM"])) {
                 if ($form->verifierLeNom($_POST["FO_NOM"])) {
                     $nomFournisseur = $form->transformerChampEnNom($_POST["FO_NOM"]);
                     $this->loadModel('Fournisseur');
                     $this->model->ajouterFournisseur($nomFournisseur);
-                    $messages[] = "Fournisseur ajouté";
+                    $success = "Fournisseur ajouté";
                 } else {
-                    $messages[] = "Le champ nom est mal formaté";
+                    $errors[] = "Le champ nom est mal formaté";
                 }
             } else {
-                $messages[] = "Le champ nom est obligatoire";
+                $errors[] = "Le champ nom est obligatoire";
             }
         }
 
@@ -67,10 +67,10 @@ class FournisseurController extends Controller
                 $num = $form->securiserChamp($num);
                 $fournisseur = $this->model->getFournisseur($num);
             } else { //Alors aucun magasin choisi
-                $messages[] = "Vous n'avez pas fourni de numero de client";
+                $errors[] = "Vous n'avez pas fourni de numero de client";
             }
         } else {
-            $messages[] = "Vous n'avez pas fourni de numero de client";
+            $errors[] = "Vous n'avez pas fourni de numero de client";
         }
         require APP . 'view/_templates/header.php';
         require APP . 'view/fournisseur/consulter.php';
