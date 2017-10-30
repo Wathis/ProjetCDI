@@ -1,6 +1,6 @@
 <form method="POST" action="">
 		<div class="form-group row">
-			<label class="col-sm-2 col-form-label" for="nom">Nom(*): :</label>
+			<label class="col-sm-2 col-form-label" for="nom">Nom(*):</label>
 			<input class="form-control col-sm-2" id="nom" type="text" name="CL_NOM" value="<?php Form::remplirChamp($client,"CL_NOM");?>"><br \>
 		</div>
 
@@ -11,7 +11,7 @@
 		</div>
 
 		<div class="form-group row">
-			<label class="col-sm-2 col-form-label" for="ville">Ville(*): :</label>
+			<label class="col-sm-2 col-form-label" for="ville">Ville(*):</label>
 			<input class="form-control col-sm-2" id="ville" type="text" name="CL_LOCALITE" value="<?php Form::remplirChamp($client,"CL_LOCALITE");?>"><br \>
 		</div>
 
@@ -43,7 +43,7 @@
 
 		<div class="form-group row">
 			<label class="col-sm-2 col-form-label" for="type">Type de client:</label>
-			<select class="form-control col-sm-2" name="CL_TYPE">
+			<select name="CL_TYPE">
 				<?php if (isset($client["CL_TYPE"])){ $type = $client["CL_TYPE"];} else { $type='0'; } ?>
 				<option <?php if ($type=='Particulier') echo ('selected'); ?> value="Particulier">Particulier</option>
 				<option <?php if ($type=='Grand compte') echo ('selected'); ?> value="Grand Compte">Grand Compte</option>

@@ -3,8 +3,9 @@
     <footer>
     	<br \>
     	<div class="text-center">
-    		Projet PHP 2016 - 2018 <br \>Le Github : <a target="_blank" href="https://github.com/Wathis/ProjetCDI">Aller voir</a><br \>
-    		Étudiants : LEBRUN Antoine, GOUET Maxime, DELAUNAY Mathis
+    		Projet PHP 2016 - 2018 <br \>
+    		LEBRUN Antoine, GOUET Maxime, DELAUNAY Mathis<br \>
+    		TD 2 - D.U.T. Informatique CAEN
     	</div>
     	<br \>
     </footer>

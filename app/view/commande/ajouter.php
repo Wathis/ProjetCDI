@@ -1,6 +1,6 @@
 <div class="container">
 	
-	<h2>Ajouter une commande</h2>
+	<h2 class="text-center">Ajouter une commande</h2>
 
 	<?php
 require APP . 'view/_templates/alert.php';
