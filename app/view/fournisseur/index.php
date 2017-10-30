@@ -1,6 +1,7 @@
 <div class="container">
     <h2>Page fournisseur</h2>
 
+    <a href="<?php echo URL . 'fournisseur/ajouter' ?>">Ajouter un fournisseur</a><br \><br \>
 	<form action="<?php echo URL .'fournisseur/rechercherFo' ?>" method="post">
 	<label for='choix'>Recherche sur :</label>
 	<select name='choix' id="choix" onchange="tri(this)">
@@ -12,15 +13,6 @@
 	<div id="tri" style ="display:inline">
 	</div>
 	</form>
-	<!-- <form action="<?php echo URL .'fournisseur/trieFo' ?>" method="post">
-        <label for='tris'>Triée par :</label>
-        <select name='tris' id="tris" onchange="tri(this)">
-			<option value='FO_Numero' selected>Numero</option>
-			<option value='FO_Nom'>Nom</option>
-		</select>
-        <div id="tris1" style ="display:inline"></div>
-        <input type='submit' value='OK'></input>
-    </form> -->
 	</br></br>
 	<table id="keywords" cellspacing="0" cellpadding="0">
 		<thead>

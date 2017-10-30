@@ -32,7 +32,11 @@ class Livraison extends Model {
         $query = $this->db->prepare($sql);
         $query->execute();
         $query=$query->fetch();
-        $li_numero_max = 'L'.($query["maxi"]+1);
+        if ($query["maxi"] + 1 < 10) {
+            $li_numero_max = 'L0'.($query["maxi"]+1);
+        } else {    
+            $li_numero_max = 'L'.($query["maxi"]+1);
+        }
 
         $sql = 'INSERT INTO CDI_LIVRAISON (LI_NUMERO,CO_NUMERO,DATE_LIV, MA_NUMERO, CL_NUMERO) VALUES (:LI_NUMERO,:CO_NUMERO,:DATE_LIV,
             (

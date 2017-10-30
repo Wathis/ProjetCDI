@@ -65,15 +65,21 @@ class Form {
 				return false;
 			}
 		}
-		return true; 
-	
-}
+		return true; 	
+    }
 	/**
 	 * Permet de remplir un champ d'un formulaire si il a déjà été rempli 
 	*/
 	public static function remplirChamp($tab,$champ) {
 		echo isset($tab[strtoupper($champ)]) ? $tab[strtoupper($champ)] : '';
 	}
+
+    /**
+     * Permet de remplir un champ d'un formulaire si il a déjà été rempli depuis le POST
+    */
+    public static function remplirChampSimple($champ) {
+        echo isset($_POST[strtoupper($champ)]) ? $_POST[strtoupper($champ)] : '';
+    }
 
     //#######################################################################################################
     //############################## FONCTIONS DE MODIFICATIONS  ############################################
@@ -107,14 +113,10 @@ class Form {
 
     //Transforme un champ en ville ( Le meme que champ prenom)
     public function transformerChampEnVille($champ) {
+        $champ = $this->supprimerAccent($champ);
         $champ = $this->supprimerLesEspacesEnTrop($champ);
         $champ = $this->supprimerTiretsEtEspacesALaFin($champ);
-        $champ = $this->supprimerCaracteresSpeciaux($champ);
-        $champ = $this->cassePrenom($champ);
-        if ($champ == "x") {
-            $champ = strtoupper($champ);
-        }
-        return $champ;
+        return mb_strtoupper($champ);
     }
 
     /**
@@ -348,15 +350,8 @@ class Form {
     public function verifierLaVille($ville){
         // $this->debugVerifications($ville);
         $ville = $this->transformerChampEnVille($ville);
-        return  $this->verifierLaLongueurDuChamp($ville) 
-                && 
-                ( 
-                    $this->verifierChampAvecQuoteEtTirets($ville)
-                    || $this->verifierChampAvecQuote($ville) 
-                    || $this->verifierChampAvecQuotes($ville) 
-                    || $this->verifierChampAvecTiretEtEspaces($ville) 
-                    || $this->verifierChampAvecTiret($ville) 
-                );
+
+        return preg_match("#^[^']([a-zA-Z0-9  ". self::AUTHORIZED_SPECIALS_CHARS ."]*(-|'|)[a-zA-Z0-9 ". self::AUTHORIZED_SPECIALS_CHARS ."]+)+$#", $ville) && $this->verifierLaLongueurDuChamp($ville);
     }
 
     //Permet de debuger pour voir quelle verification est passée à true

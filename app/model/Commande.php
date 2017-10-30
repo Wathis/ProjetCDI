@@ -36,7 +36,11 @@ class Commande extends Model {
         $query = $this->db->prepare($sql);
         $query->execute();
         $query=$query->fetch();
-        $co_numero_max = 'C'.($query["maxi"]+1);
+        if ($query["maxi"] + 1 < 10) {
+            $co_numero_max = 'F0'.($query["maxi"] + 1);
+        } else {    
+            $co_numero_max = 'F'.($query["maxi"] + 1);
+        }
 
 
         $sql = 'INSERT INTO cdi_commande (CO_NUMERO,MA_NUMERO,CL_NUMERO,CO_DATE) VALUES (:CO_NUMERO,:MA_NUMERO,:CL_NUMERO,:CO_DATE)';

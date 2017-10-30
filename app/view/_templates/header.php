@@ -28,5 +28,6 @@
         <div class="linkCDI"><a href="<?php echo URL; ?>commande">Commande</a></div>
         <div class="linkCDI"><a href="<?php echo URL; ?>article">Article</a></div>
         <div class="linkCDI"><a href="<?php echo URL; ?>fournisseur">Fournisseur</a></div>
+        <div class="linkCDI"><a href="<?php echo URL; ?>magasin">Magasin</a></div>
         <div class="linkCDI"><a href="<?php echo URL; ?>livraison">Livraisons</a></div>
     </nav>

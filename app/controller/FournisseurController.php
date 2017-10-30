@@ -11,6 +11,32 @@ class FournisseurController extends Controller
         require APP . 'view/Fournisseur/index.php';
         require APP . 'view/_templates/footer.php';
     }
+
+    //Action du controlleur pour ajouter un nouveau fournisseur
+    public function ajouterAction() {
+        $form = new Form();
+        $messages = array();
+        if (isset($_POST["submit"])) {
+            if (isset($_POST["FO_NOM"]) && !empty($_POST["FO_NOM"])) {
+                if ($form->verifierLeNom($_POST["FO_NOM"])) {
+                    $nomFournisseur = $form->transformerChampEnNom($_POST["FO_NOM"]);
+                    $this->loadModel('Fournisseur');
+                    $this->model->ajouterFournisseur($nomFournisseur);
+                    $messages[] = "Fournisseur ajouté";
+                } else {
+                    $messages[] = "Le champ nom est mal formaté";
+                }
+            } else {
+                $messages[] = "Le champ nom est obligatoire";
+            }
+        }
+
+        //Import des vues
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/Fournisseur/ajouter.php';
+        require APP . 'view/_templates/footer.php';
+    }
+
     public function rechercherFournisseurAction() {
 		$this->loadModel('Fournisseur');
 		$champ = $_POST["champ"];
@@ -29,7 +55,7 @@ class FournisseurController extends Controller
         require APP . 'view/_templates/header.php';
         require APP . 'view/Fournisseur/index.php';
         require APP . 'view/_templates/footer.php';
-        }
+    }
 
     public function consulterAction() {
 
