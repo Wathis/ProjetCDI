@@ -96,7 +96,7 @@ class Commande extends Model {
 
     //Recuperer toutes les commandes de la base de donnée
     public function getAllCommandes() {
-        $sql = "SELECT * FROM CDI_COMMANDE;";
+        $sql = "SELECT * FROM CDI_COMMANDE JOIN CDI_CLIENT USING (CL_NUMERO);";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

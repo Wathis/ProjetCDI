@@ -9,6 +9,7 @@
             }
         ?>
     </h2>
+    <a href="<?php echo URL . 'livraison/choisirCommande' ?>">Ajouter une livraison</a><br \><br \>
     <form action="<?php echo URL .'livraison/rechercherLi' ?>" method="post">
         <label for='choix'>Recherche sur :</label>
         <select name='choix' id="choix" onchange="tri(this)">

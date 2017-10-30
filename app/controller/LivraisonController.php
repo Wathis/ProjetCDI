@@ -12,6 +12,27 @@ class LivraisonController extends Controller {
         require APP . 'view/_templates/footer.php';
 	}
 
+    //Action pour choisir la commande avant de creer une livraison
+    public function choisirCommandeAction() {
+
+        $this->loadModel('Commande');
+        $commandes = $this->model->getAllCommandes();
+        $messages = array();
+
+        if (isset($_POST["submit"])) {
+            if (isset($_POST["CO_NUMERO"]) && !empty($_POST["CO_NUMERO"])){
+                header("Location:".URL."livraison/ajouter?co_numero=" . $_POST["CO_NUMERO"]);
+            } else {
+                $messages[] = "Vous devez choisir une commande";
+            }
+        }
+
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/livraison/choisir.php';
+        require APP . 'view/_templates/footer.php';
+    }
+
+
     //Creer une livraison 
     public function ajouterAction() {
         $messages = array();

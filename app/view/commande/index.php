@@ -13,16 +13,6 @@
         <div id="tri" style ="display:inline">
         </div>
     </form>
-    <!-- <form action="<?php echo URL .'commande/trieCo' ?>" method="post">
-        <label for='tris'>Triée par :</label>
-        <select name='tris' id="tris" onchange="tri(this)">
-            <option value='CO_Numero' selected>Numero</option>
-            <option value='CO_Date'>Date</option>
-            <option value='CL_Numero'>Numero Client</option>
-        </select>
-        <div id="tris1" style ="display:inline"></div>
-        <input type='submit' value='OK'></input>
-    </form> -->
 
     </br>
     <?php  
