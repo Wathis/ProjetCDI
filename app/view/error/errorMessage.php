@@ -4,9 +4,9 @@
 	if (isset($success)) {
 		echo '<div class="alert alert-success" role="alert">' . $succes . '</div>';
 	}
-	if (isset($erros)) {
-		foreach ($erros as $error) {
+	if (isset($errors)) {
+		foreach ($errors as $error) {
 			echo '<div class="alert alert-warning" role="alert">' . $error . '</div>';
 		}
 	}
-}?>
+?>

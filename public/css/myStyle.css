@@ -69,6 +69,11 @@ nav > a:visited {
 	padding-right: 8px;
 }
 
+footer {
+	background-color: rgb(164,166,167);
+	color : white;
+}
+
 /*.well {
 	background-color: grey;
 	border-radius: 10px;

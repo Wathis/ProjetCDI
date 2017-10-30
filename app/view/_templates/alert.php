@@ -1,10 +1,24 @@
 <?php 
 	if (isset($success)) {
-		echo '<div class="alert alert-success" role="alert">' . $success . '</div>';
+?>
+		<div class="alert alert-success alert-dismissible fade show" role="alert">
+			<?php echo $success ?>
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+<?php
 	}
 	if (isset($errors)) {
 		foreach ($errors as $error) {
-			echo '<div class="alert alert-warning" role="alert">' . $error . '</div>';
+?>
+			<div class="alert alert-warning alert-dismissible fade show" role="alert">
+				<?php echo $error ?>
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+<?php
 		}
 	}
 

@@ -16,7 +16,7 @@
 
 	$pdf->Cell(0,50,'Numero du magasin : ' . $commande[0]['MA_NUMERO'],0,0,'L');
 	$pdf->Cell(0,55,'Ville du magasin : ' . $magasin["MA_LOCALITE"],0,1,'R');
-	$pdf->Cell(0,-25,'Gerant du magasin : ' . $magasin['MA_GERANT'] ,0,1,'L');
+	$pdf->Cell(0,-25,'Gerant du magasin : ' . $magasin['MA_NOM_GERANT'] . $magasin['MA_PRENOM_GERANT'] ,0,1,'L');
 
 	$pdf->Rect(5, 135, $pdf->GetPageWidth()-10,  2);
 	$pdf->Cell(0,40,'',0,1,'L');

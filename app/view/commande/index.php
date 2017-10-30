@@ -18,7 +18,7 @@
     <?php  
         foreach ($commandes as $commande) {
             if (in_array($commande["CO_NUMERO"],$commandesSansLivraisons)){
-                echo '<div style="color:red">Des commandes n\'ont pas de livraison</div>';
+                echo '<div class="alert alert-danger">Des commandes n\'ont pas de livraison</div>';
                 break;
             }
         }
@@ -54,7 +54,7 @@
                         <div class="w3-dropdown-hover">
                             <button class="w3-button"><i class="fa fa-bars"></i></button>
                             <div class="w3-dropdown-content w3-bar-block w3-border">
-                                <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Magasin/index?ma_numero=' . $commande["MA_NUMERO"] . '"'; ?>>Magasin</a>
+                                <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Magasin/consulter?ma_numero=' . $commande["MA_NUMERO"] . '"'; ?>>Magasin</a>
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Client/consulter?cl_numero=' . $commande["CL_NUMERO"] . '"'; ?>>Client</a>
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Commande/consulterArticles?co_numero=' . $commande["CO_NUMERO"] . '"'; ?>>Consulter articles</a>
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Livraison/commandes?co_numero=' . $commande["CO_NUMERO"] . '"'; ?>>Livraisons déjà faites</a>

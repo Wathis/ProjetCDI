@@ -1,8 +1,8 @@
 <div class="container">
-    <h2>Articles de la commande <?php echo $co_numero ?></h2>
+    <h2 class="text-center">Articles de la commande <?php echo $co_numero ?></h2>
     </br></br>
-    <table id="keywords" cellspacing="0" cellpadding="0">
-        <thead>
+    <table id="keywords" class="table table-striped table-bordered table-hover" cellspacing="0" cellpadding="0">
+        <thead class="thead-light">
         <tr>
             <th>Numero</th>
             <th>Nom</th>

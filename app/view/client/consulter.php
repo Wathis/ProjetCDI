@@ -14,14 +14,11 @@
             <div>Localite : <?php echo $client["CL_LOCALITE"] ?></div>
             <div>Chiffre d'affaire : <?php echo $client["CL_CA"] ?></div>
             <div>Type : <?php echo $client["CL_TYPE"] ?></div>
-            <div>Enume : <?php echo $client["EMP_ENUME"] ?></div>
 
         <?php 
 
-            echo ('<a style="text-decoration:none;color:grey" href="' . URL . 'client/modifierClient?CL_NUMERO=' . $client['CL_NUMERO'].'"><br \>Modifier le client</a>'); 
+            echo ('<br \><a class="btn btn-primary" href="' . URL . 'client/modifierClient?CL_NUMERO=' . $client['CL_NUMERO'].'">Modifier le client</a>'); 
         }
-    }
-    
 
 	?>
 
