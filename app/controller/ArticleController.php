@@ -20,6 +20,81 @@ class ArticleController extends Controller
         require APP . 'view/_templates/footer.php';
     }
 
+    //Action correspondant à l'ajout d'un nouvel article
+    public function ajouterAction() {
+
+        //On charche tous les fournisseurs pour le select
+        $this->loadModel('Fournisseur');
+        $fournisseurs = $this->model->getAllFournisseurs();
+
+        $messages = array();
+        $form = new Form();
+
+        //L'utilisateur a appuyé sur "ajouter"
+        if (isset($_POST["submit"])) {
+            //On fait toutes les verifications obligatoires
+            $articleInformations = array();
+            if (isset($_POST['AR_NOM']) && !empty($_POST['AR_NOM'])){
+                $articleInformations["AR_NOM"] = strtoupper($_POST['AR_NOM']);   
+            } else {
+                $messages[] = "Vous n'avez pas entré de nom d'article";
+            }
+
+            if (isset($_POST['AR_PV'])){
+                if (!preg_match("#^[0-9]+$#", $_POST['AR_PV'])) {
+                    $messages[] = "Le prix de vente doit être un nombre";
+                } else {
+                    $articleInformations["AR_PV"] = $_POST['AR_PV'];   
+                }
+            } else {
+                $messages[] = "Vous n'avez pas entré de prix de vente";
+            }
+
+            if (isset($_POST['AR_PA'])){
+                if (!preg_match("#^[0-9]+$#", $_POST['AR_PA'])) {
+                    $messages[] = "Le prix d'achat doit être un nombre";
+                } else {
+                    $articleInformations["AR_PA"] = $_POST['AR_PA'];   
+                }
+            } else {
+                $messages[] = "Vous n'avez pas entré de prix d'achat";
+            }
+
+            //On extrait les données facultatives
+            $articleInformations["FO_NUMERO"] = $_POST['FO_NUMERO'];
+            $articleInformations["AR_COULEUR"] = strtoupper($_POST['AR_COULEUR']); 
+            //le isset et empty permettent de rendre les champs facultatifs
+            if (isset($_POST['AR_POIDS']) && !empty($_POST['AR_POIDS'])) {
+                if (!preg_match("#^[0-9]+$#", $_POST['AR_POIDS'])) {
+                    $messages[] = "Le poids est invalide";
+                } else {
+                    $articleInformations["AR_POIDS"] = $_POST['AR_POIDS'];   
+                }
+            }
+            if (isset($_POST['AR_STOCK']) && !empty($_POST['AR_STOCK'])) {
+                if (!preg_match("#^[0-9]+$#", $_POST['AR_STOCK'])) {
+                    $messages[] = "Le stock est invalide";
+                } else {
+                    $articleInformations["AR_STOCK"] = $_POST['AR_STOCK'];   
+                }
+            }
+
+            //Donc toutes les données sont récupérées, on peut inserer l'article
+            if (count($messages) == 0) {
+                //Insertion de l'article
+                $this->loadModel('Article');
+                $this->model->ajouterArticle($articleInformations);
+                $messages[] = "Article ajouté";
+                echo "<PRE>";
+                print_r($articleInformations);
+                echo "</PRE>";
+            }
+        }
+
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/article/ajouter.php';
+        require APP . 'view/_templates/footer.php';
+    }
     //Consuler les articles qui restent a livrer
     public function restantALivrerAction(){
 

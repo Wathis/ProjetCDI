@@ -1,6 +1,7 @@
 <div class="container">
     <h2>Page article</h2>
 
+    <a href="<?php echo URL . 'article/ajouter' ?>">Ajouter un article</a><br \><br \>
 	<form action="<?php echo URL .'article/rechercherArt' ?>" method="post">
 	<label for='choix'>Recherche sur :</label>
 	<select name='choix' id="choix" onchange="tri(this)">

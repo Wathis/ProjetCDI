@@ -35,7 +35,13 @@ class ClientController extends Controller {
                     } else {
                         $messages[] = "Champ prenom invalide";
                     }
-                    if (empty($client["CL_LOCALITE"]) || !isset($client["CL_LOCALITE"])){
+                    if (!empty($client["CL_LOCALITE"]) && isset($client["CL_LOCALITE"])){
+                        if ($form->verifierLaVille($client["CL_LOCALITE"])) {
+                            $client["CL_LOCALITE"] = $form->transformerChampEnVille($client["CL_LOCALITE"]);
+                        } else {
+                            $messages[] = "Mauvais format de ville";
+                        }
+                    } else {
                         $messages[] = "Vous devez entrer une ville";
                     }
                     if (!empty($client["CL_CA"]) && $client["CL_TYPE"] === "Particulier") {
@@ -49,12 +55,12 @@ class ClientController extends Controller {
                     //Si il y a aucune erreur, on peut ajouter le client
                     if (empty($messages)) {
                         //on charge le modele client pour acceder aux connexions avec la base de donnée
-                        // $this->loadModel('Client');
-                        // $this->model->ajouterUnClient($client);
+                        $this->loadModel('Client');
+                        $this->model->ajouterUnClient($client);
                         $messages[] = "Client ajouté";
-                        echo "CL_NOM : ",$client["CL_NOM"],"<br \>";
-                        echo "CL_PRENOM : ",$client["CL_PRENOM"],"<br \>";
-                        echo "CL_LOCALITE : ",$client["CL_LOCALITE"],"<br \>";
+                        // echo "CL_NOM : ",$client["CL_NOM"],"<br \>";
+                        // echo "CL_PRENOM : ",$client["CL_PRENOM"],"<br \>";
+                        // echo "CL_LOCALITE : ",$client["CL_LOCALITE"],"<br \>";
                     }
 			} else {
                 $messages[] = "Veuillez remplir tous les champs obligatoires (*)";

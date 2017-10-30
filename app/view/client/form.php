@@ -1,11 +1,11 @@
 <form method="POST" action="">
-		<label for="nom">Nom* :</label>
+		<label for="nom">Nom(*): :</label>
 		<input id="nom" type="text" name="CL_NOM" value="<?php Form::remplirChamp($client,"CL_NOM");?>"><br \>
 
-		<label for="prenom">Prenom* :</label>
+		<label for="prenom">Prenom(*): :</label>
 		<input id="prenom" type="text" name="CL_PRENOM" value="<?php Form::remplirChamp($client,"CL_PRENOM");?>"><br \>
 
-		<label for="ville">Ville* :</label>
+		<label for="ville">Ville(*): :</label>
 		<input id="ville" type="text" name="CL_LOCALITE" value="<?php Form::remplirChamp($client,"CL_LOCALITE");?>"><br \>
 
 		<label for="pays">Pays :</label>

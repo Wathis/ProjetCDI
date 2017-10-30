@@ -24,6 +24,31 @@ class Article extends Model
         return $stock - $quantity >= 0 ? true : false;
     }
 
+    //permet d'ajouter un nouvel article
+    public function ajouterArticle($article) {
+        $sql = 'SELECT max(CAST(SUBSTR(AR_NUMERO,2)as UNSIGNED INT)) as maxi FROM cdi_article ';
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        $query=$query->fetch();
+        $num = 'A'.($query["maxi"]+1);
+
+        $sql = 'INSERT INTO cdi_article (AR_NUMERO,AR_NOM,AR_POIDS,AR_COULEUR,AR_STOCK,AR_PA,AR_PV,FO_NUMERO) VALUES (:AR_NUMERO,:AR_NOM,:AR_POIDS,:AR_COULEUR,:AR_STOCK,:AR_PA,:AR_PV,:FO_NUMERO)';
+        $query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+
+        $query->execute(array(
+            ':AR_NUMERO' => $num,
+            ':AR_NOM' =>  $article["AR_NOM"],
+            ':AR_POIDS' =>  $article["AR_POIDS"],
+            ':AR_COULEUR' =>  $article["AR_COULEUR"],
+            ':AR_STOCK' =>  $article["AR_STOCK"],
+            ':AR_PA' =>  $article["AR_PA"],
+            ':AR_PV' =>  $article["AR_PV"],
+            ':FO_NUMERO' =>  $article["FO_NUMERO"]
+        ));
+    }
+
+
+    //supprimer un article
     public function deleteArticle($articleId) {
         $sql = "DELETE FROM cdi_article WHERE ar_numero = :ar_numero";
         $query = $this->db->prepare($sql);

@@ -105,6 +105,18 @@ class Form {
         return $champ;
     }
 
+    //Transforme un champ en ville ( Le meme que champ prenom)
+    public function transformerChampEnVille($champ) {
+        $champ = $this->supprimerLesEspacesEnTrop($champ);
+        $champ = $this->supprimerTiretsEtEspacesALaFin($champ);
+        $champ = $this->supprimerCaracteresSpeciaux($champ);
+        $champ = $this->cassePrenom($champ);
+        if ($champ == "x") {
+            $champ = strtoupper($champ);
+        }
+        return $champ;
+    }
+
     /**
      * Extrait les informations du client present dans le tableau POST
      */
@@ -273,7 +285,7 @@ class Form {
      *  Autorise ce genre de modèle : 'éÉ'é-É'bé'
     */ 
     private function verifierChampAvecQuoteEtTirets($champ) {
-        return preg_match("/^'[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+('|)[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+-[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+('|)[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+'$/",$champ);
+        return preg_match("/^('|)[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+('|)[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+-[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+('|)[a-zA-Z". self::AUTHORIZED_SPECIALS_CHARS ."]+('|)$/",$champ);
     }
 
     /**
@@ -326,6 +338,24 @@ class Form {
                     || $this->verifierChampAvecTiretEtEspaces($nom) 
                     || $this->verifierChampAvecTiret($nom)
                     || $this->verifierChampAvecUnDoubleTiret($nom) 
+                );
+    }
+
+    /**
+     * Verifie si un nom est bien formaté 
+     * Return true si le nom passe au moins un des test requis
+    */
+    public function verifierLaVille($ville){
+        // $this->debugVerifications($ville);
+        $ville = $this->transformerChampEnVille($ville);
+        return  $this->verifierLaLongueurDuChamp($ville) 
+                && 
+                ( 
+                    $this->verifierChampAvecQuoteEtTirets($ville)
+                    || $this->verifierChampAvecQuote($ville) 
+                    || $this->verifierChampAvecQuotes($ville) 
+                    || $this->verifierChampAvecTiretEtEspaces($ville) 
+                    || $this->verifierChampAvecTiret($ville) 
                 );
     }
 
