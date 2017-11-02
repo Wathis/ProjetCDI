@@ -74,7 +74,7 @@ class Router {
             //On extrait le nom du controlleur et de l'action
             $this->controller = isset($url[0]) ? $url[0] . 'Controller' : null;
             $this->action = isset($url[1]) ? $url[1]  . 'Action' : null;
-
+            $this->controller = ucfirst($this->controller);
             // On retire le controlleur et l'action
             unset($url[0], $url[1]);
 
