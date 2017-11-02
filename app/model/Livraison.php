@@ -28,15 +28,7 @@ class Livraison extends Model {
 
     //Insere une nouvelle livraison et ligne de livraison
     public function insererNouvelleLivraison($co_numero,$articlesLivres) {
-        $sql = 'SELECT max(CAST(SUBSTR(LI_NUMERO,2)as UNSIGNED INT)) as maxi FROM CDI_LIVRAISON ';
-        $query = $this->db->prepare($sql);
-        $query->execute();
-        $query=$query->fetch();
-        if ($query["maxi"] + 1 < 10) {
-            $li_numero_max = 'L0'.($query["maxi"]+1);
-        } else {    
-            $li_numero_max = 'L'.($query["maxi"]+1);
-        }
+        $li_numero_max = $this->getMaxId('CDI_LIVRAISON','LI_NUMERO','L');
 
         $sql = 'INSERT INTO CDI_LIVRAISON (LI_NUMERO,CO_NUMERO,DATE_LIV, MA_NUMERO, CL_NUMERO) VALUES (:LI_NUMERO,:CO_NUMERO,:DATE_LIV,
             (

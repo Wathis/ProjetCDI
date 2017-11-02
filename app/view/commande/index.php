@@ -29,7 +29,7 @@
         <tr>
             <th>Numero</th>
             <th>Date</th>
-            <th>Numero de client</th>
+            <th>Client</th>
             <th>Magasin numero</th>
             <th></th>
         </tr>
@@ -48,7 +48,7 @@
                     ?>
                 </td>
                 <td><?php echo $commande["CO_DATE"]; ?></td>
-                <td><?php echo $commande["CL_NUMERO"]; ?></td>
+                <td><?php echo $commande["CL_NOM"] , ' ' , $commande['CL_PRENOM']; ?></td>
                 <td><?php echo $commande["MA_NUMERO"]; ?></td>
                 <td><div class="w3-container">
                         <div class="w3-dropdown-hover">

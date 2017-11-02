@@ -57,13 +57,17 @@ class LivraisonController extends Controller {
                     if (isset($_POST["quantity" . $article["AR_NUMERO"]]) && !empty($_POST["quantity" . $article["AR_NUMERO"]])) {
                         $quantite = $_POST["quantity" . $article["AR_NUMERO"]];
                         $restant = $this->model->getNombreCommandéPourArticle($article["AR_NUMERO"], $co_numero);
-                        if ($restant - $quantite >= 0) {
-                            $articlesLivres[] = array (
-                                "AR_NUMERO" => $article["AR_NUMERO"],
-                                "QUANTITE" => $quantite
-                            );
+                        if ( $quantite > 0 ){
+                            if ($restant - $quantite >= 0) {
+                                $articlesLivres[] = array (
+                                    "AR_NUMERO" => $article["AR_NUMERO"],
+                                    "QUANTITE" => $quantite
+                                );
+                            } else {
+                                $errors[] = "Un article va être livré en trop";
+                            }
                         } else {
-                            $errors[] = "Un article va être livré en trop";
+                            $errors[] = "Vous ne pouvez pas ajouter une quantité négative";
                         }
                     } else {
                         $errors[] = "Un article n'a pas eu de quantité";

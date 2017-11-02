@@ -16,15 +16,7 @@ class Fournisseur extends Model
 
     //Ajouter un nouveau fournisseur
     public function ajouterFournisseur($nom) {
-        $sql = 'SELECT max(CAST(SUBSTR(FO_NUMERO,2)as UNSIGNED INT)) as maxi FROM cdi_fournisseur ';
-        $query = $this->db->prepare($sql);
-        $query->execute();
-        $query=$query->fetch();
-        if ($query["maxi"] + 1 < 10) {
-            $num = 'F0'.($query["maxi"]+1);
-        } else {    
-            $num = 'F'.($query["maxi"]+1);
-        }
+        $num = $this->getMaxId('cdi_fournisseur','FO_NUMERO','F');
 
         $sql = 'INSERT INTO cdi_fournisseur (FO_NUMERO,FO_NOM) VALUES (:FO_NUMERO,:FO_NOM)';
         $query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));

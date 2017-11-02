@@ -59,7 +59,7 @@ header div {
 	text-align: center;
 }*/
 
-nav > a:visited {
+nav > a:visited,nav > a  {
 	text-decoration: none;
 	color : white;
 }

@@ -45,12 +45,7 @@ class Client extends Model {
     // Fonction pour ajouter un nouveau client dans la base
     // Client est tableau associatif des informations du client
 	public function ajouterUnClient($client) {
-		$sql = 'SELECT max(CAST(SUBSTR(CL_NUMERO,2)as UNSIGNED INT)) as maxi FROM cdi_client ';
-		$query = $this->db->prepare($sql);
-		$query->execute();
-		$query=$query->fetch();
-		$num = 'C'.($query["maxi"]+1);
-
+		$num = $this->getMaxId('CDI_CLIENT','CL_NUMERO','C');
 
 		$sql = 'INSERT INTO cdi_client (CL_NUMERO,CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS,CL_CA,CL_TYPE,EMP_ENUME) VALUES (:CL_NUMERO,:CL_NOM,:CL_PRENOM,:CL_LOCALITE,:CL_PAYS,:CL_CA,:CL_TYPE,:EMP_ENUME)';
 		$query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));

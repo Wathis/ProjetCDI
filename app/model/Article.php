@@ -26,11 +26,7 @@ class Article extends Model
 
     //permet d'ajouter un nouvel article
     public function ajouterArticle($article) {
-        $sql = 'SELECT max(CAST(SUBSTR(AR_NUMERO,2)as UNSIGNED INT)) as maxi FROM cdi_article ';
-        $query = $this->db->prepare($sql);
-        $query->execute();
-        $query=$query->fetch();
-        $num = 'A'.($query["maxi"]+1);
+        $num = $this->getMaxId('CDI_ARTICLE','AR_NUMERO','A');
 
         $sql = 'INSERT INTO cdi_article (AR_NUMERO,AR_NOM,AR_POIDS,AR_COULEUR,AR_STOCK,AR_PA,AR_PV,FO_NUMERO) VALUES (:AR_NUMERO,:AR_NOM,:AR_POIDS,:AR_COULEUR,:AR_STOCK,:AR_PA,:AR_PV,:FO_NUMERO)';
         $query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));

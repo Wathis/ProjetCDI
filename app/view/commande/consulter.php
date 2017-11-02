@@ -18,6 +18,7 @@
     	<div>Date : <?php echo $value["CO_DATE"] ?></div>
     	<div>Numero du Magasin : <?php echo $value["MA_NUMERO"] ?></div>
     	<div>Numero du client : <?php echo $value["CL_NUMERO"] ?></div>
+        <div>Detail client : <?php echo $value["CL_NOM"] , ' ', $value["CL_PRENOM"] ?></div>
         <br>
 
     <?php 

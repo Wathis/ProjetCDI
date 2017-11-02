@@ -15,15 +15,7 @@ class Magasin extends Model {
 
     //Ajouter un nouveau magasin
     public function insererNouveauMagasin($nom,$prenom,$localite) {
-        $sql = 'SELECT max(CAST(SUBSTR(MA_NUMERO,2)as UNSIGNED INT)) as maxi FROM cdi_magasin ';
-        $query = $this->db->prepare($sql);
-        $query->execute();
-        $query=$query->fetch();
-        if ($query["maxi"] + 1 < 10) {
-            $num = 'M0'.($query["maxi"]+1);
-        } else {    
-            $num = 'M'.($query["maxi"]+1);
-        }
+        $num = $this->getMaxId('CDI_MAGASIN','MA_NUMERO','M');
 
         $sql = 'INSERT INTO cdi_magasin (MA_NUMERO,MA_NOM_GERANT,MA_PRENOM_GERANT,MA_LOCALITE) VALUES (:MA_NUMERO,:MA_NOM_GERANT,:MA_PRENOM_GERANT,:MA_LOCALITE)';
         $query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));

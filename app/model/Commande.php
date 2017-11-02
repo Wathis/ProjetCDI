@@ -16,7 +16,7 @@ class Commande extends Model {
 
     //Recupere les ids des commandes qui n'ont pas encore de livraisons
     public function getCommandeSansLivraisons() {
-        $sql = 'SELECT CO_NUMERO FROM CDI_COMMANDE WHERE CO_NUMERO NOT IN 
+        $sql = 'SELECT CO_NUMERO FROM CDI_COMMANDE JOIN CDI_CLIENT USING (CL_NUMERO) WHERE CO_NUMERO NOT IN 
                 ( 
                     SELECT CO_NUMERO FROM CDI_LIVRAISON 
                 );';
@@ -32,16 +32,7 @@ class Commande extends Model {
 
     //permet d'ajouter une nouvelle commande  avec ses articles
     public function nouvelleCommande($co_date,$ma_numero,$cl_numero, $articles) {
-        $sql = 'SELECT max(CAST(SUBSTR(CO_NUMERO,2)as UNSIGNED INT)) as maxi FROM cdi_commande ';
-        $query = $this->db->prepare($sql);
-        $query->execute();
-        $query=$query->fetch();
-        if ($query["maxi"] + 1 < 10) {
-            $co_numero_max = 'F0'.($query["maxi"] + 1);
-        } else {    
-            $co_numero_max = 'F'.($query["maxi"] + 1);
-        }
-
+        $co_numero_max = $this->getMaxId('CDI_COMMANDE','CO_NUMERO','C');
 
         $sql = 'INSERT INTO cdi_commande (CO_NUMERO,MA_NUMERO,CL_NUMERO,CO_DATE) VALUES (:CO_NUMERO,:MA_NUMERO,:CL_NUMERO,:CO_DATE)';
         $query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
@@ -111,7 +102,7 @@ class Commande extends Model {
 
     //Recuper les commandes qui ont pour numero article $ar_article
     public function getCommandeArticle($ar_numero){
-        $sql = "SELECT * FROM CDI_COMMANDE join cdi_ligcde using(co_numero) join cdi_article using(ar_numero) where ar_numero = '$ar_numero';";
+        $sql = "SELECT * FROM CDI_COMMANDE join cdi_ligcde using(co_numero) join cdi_article using(ar_numero) JOIN CDI_CLIENT USING (CL_NUMERO) where ar_numero = '$ar_numero';";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -119,7 +110,7 @@ class Commande extends Model {
 
     //Permet de recuperer les commandes concerné par le numero de client envoyé en parametre
     public function getCommandeClient($cl_numero) {
-        $sql = 'SELECT * FROM CDI_COMMANDE WHERE CL_NUMERO = :cl_numero;';
+        $sql = 'SELECT * FROM CDI_COMMANDE JOIN CDI_CLIENT USING (CL_NUMERO) WHERE CL_NUMERO = :cl_numero;';
         $query = $this->db->prepare($sql);
         $parameters = array(':cl_numero' => $cl_numero);
         $query->execute($parameters);
@@ -128,7 +119,7 @@ class Commande extends Model {
     public function getCommandeRecherche($champ,$choix,$ordre) {
         $choix= htmlspecialchars($choix);
         $champ=htmlspecialchars($champ);
-        $sql = 'SELECT * FROM CDI_COMMANDE where '.$choix.' like "%'.$champ.'%" order by '.$choix.' '.$ordre.'';
+        $sql = 'SELECT * FROM CDI_COMMANDE JOIN CDI_CLIENT USING (CL_NUMERO) where '.$choix.' like "%'.$champ.'%" order by '.$choix.' '.$ordre.'';
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

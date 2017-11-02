@@ -2,8 +2,8 @@
 
 	<input type="hidden" value="<?php echo $co_numero;?>" name="co_numero">
 
-	<table id="keywords" cellspacing="0" cellpadding="0">
-        <thead>
+	<table id="keywords" class="table table-striped table-bordered table-hover" cellspacing="0" cellpadding="0">
+		<thead class="thead-light">
 	        <tr>
 	            <th>Article concerné par la livraison</th>
 	            <th>Quantité livrée</th>
