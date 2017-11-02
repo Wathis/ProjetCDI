@@ -142,14 +142,14 @@ class Livraison extends Model {
     public function getLivraisonRecherche($champ,$choix,$ordre) {
         $choix= htmlspecialchars($choix);
         $champ=htmlspecialchars($champ);
-        $sql = 'SELECT * FROM CDI_LIVRAISON where '.$choix.' like "%'.$champ.'%" order by '.$choix.' '.$ordre.'';
+        $sql = 'SELECT * FROM CDI_LIVRAISON JOIN CDI_CLIENT USING (CL_NUMERO) where '.$choix.' like "%'.$champ.'%" order by '.$choix.' '.$ordre.'';
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
     }
     public function getLivraisonOrder($choix,$ordre){
         $choix= htmlspecialchars($choix);
-        $sql = 'SELECT * FROM CDI_LIVRAISON order by '.$choix.' '.$ordre.'';
+        $sql = 'SELECT * FROM CDI_LIVRAISON JOIN CDI_CLIENT USING (CL_NUMERO) order by '.$choix.' '.$ordre.'';
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

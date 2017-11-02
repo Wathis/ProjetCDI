@@ -108,6 +108,7 @@ class ClientController extends Controller {
 		$champ = $_POST["champ"];
 		$choix = $_POST["choix"];
 		$ordre = $_POST["ordre"];
+        $clientAvecRetard = $this->model->getClientRetards();
 		$clients = $this->model->getClientsRecherche($champ,$choix,$ordre);
 		require APP . 'view/_templates/header.php';
         require APP . 'view/client/index.php';
@@ -117,6 +118,7 @@ class ClientController extends Controller {
         $this->loadModel('Client');
         $choix = $_POST["tris"];
         $ordre = $_POST["ordre1"];
+        $clientAvecRetard = $this->model->getClientRetards();
         $clients = $this->model->getClientOrder($choix,$ordre);
         require APP . 'view/_templates/header.php';
         require APP . 'view/client/index.php';

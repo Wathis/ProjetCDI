@@ -111,6 +111,7 @@ class LivraisonController extends Controller {
         $choix = $_POST["tris"];
         $ordre = $_POST["ordre1"];
         $livraisons = $this->model->getLivraisonOrder($choix,$ordre);
+        $livraisonsEnRetardIds = $this->model->getLivraisonsEnRetard();
         require APP . 'view/_templates/header.php';
         require APP . 'view/livraison/index.php';
         require APP . 'view/_templates/footer.php';
@@ -142,6 +143,7 @@ class LivraisonController extends Controller {
         $choix = $_POST["choix"];
         $ordre = $_POST["ordre"];
         $livraisons = $this->model->getLivraisonRecherche($champ,$choix,$ordre);
+        $livraisonsEnRetardIds = $this->model->getLivraisonsEnRetard();
         require APP . 'view/_templates/header.php';
         require APP . 'view/livraison/index.php';
         require APP . 'view/_templates/footer.php';
