@@ -27,6 +27,6 @@
         <a class="nav-item nav-link" href="<?php echo URL; ?>article">Article</a>
         <a class="nav-item nav-link" href="<?php echo URL; ?>fournisseur">Fournisseur</a>
         <a class="nav-item nav-link" href="<?php echo URL; ?>magasin">Magasin</a>
-        <a class="nav-item nav-link" href="<?php echo URL; ?>parametre">Parametres</a>
         <a class="nav-item nav-link" href="<?php echo URL; ?>livraison">Livraisons</a>
+        <a class="nav-item nav-link" href="<?php echo URL; ?>parametre">Parametres</a>
     </nav>

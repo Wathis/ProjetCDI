@@ -13,6 +13,46 @@ class ParametreController extends Controller {
     public function resetAllAction() {
     	$this->loadModel("Parametre");
     	$this->model->resetAllTables();
-    	// header("Location:".URL."parametre");
+        $success = "Toute la base a été supprimé";
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/parametre/index.php';
+        require APP . 'view/_templates/footer.php';
+    }
+
+    public function insertFournisseurAction() {
+        $this->loadModel("Parametre");
+        $this->model->insererFournisseurs();
+        $success = "Les fournisseurs de base ont été ajouté";
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/parametre/index.php';
+        require APP . 'view/_templates/footer.php';
+    }
+
+    public function insererArticles() {
+        $this->loadModel('Parametre');
+        $this->model->insererArticles();
+        $success = "Les articles de base ont été ajouté";
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/parametre/index.php';
+        require APP . 'view/_templates/footer.php';
+    }
+
+     public function insertMagasinAction() {
+        $this->loadModel("Parametre");
+        $this->model->insererMagasins();
+        $success = "Les magasins de base ont été ajouté";
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/parametre/index.php';
+        require APP . 'view/_templates/footer.php';
+    }
+
+    //reset toute la base sauf la table article, client, 
+    public function resetCommandeAction() {
+        $this->loadModel("Parametre");
+        $this->model->resetCommande();
+        $success = "Livraison et commande ont été supprimé";
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/parametre/index.php';
+        require APP . 'view/_templates/footer.php';
     }
 }

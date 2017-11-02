@@ -339,19 +339,19 @@ CREATE TABLE `CDI_MAGASIN` (
 -- Contenu de la table `CDI_MAGASIN`
 --
 
-INSERT INTO `CDI_MAGASIN` (`MA_NUMERO`, `MA_LOCALITE`, `MA_GERANT`) VALUES
-('M01', 'PARIS 5E', 'BERTON Louis'),
-('M02', 'PARIS 10E', 'JANNEAU Luc'),
-('M03', 'LYON', 'MOUILLARD Marcel'),
-('M04', 'MARSEILLE', 'CAMUS Marius'),
-('M05', 'MONTPELLIER', 'BAIJOT Marc'),
-('M06', 'BORDEAUX', 'DETIENNE Nicole'),
-('M07', 'NANTES', 'DUMONT Henri'),
-('M08', 'TOURS', 'DEMARTEAU Renee'),
-('M09', 'ROUEN', 'NOSSENT Daniel'),
-('M10', 'LILLE', 'NIZET Jean Luc'),
-('M11', 'BRUXELLES', 'VANDAELE Annick'),
-('M12', 'LIEGE', 'HANNEAU Vincent');
+INSERT INTO `CDI_MAGASIN` (`MA_NUMERO`, `MA_LOCALITE`, `MA_NOM_GERANT`, `MA_PRENOM_GERANT`) VALUES
+('M01', 'PARIS 5E', 'BERTON','Louis'),
+('M02', 'PARIS 10E', 'JANNEAU','Luc'),
+('M03', 'LYON', 'MOUILLARD','Marcel'),
+('M04', 'MARSEILLE', 'CAMUS','Marius'),
+('M05', 'MONTPELLIER', 'BAIJOT','Marc'),
+('M06', 'BORDEAUX', 'DETIENNE','Nicole'),
+('M07', 'NANTES', 'DUMONT','Henri'),
+('M08', 'TOURS', 'DEMARTEAU','Renee'),
+('M09', 'ROUEN', 'NOSSENT','Daniel'),
+('M10', 'LILLE', 'NIZET','Jean Luc'),
+('M11', 'BRUXELLES', 'VANDAELE','Annick'),
+('M12', 'LIEGE', 'HANNEAU','Vincent');
 
 -- --------------------------------------------------------
 
