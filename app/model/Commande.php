@@ -34,7 +34,7 @@ class Commande extends Model {
     public function nouvelleCommande($co_date,$ma_numero,$cl_numero, $articles) {
         $co_numero_max = $this->getMaxId('CDI_COMMANDE','CO_NUMERO','C');
 
-        $sql = 'INSERT INTO cdi_commande (CO_NUMERO,MA_NUMERO,CL_NUMERO,CO_DATE) VALUES (:CO_NUMERO,:MA_NUMERO,:CL_NUMERO,:CO_DATE)';
+        $sql = 'INSERT INTO CDI_COMMANDE (CO_NUMERO,MA_NUMERO,CL_NUMERO,CO_DATE) VALUES (:CO_NUMERO,:MA_NUMERO,:CL_NUMERO,:CO_DATE)';
         $query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
         $query->execute(array(
@@ -47,7 +47,7 @@ class Commande extends Model {
         foreach ($articles as $articleId => $article) {
 
             //On cherche le PV de l'article pour effectuer la reduction
-            $sql = 'SELECT AR_PV FROM cdi_article WHERE AR_NUMERO = :AR_NUMERO;';
+            $sql = 'SELECT AR_PV FROM CDI_ARTICLE WHERE AR_NUMERO = :AR_NUMERO;';
             $query = $this->db->prepare($sql);
             $query->execute(array(
                 ':AR_NUMERO' => $articleId
@@ -55,7 +55,7 @@ class Commande extends Model {
             $query = $query->fetch();
             $PrixVente = $query["AR_PV"];
 
-            $sql = 'INSERT INTO cdi_ligcde (AR_NUMERO,CO_NUMERO,LIC_QTCMDEE,LIC_QTLIVREE,LIC_PU) VALUES (:AR_NUMERO,:CO_NUMERO,:LIC_QTCMDEE,:LIC_QTLIVREE,:LIC_PU)';
+            $sql = 'INSERT INTO CDI_LIGCDE (AR_NUMERO,CO_NUMERO,LIC_QTCMDEE,LIC_QTLIVREE,LIC_PU) VALUES (:AR_NUMERO,:CO_NUMERO,:LIC_QTCMDEE,:LIC_QTLIVREE,:LIC_PU)';
             $query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
             $query->execute(array(
                 ':AR_NUMERO' => $articleId,

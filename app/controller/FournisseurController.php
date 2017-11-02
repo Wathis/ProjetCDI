@@ -8,7 +8,7 @@ class FournisseurController extends Controller
     	$fournisseurs = $this->model->getAllFournisseurs();
         //Import des vues
         require APP . 'view/_templates/header.php';
-        require APP . 'view/Fournisseur/index.php';
+        require APP . 'view/fournisseur/index.php';
         require APP . 'view/_templates/footer.php';
     }
 
@@ -33,7 +33,7 @@ class FournisseurController extends Controller
 
         //Import des vues
         require APP . 'view/_templates/header.php';
-        require APP . 'view/Fournisseur/ajouter.php';
+        require APP . 'view/fournisseur/ajouter.php';
         require APP . 'view/_templates/footer.php';
     }
 
@@ -44,7 +44,7 @@ class FournisseurController extends Controller
         $ordre = $_POST["ordre"];
 		$fournisseurs = $this->model->getFournisseurRecherche($champ,$choix,$ordre);
 		require APP . 'view/_templates/header.php';
-        require APP . 'view/Fournisseur/index.php';
+        require APP . 'view/fournisseur/index.php';
         require APP . 'view/_templates/footer.php';
 	}
     public function trieFoAction() {
@@ -53,7 +53,7 @@ class FournisseurController extends Controller
         $ordre = $_POST["ordre1"];
         $fournisseurs = $this->model->getFournisseurOrder($choix,$ordre);
         require APP . 'view/_templates/header.php';
-        require APP . 'view/Fournisseur/index.php';
+        require APP . 'view/fournisseur/index.php';
         require APP . 'view/_templates/footer.php';
     }
 

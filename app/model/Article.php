@@ -7,7 +7,7 @@ class Article extends Model
     }
 
     public function getAllArticles() {
-        $sql = "SELECT * FROM cdi_article";
+        $sql = "SELECT * FROM CDI_ARTICLE";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -15,7 +15,7 @@ class Article extends Model
 
     //On check si il reste des articles en stock
     public function estEnStock($ar_numero,$quantity) {
-        $sql = "SELECT AR_STOCK FROM cdi_article WHERE  ar_numero = :ar_numero";
+        $sql = "SELECT AR_STOCK FROM CDI_ARTICLE WHERE  AR_NUMERO = :ar_numero";
         $query = $this->db->prepare($sql);
         $parameters = array(':ar_numero' => $ar_numero);
         $query->execute($parameters);
@@ -28,7 +28,7 @@ class Article extends Model
     public function ajouterArticle($article) {
         $num = $this->getMaxId('CDI_ARTICLE','AR_NUMERO','A');
 
-        $sql = 'INSERT INTO cdi_article (AR_NUMERO,AR_NOM,AR_POIDS,AR_COULEUR,AR_STOCK,AR_PA,AR_PV,FO_NUMERO) VALUES (:AR_NUMERO,:AR_NOM,:AR_POIDS,:AR_COULEUR,:AR_STOCK,:AR_PA,:AR_PV,:FO_NUMERO)';
+        $sql = 'INSERT INTO CDI_ARTICLE (AR_NUMERO,AR_NOM,AR_POIDS,AR_COULEUR,AR_STOCK,AR_PA,AR_PV,FO_NUMERO) VALUES (:AR_NUMERO,:AR_NOM,:AR_POIDS,:AR_COULEUR,:AR_STOCK,:AR_PA,:AR_PV,:FO_NUMERO)';
         $query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
         $query->execute(array(
@@ -46,7 +46,7 @@ class Article extends Model
 
     //supprimer un article
     public function deleteArticle($articleId) {
-        $sql = "DELETE FROM cdi_article WHERE ar_numero = :ar_numero";
+        $sql = "DELETE FROM CDI_ARTICLE WHERE AR_NUMERO = :ar_numero";
         $query = $this->db->prepare($sql);
         $parameters = array(':ar_numero' => $articleId);
         $query->execute($parameters);
@@ -54,7 +54,7 @@ class Article extends Model
     public function getArticleRecherche($champ,$choix,$ordre) {
         $choix= htmlspecialchars($choix);
         $champ=htmlspecialchars($champ);
-        $sql = 'SELECT * FROM cdi_article where '.$choix.' like "%'.$champ.'%" order by '.$choix.' '.$ordre.'';
+        $sql = 'SELECT * FROM CDI_ARTICLE where '.$choix.' LIKE "%'.$champ.'%" order by '.$choix.' '.$ordre.'';
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -82,7 +82,7 @@ class Article extends Model
     }
     public function getArticleOrder($choix,$ordre){
         $choix= htmlspecialchars($choix);
-        $sql = 'SELECT * FROM cdi_article order by '.$choix.' '.$ordre.'';
+        $sql = 'SELECT * FROM CDI_ARTICLE order by '.$choix.' '.$ordre.'';
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

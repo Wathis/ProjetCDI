@@ -6,7 +6,7 @@ class Client extends Model {
     }
 
 	public function getAllClients() {
-		$sql = 'SELECT * FROM cdi_client';
+		$sql = 'SELECT * FROM CDI_CLIENT';
 		$query = $this->db->prepare($sql);
 		$query->execute();
 		return $query->fetchAll();
@@ -29,14 +29,14 @@ class Client extends Model {
 	public function getClientsRecherche($champ,$choix,$ordre) {
 		$choix= htmlspecialchars($choix);
 		$champ=htmlspecialchars($champ);
-		$sql = 'SELECT * FROM cdi_client where '.$choix.' like "%'.$champ.'%" order by '.$choix.' '.$ordre.'';
+		$sql = 'SELECT * FROM CDI_CLIENT where '.$choix.' LIKE "%'.$champ.'%" order by '.$choix.' '.$ordre.'';
 		$query = $this->db->prepare($sql);
 		$query->execute();
 		return $query->fetchAll();
 	}
 	public function getClientOrder($choix,$ordre){
         $choix= htmlspecialchars($choix);
-        $sql = 'SELECT * FROM cdi_client order by '.$choix.' '.$ordre.'';
+        $sql = 'SELECT * FROM CDI_CLIENT order by '.$choix.' '.$ordre.'';
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -47,7 +47,7 @@ class Client extends Model {
 	public function ajouterUnClient($client) {
 		$num = $this->getMaxId('CDI_CLIENT','CL_NUMERO','C');
 
-		$sql = 'INSERT INTO cdi_client (CL_NUMERO,CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS,CL_CA,CL_TYPE,EMP_ENUME) VALUES (:CL_NUMERO,:CL_NOM,:CL_PRENOM,:CL_LOCALITE,:CL_PAYS,:CL_CA,:CL_TYPE,:EMP_ENUME)';
+		$sql = 'INSERT INTO CDI_CLIENT (CL_NUMERO,CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS,CL_CA,CL_TYPE,EMP_ENUME) VALUES (:CL_NUMERO,:CL_NOM,:CL_PRENOM,:CL_LOCALITE,:CL_PAYS,:CL_CA,:CL_TYPE,:EMP_ENUME)';
 		$query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
 		$query->execute(array(
@@ -81,14 +81,14 @@ class Client extends Model {
 	}
 	public function getClient($num)
 	{
-		$sql = "SELECT * FROM cdi_client where CL_NUMERO='$num'";
+		$sql = "SELECT * FROM CDI_CLIENT where CL_NUMERO='$num'";
 		$query = $this->db->prepare($sql);
 		$query->execute();
 		return $query->fetch(PDO::FETCH_ASSOC);
 	}
 	public function modifierClient($client,$num)
 	{
-		$sql = 'UPDATE cdi_client set CL_NOM= :CL_NOM,CL_PRENOM= :CL_PRENOM,CL_LOCALITE= :CL_LOCALITE,CL_PAYS= :CL_PAYS,CL_CA= :CL_CA,CL_TYPE= :CL_TYPE,EMP_ENUME= :EMP_ENUME where CL_NUMERO= :CL_NUMERO';
+		$sql = 'UPDATE CDI_CLIENT set CL_NOM= :CL_NOM,CL_PRENOM= :CL_PRENOM,CL_LOCALITE= :CL_LOCALITE,CL_PAYS= :CL_PAYS,CL_CA= :CL_CA,CL_TYPE= :CL_TYPE,EMP_ENUME= :EMP_ENUME where CL_NUMERO= :CL_NUMERO';
 		$query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$query->execute(array(
 			':CL_NUMERO' => $num,

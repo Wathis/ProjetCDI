@@ -87,7 +87,7 @@ class Livraison extends Model {
                 AND 
                 ( 
                     DATE_ADD((SELECT CO_DATE FROM CDI_COMMANDE WHERE CO_NUMERO = LIV.CO_NUMERO), INTERVAL 5 DAY) <= NOW()
-                    OR DATE_LIV is null
+                    OR DATE_LIV IS NULL
                 )";
         $query = $this->db->prepare($sql);
         $query->execute();
@@ -104,9 +104,9 @@ class Livraison extends Model {
     public function ajouterUneQuantiteArticleLivre($ar_numero,$li_numero,$quantite) {
         $sql = "SELECT * FROM CDI_LIGCDE WHERE ar_numero = '$ar_numero' AND co_numero = 
                 ( 
-                    select co_numero from cdi_commande where co_numero = 
+                    SELECT CO_NUMERO FROM CDI_COMMANDE WHERE co_numero = 
                     ( 
-                        select distinct co_numero from CDI_LIVRAISON Where li_numero = '$li_numero' 
+                        SELECT DISTINCT CO_NUMERO FROM CDI_LIVRAISON WHERE LI_NUMERO = '$li_numero' 
                     ) 
                 );";
         $query = $this->db->prepare($sql);
@@ -123,7 +123,7 @@ class Livraison extends Model {
             $sql = "UPDATE CDI_LIGLIV SET LIL_QTLIVREE = $nvQuantite WHERE ar_numero = '$ar_numero' AND li_numero = '$li_numero'";
             $query = $this->db->prepare($sql);
             $query->execute();
-             $sql = "UPDATE CDI_LIGCDE SET LIL_QTLIVREE = $nvQuantite WHERE ar_numero = '$ar_numero' AND co_numero = (select co_numero from cdi_commande where li_numero = '$li_numero')";
+             $sql = "UPDATE CDI_LIGCDE SET LIL_QTLIVREE = $nvQuantite WHERE AR_NUMERO = '$ar_numero' AND CO_NUMERO = (select CO_NUMERO from CDI_COMMANDE where LI_NUMERO = '$li_numero')";
             $query = $this->db->prepare($sql);
             $query->execute();
         }
@@ -142,14 +142,14 @@ class Livraison extends Model {
     public function getLivraisonRecherche($champ,$choix,$ordre) {
         $choix= htmlspecialchars($choix);
         $champ=htmlspecialchars($champ);
-        $sql = 'SELECT * FROM CDI_LIVRAISON JOIN CDI_CLIENT USING (CL_NUMERO) where '.$choix.' like "%'.$champ.'%" order by '.$choix.' '.$ordre.'';
+        $sql = 'SELECT * FROM CDI_LIVRAISON JOIN CDI_CLIENT USING (CL_NUMERO) WHERE '.$choix.' LIKE "%'.$champ.'%" ORDER BY '.$choix.' '.$ordre.'';
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
     }
     public function getLivraisonOrder($choix,$ordre){
         $choix= htmlspecialchars($choix);
-        $sql = 'SELECT * FROM CDI_LIVRAISON JOIN CDI_CLIENT USING (CL_NUMERO) order by '.$choix.' '.$ordre.'';
+        $sql = 'SELECT * FROM CDI_LIVRAISON JOIN CDI_CLIENT USING (CL_NUMERO) ORDER BY '.$choix.' '.$ordre.'';
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();

@@ -17,7 +17,7 @@ class Magasin extends Model {
     public function insererNouveauMagasin($nom,$prenom,$localite) {
         $num = $this->getMaxId('CDI_MAGASIN','MA_NUMERO','M');
 
-        $sql = 'INSERT INTO cdi_magasin (MA_NUMERO,MA_NOM_GERANT,MA_PRENOM_GERANT,MA_LOCALITE) VALUES (:MA_NUMERO,:MA_NOM_GERANT,:MA_PRENOM_GERANT,:MA_LOCALITE)';
+        $sql = 'INSERT INTO CDI_MAGASIN (MA_NUMERO,MA_NOM_GERANT,MA_PRENOM_GERANT,MA_LOCALITE) VALUES (:MA_NUMERO,:MA_NOM_GERANT,:MA_PRENOM_GERANT,:MA_LOCALITE)';
         $query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
         $query->execute(array(
@@ -32,7 +32,7 @@ class Magasin extends Model {
     public function getMagasinRecherche($champ,$choix,$ordre) {
         $choix= htmlspecialchars($choix);
         $champ=htmlspecialchars($champ);
-        $sql = 'SELECT * FROM cdi_magasin where '.$choix.' like "%'.$champ.'%" order by '.$choix.' '.$ordre.'';
+        $sql = 'SELECT * FROM CDI_MAGASIN where '.$choix.' LIKE "%'.$champ.'%" ORDER BY '.$choix.' '.$ordre.'';
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
