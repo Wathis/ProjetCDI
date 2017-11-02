@@ -15,7 +15,12 @@ class Parametre extends Model {
         $this->resetTable("CDI_LIVRAISON");
         $this->resetTable("CDI_MAGASIN");
     }
-
+    
+    public function recreerLaBaseDeDonnée() {
+        $sql = file_get_contents( UTILS  . 'bdd.sql');
+        $query = $this->db->prepare($sql);
+        $query->execute();
+    }
 
     public function resetCommande() {
         $this->resetTable("CDI_COMMANDE");

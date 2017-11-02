@@ -11,23 +11,25 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 --
--- Base de données :  `php_iut`
+-- Base de données :  `projetCDI`
 --
 
--- --------------------------------------------------------
 
---
--- Structure de la table `BILAN`
---
+DROP TABLE IF EXISTS BILAN;
+DROP TABLE IF EXISTS SONDAGE;
+DROP TABLE IF EXISTS CDI_POIMESSAGE;
+DROP TABLE IF EXISTS CDI_MESSAGE;
+DROP TABLE IF EXISTS CDI_ARTICLE;
+DROP TABLE IF EXISTS CDI_CLIENT;
+DROP TABLE IF EXISTS CDI_COMMANDE;
+DROP TABLE IF EXISTS CDI_FOURNISSEUR;
+DROP TABLE IF EXISTS CDI_LIGCDE;
+DROP TABLE IF EXISTS CDI_LIV_MESSAGE;
+DROP TABLE IF EXISTS CDI_LIVRAISON;
+DROP TABLE IF EXISTS CDI_MAGASIN;
+DROP TABLE IF EXISTS CDI_LIGLIV;
 
-CREATE TABLE `BILAN` (
-  `REP1_OUI` smallint(6) DEFAULT NULL,
-  `REP1_NON` smallint(6) DEFAULT NULL,
-  `REP2_PDTT` smallint(6) DEFAULT NULL,
-  `REP2_UNPE` smallint(6) DEFAULT NULL,
-  `REP2_BCPS` smallint(6) DEFAULT NULL,
-  `REP2_NSPP` smallint(6) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- --------------------------------------------------------
 
@@ -353,114 +355,37 @@ INSERT INTO `CDI_MAGASIN` (`MA_NUMERO`, `MA_LOCALITE`, `MA_NOM_GERANT`, `MA_PREN
 ('M11', 'BRUXELLES', 'VANDAELE','Annick'),
 ('M12', 'LIEGE', 'HANNEAU','Vincent');
 
--- --------------------------------------------------------
-
---
--- Structure de la table `CDI_MESSAGE`
---
-
-CREATE TABLE `CDI_MESSAGE` (
-  `MES_CODE` char(3) DEFAULT NULL,
-  `TEXTE` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Contenu de la table `CDI_MESSAGE`
---
-
-INSERT INTO `CDI_MESSAGE` (`MES_CODE`, `TEXTE`) VALUES
-('M01', 'La livraison existe'),
-('M02', 'Nouvelle livraison'),
-('M03', 'La commande existe'),
-('M04', 'La commande est inconnue'),
-('M05', 'L\'article existe'),
-('M15', 'La ligne Commande a ete mise en attente'),
-('M06', 'L\'article est inconnu'),
-('M07', 'L\'article n\'a pas ete commande'),
-('M08', 'L\'article a ete commande'),
-('M09', 'Le stock est insuffisant'),
-('M10', 'Le stock a ete mis a jour'),
-('M11', 'La ligne LIVRAISON a ete creee'),
-('M12', 'La ligne  LLIVR a ete creee'),
-('M13', 'La ligne LCDE  a ete mise a jour'),
-('M14', 'Commande entierement livree'),
-('M19', 'Le stock est égal à zéro'),
-('M00', 'Travail à rendre le');
-
--- -- --------------------------------------------------------
-
--- --
--- -- Structure de la table `CDI_POIDS`
--- --
-
--- CREATE TABLE `CDI_POIDS` (
---   `POI_CODE` tinyint(4) DEFAULT NULL,
---   `LIBELLE` varchar(5) DEFAULT NULL,
---   `POIDS_MIN` smallint(6) DEFAULT NULL,
---   `POIDS_MAX` smallint(6) DEFAULT NULL
--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --
--- -- Contenu de la table `CDI_POIDS`
--- --
-
--- INSERT INTO `CDI_POIDS` (`POI_CODE`, `LIBELLE`, `POIDS_MIN`, `POIDS_MAX`) VALUES
--- (2, 'LEGER', 101, 500),
--- (1, 'PLUME', 0, 100),
--- (4, 'LOURD', 2501, 9999),
--- (3, 'MOYEN', 501, 2500);
-
--- -- --------------------------------------------------------
-
---
--- -- Structure de la table `CDI_POIMESSAGE`
--- --
-
--- CREATE TABLE `CDI_POIMESSAGE` (
---   `MESSAGE_124` varchar(60) DEFAULT NULL,
---   `TOTAL_LU` tinyint(4) DEFAULT NULL,
---   `MESSAGE_3` varchar(60) DEFAULT NULL,
---   `LOGIN` varchar(10) DEFAULT NULL,
---   `DATE_JOUR` datetime DEFAULT NULL
--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -- --------------------------------------------------------
-
---
--- Structure de la table `SONDAGE`
---
-
-CREATE TABLE `SONDAGE` (
-  `NUM` double DEFAULT NULL,
-  `DATE_NAISSANCE` datetime DEFAULT NULL,
-  `REPONSE1` varchar(3) DEFAULT NULL,
-  `REPONSE2` varchar(30) DEFAULT NULL,
-  `VAL` smallint(6) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Contenu de la table `SONDAGE`
---
-
-INSERT INTO `SONDAGE` (`NUM`, `DATE_NAISSANCE`, `REPONSE1`, `REPONSE2`, `VAL`) VALUES
-(4, NULL, 'oui', 'un peu', 7),
-(5, NULL, 'oui', 'un peu', 7),
-(6, NULL, 'non', 'ne se prononce pas', 7),
-(7, NULL, 'non', 'pas du tout', 2),
-(20, NULL, 'oui', 'pas du tout', 8),
-(21, NULL, 'non', 'un peu', 2),
-(22, NULL, 'oui', 'pas du tout', 3),
-(30, NULL, 'oui', 'un peu', 3);
-
---
--- Index pour les tables exportées
---
-
 --
 -- Index pour la table `CDI_ARTICLE`
 --
 ALTER TABLE `CDI_ARTICLE`
   ADD PRIMARY KEY (`AR_NUMERO`);
+
+--
+-- Index pour la table `CDI_MAGASIN`
+--
+ALTER TABLE `CDI_MAGASIN`
+  ADD PRIMARY KEY (`MA_NUMERO`);
+
+  --
+-- Index pour la table `CDI_COMMANDE`
+--
+ALTER TABLE `CDI_COMMANDE`
+  ADD PRIMARY KEY (`CO_NUMERO`);
+
+
+ --
+-- Index pour la table `CDI_COMMANDE`
+--
+ALTER TABLE `CDI_LIVRAISON`
+  ADD PRIMARY KEY (`LI_NUMERO`);
+
+  --
+-- Index pour la table `CDI_COMMANDE`
+-- PERMET QUE LE COUPLE NOM - PRENOM - LOCALITE SOIT UNIQUE
+ALTER TABLE `CDI_CLIENT`
+  ADD PRIMARY KEY (`CL_NOM`,`CL_PRENOM`,`CL_LOCALITE`);
+
 
 --
 -- Index pour la table `CDI_FOURNISSEUR`

@@ -19,6 +19,15 @@ class ParametreController extends Controller {
         require APP . 'view/_templates/footer.php';
     }
 
+    public function recreerLaBaseDeDonneeAction() {
+        $this->loadModel("Parametre");
+        $this->model->recreerLaBaseDeDonnée();
+        $success = "La base a été recréé";
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/parametre/index.php';
+        require APP . 'view/_templates/footer.php';
+    }
+
     public function insertFournisseurAction() {
         $this->loadModel("Parametre");
         $this->model->insererFournisseurs();
@@ -28,7 +37,7 @@ class ParametreController extends Controller {
         require APP . 'view/_templates/footer.php';
     }
 
-    public function insererArticles() {
+    public function insertArticleAction() {
         $this->loadModel('Parametre');
         $this->model->insererArticles();
         $success = "Les articles de base ont été ajouté";
