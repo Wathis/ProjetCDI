@@ -22,7 +22,6 @@ class Article extends Model
         ));
         $query = $query->fetch();
         $nbr = (int) $query["nb"];
-        var_dump($nbr);
         return $nbr > 0;
     }
 
