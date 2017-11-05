@@ -18,7 +18,7 @@
 		<select id="magasin" name="MA_NUMERO">
 			<?php 
 				foreach ($magasins as $magasin) {
-					echo '<option value="' . $magasin["MA_NUMERO"] . '">' . $magasin["MA_GERANT"] . ' (' . $magasin["MA_LOCALITE"] . ')</option>';
+					echo '<option value="' . $magasin["MA_NUMERO"] . '">' . $magasin["MA_NOM_GERANT"] . ' '. $magasin["MA_PRENOM_GERANT"] .  ' (' . $magasin["MA_LOCALITE"] . ')</option>';
 				}
 			?>
 		</select><br \><br \>

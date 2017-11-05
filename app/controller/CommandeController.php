@@ -45,12 +45,15 @@ class CommandeController extends Controller {
                     } else {
                         $reduction = (int) $reduction;
                         if ($reduction > 100 || $reduction < 0) {
-                            $errors[] = "La reduction ne peut pas être superieure à 100% ou inferieur à 0%";
+                            $errors[] = "La reduction ne peut pas être superieure à 100% ou inferieure à 0%";
                         } else {
                             if (isset($_POST['quantity' . $i])){
                                 $article_id = $_POST['article' . $i];
                                 $quantity = $_POST['quantity' . $i];
-                                if ($this->model->estEnStock($article_id,$quantity)) {
+                                if ($this->model->stockEstNull($article_id)) {
+                                    $informations[] = "Le stock n'est pas géré pour cet article";
+                                }
+                                if ($this->model->estEnStock($article_id,$quantity) || $this->model->stockEstNull($article_id)) {
                                     $articlesPost[$article_id] = array(
                                         "LIC_QTCMDEE" => $quantity,
                                         "REDUCTION" => $reduction

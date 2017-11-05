@@ -13,6 +13,19 @@ class Article extends Model
         return $query->fetchAll();
     }
 
+    //Return true si le stock est null
+    public function stockEstNull($ar_numero) {
+        $sql = "SELECT count(AR_NUMERO) as nb FROM CDI_ARTICLE WHERE  AR_NUMERO = :AR_NUMERO AND AR_STOCK IS NULL";
+        $query = $this->db->prepare($sql);
+        $query->execute(array(
+            ":AR_NUMERO" => $ar_numero
+        ));
+        $query = $query->fetch();
+        $nbr = (int) $query["nb"];
+        var_dump($nbr);
+        return $nbr > 0;
+    }
+
     //On check si il reste des articles en stock
     public function estEnStock($ar_numero,$quantity) {
         $sql = "SELECT AR_STOCK FROM CDI_ARTICLE WHERE  AR_NUMERO = :ar_numero";
