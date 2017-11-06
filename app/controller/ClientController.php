@@ -16,7 +16,7 @@ class ClientController extends Controller {
 	public function ajouterAction() {
 		$this->loadModel('Pays');
         $errors = array();
-		$informationsDiverses = ["CL_NOM","CL_PRENOM","CL_LOCALITE","CL_CA"];
+		$informationsDiverses = ["CL_NOM","CL_PRENOM","CL_LOCALITE","CL_CA","CL_TYPE"];
 		$informationsObligatoires = ["CL_NOM","CL_PRENOM","CL_LOCALITE"];
 		//On charge les pays pour la vue
 		$pays = $this->model->getAllPays();
@@ -47,10 +47,16 @@ class ClientController extends Controller {
                     if (!empty($client["CL_CA"]) && $client["CL_TYPE"] === "Particulier") {
                         $errors[] = "Un particulier ne peut avoir de chiffre d'affaire";
                     }
-                    if (!preg_match('/^[0-9]+$/', $client["CL_CA"])) {
-                         $client["CL_CA"] = null;
+                    if ($client["CL_TYPE"] != "Particulier") {
+                        if (!empty($client["CL_CA"])) {
+                            if (!preg_match('/^[0-9]+$/', $client["CL_CA"])) {
+                                $errors[] = "Le chiffre d'affaire doit être un nombre";
+                            }
+                        }
+                    } else {
+                        $client["CL_CA"] = null;
                     }
-                    // //On securise les champs avant l'insertion en base de donnée
+                    // On securise les champs avant l'insertion en base de donnée
                     // $client = $form->securiserLesChamps($client);
                     //Si il y a aucune erreur, on peut ajouter le client
                     if (empty($errors)) {
@@ -59,7 +65,7 @@ class ClientController extends Controller {
                         if ($this->model->ajouterUnClient($client)) {
                             $success = "Client ajouté";
                         } else {
-                            $errors[] = "Ce client exite déjà";
+                            $errors[] = "Ce client existe déjà";
                         }
                         // echo "CL_NOM : ",$client["CL_NOM"],"<br \>";
                         // echo "CL_PRENOM : ",$client["CL_PRENOM"],"<br \>";
@@ -170,7 +176,13 @@ class ClientController extends Controller {
                 if (!empty($client["CL_CA"]) && $client["CL_TYPE"] === "Particulier") {
                     $errors[] = "Un particulier ne peut avoir de chiffre d'affaire";
                 }
-                if (!preg_match('/^[0-9]+$/', $client["CL_CA"])) {
+                if ($client["CL_TYPE"] != "Particulier") {
+                    if (!empty($client["CL_CA"])) {
+                        if (!preg_match('/^[0-9]+$/', $client["CL_CA"])) {
+                            $errors[] = "Le chiffre d'affaire doit être un nombre";
+                        }
+                    }
+                } else {
                     $client["CL_CA"] = null;
                 }
                 // //On securise les champs avant l'insertion en base de donnée

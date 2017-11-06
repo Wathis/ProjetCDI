@@ -28,6 +28,7 @@
 2017-11-06 12:54:52 : Le client existe déjà
 2017-11-06 12:54:56 : Client modifié
 2017-11-06 12:55:06 : Ce client exite déjà
+<<<<<<< HEAD
 2017-11-06 12:18:31 : La base a été recréé
 2017-11-06 12:18:35 : La base a été recréé
 2017-11-06 12:18:35 : La base a été recréé
@@ -47,3 +48,78 @@
 2017-11-06 13:47:01 : La Commande sélectionnée ne peut pas etre modifié
 2017-11-06 13:47:04 : La Commande sélectionnée ne peut pas etre modifié
 2017-11-06 13:47:09 : La Commande sélectionnée ne peut pas etre modifié
+=======
+<<<<<<< HEAD
+2017-11-06 12:13:33 : Veuillez rentrer un nombre
+2017-11-06 12:15:42 : Ce client existe déjà
+2017-11-06 12:15:49 : Ce client existe déjà
+2017-11-06 12:15:51 : Ce client existe déjà
+2017-11-06 12:15:51 : Ce client existe déjà
+2017-11-06 12:15:54 : Ce client existe déjà
+2017-11-06 12:15:54 : Ce client existe déjà
+2017-11-06 12:15:55 : Ce client existe déjà
+2017-11-06 12:15:55 : Ce client existe déjà
+2017-11-06 12:15:55 : Ce client existe déjà
+2017-11-06 12:16:03 : Ce client existe déjà
+2017-11-06 12:16:29 : Ce client existe déjà
+2017-11-06 12:17:35 : Ce client exite déjà
+2017-11-06 12:17:51 : Ce client exite déjà
+2017-11-06 12:19:13 : Un particulier ne peut avoir de chiffre d'affaire
+2017-11-06 12:19:17 : Veuillez rentrer un nombre
+2017-11-06 12:19:20 : Un particulier ne peut avoir de chiffre d'affaire
+2017-11-06 12:19:23 : Client ajouté
+2017-11-06 12:19:32 : Veuillez rentrer un nombre
+2017-11-06 12:19:34 : Un particulier ne peut avoir de chiffre d'affaire
+2017-11-06 12:20:08 : Un particulier ne peut avoir de chiffre d'affaire
+2017-11-06 12:20:09 : Un particulier ne peut avoir de chiffre d'affaire
+2017-11-06 12:20:16 : Ce client existe déjà
+2017-11-06 12:21:26 : Ce client existe déjà
+2017-11-06 12:21:45 : La base a été recréé
+2017-11-06 12:22:01 : Ce client existe déjà
+2017-11-06 12:22:19 : Ce client existe déjà
+2017-11-06 12:22:21 : Ce client existe déjà
+2017-11-06 12:22:21 : Ce client existe déjà
+2017-11-06 12:22:37 : Ce client existe déjà
+2017-11-06 12:23:19 : Ce client existe déjà
+2017-11-06 12:23:55 : Client ajouté
+2017-11-06 12:25:11 : Ce client exite déjà
+2017-11-06 12:25:25 : Le chiffre d'affaire ne doit être composé que de chiffres
+2017-11-06 12:25:37 : Ce client exite déjà
+2017-11-06 12:26:53 : Ce client exite déjà
+2017-11-06 12:26:59 : Ce client exite déjà
+2017-11-06 12:28:24 : Ce client exite déjà
+2017-11-06 12:28:31 : Le chiffre d'affaire ne doit être composé que de chiffres
+2017-11-06 12:28:39 : Client ajouté
+2017-11-06 12:30:53 : Ce client exite déjà
+2017-11-06 12:31:11 : Ce client exite déjà
+2017-11-06 12:31:29 : Ce client exite déjà
+2017-11-06 12:32:15 : Client ajouté
+2017-11-06 12:56:39 : La base a été recréé
+2017-11-06 12:57:46 : La base a été recréé
+2017-11-06 13:00:14 : Toute la base a été supprimé
+2017-11-06 13:00:17 : La base a été recréé
+2017-11-06 13:00:24 : La base a été recréé
+2017-11-06 13:00:54 : La base a été recréé
+=======
+2017-11-06 13:34:33 : La base a été recréée
+2017-11-06 13:35:22 : Commande passée
+2017-11-06 13:35:22 : Le stock n'est pas géré pour cet article
+2017-11-06 13:39:50 : Un article va être livré en trop
+2017-11-06 13:39:55 : Un article va être livré en trop
+2017-11-06 13:49:49 : Un particulier ne peut avoir de chiffre d'affaire
+2017-11-06 13:49:55 : Le chiffre d'affaire doit être un nombre
+2017-11-06 13:50:02 : Client ajouté
+2017-11-06 13:50:10 : Client ajouté
+2017-11-06 13:51:21 : Un particulier ne peut avoir de chiffre d'affaire
+2017-11-06 13:51:41 : Client ajouté
+2017-11-06 13:52:17 : Le chiffre d'affaire doit être un nombre
+2017-11-06 13:52:20 : Un particulier ne peut avoir de chiffre d'affaire
+2017-11-06 13:52:23 : Ce client exite déjà
+2017-11-06 13:52:27 : Client ajouté
+2017-11-06 14:00:21 : Veuillez remplir tous les champs obligatoires (*)
+>>>>>>> e604757fa820d1a5371a8e805316e2e404cdf5d1
+2017-11-06 13:12:24 : Client modifié
+2017-11-06 13:12:33 : Client modifié
+2017-11-06 13:12:48 : Client modifié
+2017-11-06 13:13:31 : Ce client exite déjà
+>>>>>>> 713f01b6a304009b8e6ed62488685732f2586f3e
