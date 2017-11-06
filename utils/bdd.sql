@@ -1,18 +1,6 @@
-﻿-- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
---
--- Client :  localhost:3306
--- Généré le :  Lun 25 Septembre 2017 à 11:39
--- Version du serveur :  5.6.35
--- Version de PHP :  7.1.1
-
+﻿
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
---
--- Base de données :  `projetCDI`
---
 
 DROP TABLE IF EXISTS CDI_PAYS;
 DROP TABLE IF EXISTS BILAN;
@@ -30,13 +18,6 @@ DROP TABLE IF EXISTS CDI_MAGASIN;
 DROP TABLE IF EXISTS CDI_LIGLIV;
 
 
-
--- --------------------------------------------------------
-
---
--- Structure de la table `CDI_ARTICLE`
---
-
 CREATE TABLE `CDI_ARTICLE` (
   `AR_NUMERO` char(8) NOT NULL DEFAULT '',
   `FO_NUMERO` char(8) DEFAULT NULL,
@@ -48,10 +29,6 @@ CREATE TABLE `CDI_ARTICLE` (
   `AR_PV` decimal(5,2) DEFAULT NULL,
   `ar_poicode` tinyint(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Contenu de la table `CDI_ARTICLE`
---
 
 INSERT INTO `CDI_ARTICLE` (`AR_NUMERO`, `FO_NUMERO`, `AR_NOM`, `AR_POIDS`, `AR_COULEUR`, `AR_STOCK`, `AR_PA`, `AR_PV`, `ar_poicode`) VALUES
 ('A01', 'F04', 'AGRAFEUSE', '150.000', 'ROUGE', 3, '7.00', '10.00', NULL),
@@ -79,11 +56,6 @@ INSERT INTO `CDI_ARTICLE` (`AR_NUMERO`, `FO_NUMERO`, `AR_NOM`, `AR_POIDS`, `AR_C
 ('A30', 'F01', 'Calculatrice', '80.000', 'Bleu', NULL, '6.00', '15.00', NULL),
 ('A31', 'F06', 'SOURIS', '35.000', 'Vert', 5, '2.00', '5.00', NULL);
 
--- --------------------------------------------------------
-
---
--- Structure de la table `CDI_CLIENT`
---
 
 CREATE TABLE `CDI_CLIENT` (
   `CL_NUMERO` char(8) DEFAULT NULL,
@@ -96,9 +68,6 @@ CREATE TABLE `CDI_CLIENT` (
   `EMP_ENUME` smallint(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Contenu de la table `CDI_CLIENT`
---
 
 INSERT INTO `CDI_CLIENT` (`CL_NUMERO`, `CL_NOM`, `CL_PRENOM`, `CL_PAYS`, `CL_LOCALITE`, `CL_CA`, `CL_TYPE`, `EMP_ENUME`) VALUES
 ('C01', 'DEFRERE', 'Marc', 'F', 'PARIS', NULL, 'Particulier', 7934),
@@ -118,11 +87,6 @@ INSERT INTO `CDI_CLIENT` (`CL_NUMERO`, `CL_NOM`, `CL_PRENOM`, `CL_PAYS`, `CL_LOC
 ('C15', 'DELVENNE', 'Christian', 'F', 'LYON', 590, 'Grand compte', 7436),
 ('C16', 'DEFEEZ', 'Andre', 'F', 'LYON', NULL, 'Particulier', 5814);
 
--- --------------------------------------------------------
-
---
--- Structure de la table `CDI_COMMANDE`
---
 
 CREATE TABLE `CDI_COMMANDE` (
   `CO_NUMERO` char(8) DEFAULT NULL,
@@ -131,9 +95,6 @@ CREATE TABLE `CDI_COMMANDE` (
   `MA_NUMERO` char(8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Contenu de la table `CDI_COMMANDE`
---
 
 INSERT INTO `CDI_COMMANDE` (`CO_NUMERO`, `CO_DATE`, `CL_NUMERO`, `MA_NUMERO`) VALUES
 ('C9713', '2017-10-18 00:00:00', 'C07', 'M10'),
@@ -151,20 +112,11 @@ INSERT INTO `CDI_COMMANDE` (`CO_NUMERO`, `CO_DATE`, `CL_NUMERO`, `MA_NUMERO`) VA
 ('C9712', '2017-10-18 00:00:00', 'C01', 'M11'),
 ('C9714', '2017-10-18 00:00:00', 'C06', 'M04');
 
--- --------------------------------------------------------
-
---
--- Structure de la table `CDI_FOURNISSEUR`
---
 
 CREATE TABLE `CDI_FOURNISSEUR` (
   `FO_NUMERO` char(8) NOT NULL DEFAULT '',
   `FO_NOM` char(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Contenu de la table `CDI_FOURNISSEUR`
---
 
 INSERT INTO `CDI_FOURNISSEUR` (`FO_NUMERO`, `FO_NOM`) VALUES
 ('F01', 'CATI O ELECTRONIC'),
@@ -174,11 +126,6 @@ INSERT INTO `CDI_FOURNISSEUR` (`FO_NUMERO`, `FO_NOM`) VALUES
 ('F05', 'ELECTROLAMP'),
 ('F06', 'RAMONAGE BDD');
 
--- --------------------------------------------------------
-
---
--- Structure de la table `CDI_LIGCDE`
---
 
 CREATE TABLE `CDI_LIGCDE` (
   `LIC_QTCMDEE` decimal(38,0) DEFAULT NULL,
@@ -189,58 +136,46 @@ CREATE TABLE `CDI_LIGCDE` (
   `DATE_LIV` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Contenu de la table `CDI_LIGCDE`
---
 
 INSERT INTO `CDI_LIGCDE` (`LIC_QTCMDEE`, `LIC_QTLIVREE`, `LIC_PU`, `CO_NUMERO`, `AR_NUMERO`, `DATE_LIV`) VALUES
-('4', '1', 28, 'C9713', 'A04', '2017-11-21 00:00:00'),
-('1', '1', 25, 'C9713', 'A03', '2017-11-21 00:00:00'),
-('10', '4', 2, 'C9713', 'A10', '2017-11-21 00:00:00'),
-('1', '1', 28, 'C9701', 'A04', '2017-11-21 00:00:00'),
-('1', '1', 2, 'C9702', 'A10', '2017-11-21 00:00:00'),
-('2', '1', 3, 'C9702', 'A11', '2017-11-21 00:00:00'),
-('3', '3', 3, 'C9702', 'A14', '2017-11-21 00:00:00'),
-('1', '1', 40, 'C9703', 'A02', '2017-11-21 00:00:00'),
-('2', '2', 25, 'C9703', 'A03', '2017-11-21 00:00:00'),
-('5', '5', 5, 'C9703', 'A15', '2017-11-21 00:00:00'),
-('1', '1', 3, 'C9703', 'A14', '2017-11-21 00:00:00'),
-('1', '1', 3, 'C9703', 'A13', '2017-11-21 00:00:00'),
-('2', '0', 40, 'C9704', 'A02', '2017-11-21 00:00:00'),
-('1', '0', 3, 'C9704', 'A12', '2017-11-21 00:00:00'),
-('10', '0', 3, 'C9704', 'A13', '2017-11-21 00:00:00'),
-('8', '0', 5, 'C9704', 'A15', '2017-11-21 00:00:00'),
-('1', '0', 28, 'C9704', 'A05', '2017-11-21 00:00:00'),
-('1', '1', 28, 'C9705', 'A06', '2017-11-21 00:00:00'),
-('1', '1', 35, 'C9705', 'A08', '2017-11-21 00:00:00'),
-('1', '1', 2, 'C9706', 'A10', '2017-11-21 00:00:00'),
-('1', '0', 28, 'C9707', 'A07', '2017-11-21 00:00:00'),
-('1', '1', 10, 'C9708', 'A01', '2017-11-21 00:00:00'),
-('3', '3', 3, 'C9709', 'A12', '2017-11-21 00:00:00'),
-('3', '3', 3, 'C9709', 'A13', '2017-11-21 00:00:00'),
-('3', '3', 3, 'C9709', 'A14', '2017-11-21 00:00:00'),
-('3', '3', 5, 'C9709', 'A15', '2017-11-21 00:00:00'),
-('8', '8', 3, 'C9710', 'A12', '2017-11-21 00:00:00'),
-('9', '3', 3, 'C9710', 'A02', '2017-11-21 00:00:00'),
-('1', '0', 39, 'C9711', 'A09', '2017-11-21 00:00:00'),
-('5', '5', 5, 'C9712', 'A15', '2017-11-21 00:00:00'),
-('3', '1', 25, 'C9712', 'A03', '2017-11-21 00:00:00');
+('4', '1', 28, 'C9713', 'A04', '2017-10-21 00:00:00'),
+('1', '1', 25, 'C9713', 'A03', '2017-10-21 00:00:00'),
+('10', '4', 2, 'C9713', 'A10', '2017-10-21 00:00:00'),
+('1', '1', 28, 'C9701', 'A04', '2017-10-21 00:00:00'),
+('1', '1', 2, 'C9702', 'A10', '2017-10-21 00:00:00'),
+('2', '1', 3, 'C9702', 'A11', '2017-10-21 00:00:00'),
+('3', '3', 3, 'C9702', 'A14', '2017-10-21 00:00:00'),
+('1', '1', 40, 'C9703', 'A02', '2017-10-21 00:00:00'),
+('2', '2', 25, 'C9703', 'A03', '2017-10-21 00:00:00'),
+('5', '5', 5, 'C9703', 'A15', '2017-10-21 00:00:00'),
+('1', '1', 3, 'C9703', 'A14', '2017-10-21 00:00:00'),
+('1', '1', 3, 'C9703', 'A13', '2017-10-21 00:00:00'),
+('2', '0', 40, 'C9704', 'A02', '2017-10-21 00:00:00'),
+('1', '0', 3, 'C9704', 'A12', '2017-10-21 00:00:00'),
+('10', '0', 3, 'C9704', 'A13', '2017-10-21 00:00:00'),
+('8', '0', 5, 'C9704', 'A15', '2017-10-21 00:00:00'),
+('1', '0', 28, 'C9704', 'A05', '2017-10-21 00:00:00'),
+('1', '1', 28, 'C9705', 'A06', '2017-10-21 00:00:00'),
+('1', '1', 35, 'C9705', 'A08', '2017-10-21 00:00:00'),
+('1', '1', 2, 'C9706', 'A10', '2017-10-21 00:00:00'),
+('1', '0', 28, 'C9707', 'A07', '2017-10-21 00:00:00'),
+('1', '1', 10, 'C9708', 'A01', '2017-10-21 00:00:00'),
+('3', '3', 3, 'C9709', 'A12', '2017-10-21 00:00:00'),
+('3', '3', 3, 'C9709', 'A13', '2017-10-21 00:00:00'),
+('3', '3', 3, 'C9709', 'A14', '2017-10-21 00:00:00'),
+('3', '3', 5, 'C9709', 'A15', '2017-10-21 00:00:00'),
+('8', '8', 3, 'C9710', 'A12', '2017-10-21 00:00:00'),
+('9', '3', 3, 'C9710', 'A02', '2017-10-21 00:00:00'),
+('1', '0', 39, 'C9711', 'A09', '2017-10-21 00:00:00'),
+('5', '5', 5, 'C9712', 'A15', '2017-10-21 00:00:00'),
+('3', '1', 25, 'C9712', 'A03', '2017-10-21 00:00:00');
 
--- --------------------------------------------------------
-
---
--- Structure de la table `CDI_LIGLIV`
---
 
 CREATE TABLE `CDI_LIGLIV` (
   `LIL_QTLIVREE` smallint(6) DEFAULT NULL,
   `LI_NUMERO` char(8) DEFAULT NULL,
   `AR_NUMERO` char(8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Contenu de la table `CDI_LIGLIV`
---
 
 INSERT INTO `CDI_LIGLIV` (`LIL_QTLIVREE`, `LI_NUMERO`, `AR_NUMERO`) VALUES
 (4, 'L9711', 'A10'),
@@ -275,43 +210,29 @@ INSERT INTO `CDI_LIGLIV` (`LIL_QTLIVREE`, `LI_NUMERO`, `AR_NUMERO`) VALUES
 (1, 'L9712', 'A03'),
 (5, 'L9712', 'A05');
 
--- --------------------------------------------------------
-
---
--- Structure de la table `CDI_LIVRAISON`
---
-
 CREATE TABLE `CDI_LIVRAISON` (
   `LI_NUMERO` char(8) DEFAULT NULL,
   `MA_NUMERO` char(8) DEFAULT NULL,
   `CO_NUMERO` char(8) DEFAULT NULL,
   `CL_NUMERO` char(8) DEFAULT NULL,
-  `DATE_LIV` datetime DEFAULT NULL
+  `DATE_LIV_PREVUE` datetime DEFAULT NULL,
+  `DATE_LIV_REELE` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Contenu de la table `CDI_LIVRAISON`
---
+INSERT INTO `CDI_LIVRAISON` (`LI_NUMERO`, `MA_NUMERO`, `CO_NUMERO`, `CL_NUMERO`, `DATE_LIV_PREVUE`, `DATE_LIV_REELE`) VALUES
+('L9701', 'M03', 'C9701', 'C07', '2017-11-21 00:00:00', NULL),
+('L9702', 'M12', 'C9702', 'C06', '2017-10-21 00:00:00', '2017-10-22 00:00:00'),
+('L9703', 'M01', 'C9703', 'C13', '2017-10-21 00:00:00', NULL),
+('L9704', 'M02', 'C9704', 'C01', '2017-10-21 00:00:00', '2017-10-25 00:00:00'),
+('L9705', 'M11', 'C9705', 'C08', '2017-10-21 00:00:00', '2017-10-24 00:00:00'),
+('L9706', 'M04', 'C9706', 'C05', '2017-10-21 00:00:00', '2017-10-21 00:00:00'),
+('L9707', 'M11', 'C9707', 'C04', '2017-10-21 00:00:00', NULL),
+('L9708', 'M12', 'C9708', 'C03', '2017-10-21 00:00:00', '2017-10-24 00:00:00'),
+('L9709', 'M11', 'C9709', 'C10', '2017-10-21 00:00:00', '2017-10-23 00:00:00'),
+('L9710', 'M11', 'C9710', 'C01', '2017-10-21 00:00:00', '2017-10-22 00:00:00'),
+('L9711', 'M01', 'C9711', 'C12', '2017-10-21 00:00:00', '2017-10-24 00:00:00'),
+('L9712', 'M11', 'C9712', 'C01', '2017-10-21 00:00:00', '2017-10-24 00:00:00');
 
-INSERT INTO `CDI_LIVRAISON` (`LI_NUMERO`, `MA_NUMERO`, `CO_NUMERO`, `CL_NUMERO`, `DATE_LIV`) VALUES
-('L9701', 'M03', 'C9701', 'C07', '2017-11-21 00:00:00'),
-('L9702', 'M12', 'C9702', 'C06', '2017-11-21 00:00:00'),
-('L9703', 'M01', 'C9703', 'C13', '2017-11-21 00:00:00'),
-('L9704', 'M02', 'C9704', 'C01', '2017-11-21 00:00:00'),
-('L9705', 'M11', 'C9705', 'C08', '2017-11-21 00:00:00'),
-('L9706', 'M04', 'C9706', 'C05', '2017-11-21 00:00:00'),
-('L9707', 'M11', 'C9707', 'C04', '2017-11-21 00:00:00'),
-('L9708', 'M12', 'C9708', 'C03', '2017-11-21 00:00:00'),
-('L9709', 'M11', 'C9709', 'C10', '2017-11-21 00:00:00'),
-('L9710', 'M11', 'C9710', 'C01', '2017-11-21 00:00:00'),
-('L9711', 'M01', 'C9711', 'C12', '2017-11-21 00:00:00'),
-('L9712', 'M11', 'C9712', 'C01', '2017-11-21 00:00:00');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `CDI_LIV_MESSAGE`
---
 
 CREATE TABLE `CDI_LIV_MESSAGE` (
   `LIV_NUMERO` char(8) DEFAULT NULL,
@@ -324,11 +245,6 @@ CREATE TABLE `CDI_LIV_MESSAGE` (
   `LOGIN` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Structure de la table `CDI_MAGASIN`
---
 
 CREATE TABLE `CDI_MAGASIN` (
   `MA_NUMERO` char(8) DEFAULT NULL,
@@ -337,9 +253,6 @@ CREATE TABLE `CDI_MAGASIN` (
   `MA_PRENOM_GERANT` varchar(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Contenu de la table `CDI_MAGASIN`
---
 
 INSERT INTO `CDI_MAGASIN` (`MA_NUMERO`, `MA_LOCALITE`, `MA_NOM_GERANT`, `MA_PRENOM_GERANT`) VALUES
 ('M01', 'PARIS 5E', 'BERTON','Louis'),
@@ -355,52 +268,35 @@ INSERT INTO `CDI_MAGASIN` (`MA_NUMERO`, `MA_LOCALITE`, `MA_NOM_GERANT`, `MA_PREN
 ('M11', 'BRUXELLES', 'VANDAELE','Annick'),
 ('M12', 'LIEGE', 'HANNEAU','Vincent');
 
---
--- Index pour la table `CDI_ARTICLE`
---
 ALTER TABLE `CDI_ARTICLE`
   ADD PRIMARY KEY (`AR_NUMERO`);
 
---
--- Index pour la table `CDI_MAGASIN`
---
 ALTER TABLE `CDI_MAGASIN`
   ADD PRIMARY KEY (`MA_NUMERO`);
 
-  --
--- Index pour la table `CDI_COMMANDE`
---
+
 ALTER TABLE `CDI_COMMANDE`
   ADD PRIMARY KEY (`CO_NUMERO`);
 
 
- --
--- Index pour la table `CDI_COMMANDE`
---
 ALTER TABLE `CDI_LIVRAISON`
   ADD PRIMARY KEY (`LI_NUMERO`);
 
-  --
--- Index pour la table `CDI_COMMANDE`
--- PERMET QUE LE COUPLE NOM - PRENOM - LOCALITE SOIT UNIQUE
 ALTER TABLE `CDI_CLIENT`
   ADD PRIMARY KEY (`CL_NOM`,`CL_PRENOM`,`CL_LOCALITE`);
 
 
---
--- Index pour la table `CDI_FOURNISSEUR`
---
 ALTER TABLE `CDI_FOURNISSEUR`
   ADD PRIMARY KEY (`FO_NUMERO`);
 
-  CREATE TABLE CDI_PAYS 
+CREATE TABLE CDI_PAYS 
 (
-  CODE_CIO varchar(3) 
-, CODE_ISO varchar(3) 
-, NOM varchar(50) 
-, ANNEE_CREATION int
-, ANNEE_DISPARITION int 
-) ;
+  CODE_CIO varchar(3),
+  CODE_ISO varchar(3),
+  NOM varchar(50),
+  ANNEE_CREATION int,
+  ANNEE_DISPARITION int 
+);
 
 Insert into CDI_PAYS (CODE_CIO,CODE_ISO,NOM,ANNEE_CREATION,ANNEE_DISPARITION) values ('ERI','ER ','ERYTHREE',null,null);
 Insert into CDI_PAYS (CODE_CIO,CODE_ISO,NOM,ANNEE_CREATION,ANNEE_DISPARITION) values ('ETH','ET ','ETHIOPIE',null,null);

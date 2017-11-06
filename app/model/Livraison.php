@@ -27,7 +27,7 @@ class Livraison extends Model {
     }
 
     //Insere une nouvelle livraison et ligne de livraison
-    public function insererNouvelleLivraison($co_numero,$articlesLivres) {
+    public function insererNouvelleLivraison($co_numero,$articlesLivres,$date_liv_prevue) {
         $li_numero_max = $this->getMaxId('CDI_LIVRAISON','LI_NUMERO','L');
 
         $sql = 'INSERT INTO CDI_LIVRAISON (LI_NUMERO,CO_NUMERO,DATE_LIV, MA_NUMERO, CL_NUMERO) VALUES (:LI_NUMERO,:CO_NUMERO,:DATE_LIV,
@@ -39,12 +39,12 @@ class Livraison extends Model {
             ))';
         $query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-        $dateLiv = date("Y-m-d H:i:s");
+        $dateLiv = $date_liv_prevue;
 
         $query->execute(array(
             ':LI_NUMERO' => $li_numero_max,
             ':CO_NUMERO' =>  $co_numero,
-            ':DATE_LIV' =>  $dateLiv
+            ':DATE_LIV' =>  $date_liv_prevue
         ));
 
         foreach ($articlesLivres as $article) {
@@ -55,15 +55,52 @@ class Livraison extends Model {
                 ':AR_NUMERO' =>  $article["AR_NUMERO"],
                 ':LIL_QTLIVREE' => $article["QUANTITE"]
             ));
-            $sql = "UPDATE CDI_LIGCDE SET DATE_LIV = :DATE_LIV, LIC_QTLIVREE = (SELECT LIC_QTLIVREE FROM (select * from CDI_LIGCDE) as test WHERE AR_NUMERO = :AR_NUMERO AND CO_NUMERO = :CO_NUMERO ) + :LIC_QTLIVREE WHERE AR_NUMERO = :AR_NUMERO AND CO_NUMERO = :CO_NUMERO;";
-            $this->db->prepare($sql)->execute(array(
-                ':CO_NUMERO' => $co_numero,
-                ':AR_NUMERO' =>  $article["AR_NUMERO"],
-                ':LIC_QTLIVREE' => $article["QUANTITE"],
-                ':DATE_LIV' => $dateLiv
+        }
+
+    }
+
+    //Permet de dire qu'une livraison a été effectuée en faisant un update sur LIGCDE
+    public function livraisonEffectuee($li_numero) {
+        //Recuperer articles de la commande
+        $sql = "SELECT AR_NUMERO FROM CDI_LIGLIV WHERE LI_NUMERO = :LI_NUMERO";
+        $query = $this->db->prepare($sql);
+        $query->execute(array(
+            ":LI_NUMERO" => $li_numero
+        ));
+        $results = $query->fetchAll();
+        $date = date("Y-m-d H:i:s");
+        foreach ($results as $result) {
+            $sql = "UPDATE CDI_LIGCDE SET DATE_LIV = :DATE_LIV, LIC_QTLIVREE = 
+                (
+                    SELECT LIC_QTLIVREE FROM (select * from CDI_LIGCDE) as test 
+                    WHERE AR_NUMERO = :AR_NUMERO 
+                    AND CO_NUMERO = (SELECT CO_NUMERO FROM CDI_LIVRAISON WHERE LI_NUMERO = :LI_NUMERO )
+                ) 
+                + 
+                (
+                    SELECT LIL_QTLIVREE FROM CDI_LIGLIV WHERE AR_NUMERO = :AR_NUMERO AND LI_NUMERO = :LI_NUMERO
+                )
+                WHERE AR_NUMERO = :AR_NUMERO 
+                AND CO_NUMERO = 
+                (
+                    SELECT CO_NUMERO FROM CDI_LIVRAISON WHERE LI_NUMERO = :LI_NUMERO   
+                )
+                ;";
+            $query = $this->db->prepare($sql);
+            $return = $query->execute(array(
+                ":AR_NUMERO" => $result["AR_NUMERO"],
+                ":LI_NUMERO" => $li_numero,
+                ":DATE_LIV" => $date
             ));
         }
 
+        //On met à la date du jour la date de livraison reele
+        $sql = "UPDATE CDI_LIVRAISON SET DATE_LIV_REELE = :DATE_LIV WHERE LI_NUMERO = :LI_NUMERO";
+        $query = $this->db->prepare($sql);
+        $query->execute(array(
+            ":LI_NUMERO" => $li_numero,
+            ":DATE_LIV" => $date
+        ));
     }
 
     //Permet de recuperer les livraisons concerné par le numero de commande envoyé en parametre
@@ -78,17 +115,9 @@ class Livraison extends Model {
         return $query->fetchAll();
     }
 
-    //Renvoie les ids des commandes 
+    //Renvoie les ids des commandes
     public function getLivraisonsEnRetard(){
-        $sql = "SELECT LI_NUMERO FROM CDI_LIVRAISON as LIV WHERE CO_NUMERO IN 
-                ( 
-                    SELECT CO_NUMERO FROM CDI_LIGCDE WHERE LIC_QTCMDEE > LIC_QTLIVREE 
-                ) 
-                AND 
-                ( 
-                    DATE_ADD((SELECT CO_DATE FROM CDI_COMMANDE WHERE CO_NUMERO = LIV.CO_NUMERO), INTERVAL 5 DAY) <= NOW()
-                    OR DATE_LIV IS NULL
-                )";
+        $sql = "SELECT LI_NUMERO FROM CDI_LIVRAISON as LIV WHERE DATE_LIV_REELE IS NULL AND DATE_LIV_PREVUE <= NOW()";
         $query = $this->db->prepare($sql);
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_ASSOC); 

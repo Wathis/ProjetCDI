@@ -14,6 +14,14 @@ class Commande extends Model {
         return $query->fetchAll();
     }
 
+    public function getArticlesAvecLivraisonsEnCours($co_numero) {
+        $sql = 'SELECT * FROM CDI_LIGCDE JOIN CDI_ARTICLE using (AR_NUMERO) WHERE CO_NUMERO = :co_numero;';
+        $query = $this->db->prepare($sql);
+        $parameters = array(':co_numero' => $co_numero);
+        $query->execute($parameters);
+        return $query->fetchAll();
+    }
+
     //Renvoie les ids des commandes 
     public function getCommandesEnRetard(){
         $sql = "SELECT CO_NUMERO FROM CDI_LIGCDE LIG WHERE LIC_QTCMDEE > LIC_QTLIVREE AND ( DATE_ADD((SELECT CO_DATE FROM CDI_COMMANDE WHERE CO_NUMERO = LIG.CO_NUMERO), INTERVAL 5 DAY) <= NOW() OR DATE_LIV IS NULL )";
@@ -26,6 +34,16 @@ class Commande extends Model {
             $ids[] = $result["CO_NUMERO"];
         }
         return $ids;
+    }
+
+
+    //Donne la commande corespondant a une livraison
+    public function getCommandeById($co_numero){
+        $sql = 'SELECT * FROM CDI_COMMANDE WHERE CO_NUMERO = :CO_NUMERO;';
+        $query = $this->db->prepare($sql);
+        $parameters = array(':CO_NUMERO' => $co_numero);
+        $query->execute($parameters);
+        return $query->fetch();
     }
 
     //Recupere les ids des commandes qui n'ont pas encore de livraisons

@@ -20,6 +20,7 @@ class Parametre extends Model {
         $sql = file_get_contents( UTILS  . 'bdd.sql');
         $query = $this->db->prepare($sql);
         $query->execute();
+        return $query->fetch();
     }
 
     public function resetCommande() {

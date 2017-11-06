@@ -44,29 +44,37 @@
         <thead class="thead-light">
         <tr>
             <th>Numero</th>
-            <th>Date de livraison</th>
+            <th>Date de livraison prévue</th>
             <th>Nom client</th>
             <th>Numero magasin</th>
             <th>Numero commande</th>
+            <th>Etat commande</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
         <?php foreach ($livraisons as $livraison) { ?>
             <tr>
-                <td><?php echo $livraison["LI_NUMERO"]; ?></td>
-                <td> <?php echo $livraison["DATE_LIV"];?> </td>
-                <td><?php echo $livraison["CL_NOM"]; ?></td>
-                <td><?php echo $livraison["MA_NUMERO"]; ?></td>
                 <td>
                     <?php 
                         //Alors c'est un retard
                         if (in_array($livraison["LI_NUMERO"],$livraisonsEnRetardIds)) {
-                            echo '<span style="color:red">' . $livraison["CO_NUMERO"] . '</span>';
+                            echo '<span style="color:red">' . $livraison["LI_NUMERO"] . '</span>';
                         } else {
-                            echo $livraison["CO_NUMERO"]; 
+                            echo $livraison["LI_NUMERO"]; 
                         }   
                     ?>
+                </td>
+                <td> <?php echo $livraison["DATE_LIV_PREVUE"];?> </td>
+                <td><?php echo $livraison["CL_NOM"]; ?></td>
+                <td><?php echo $livraison["MA_NUMERO"]; ?></td>
+                <td><?php echo $livraison["CO_NUMERO"];?></td>
+                <td>
+                    <?php if (!$livraison["DATE_LIV_REELE"]){ ?>
+                        <a class="btn btn-warning" href=<?php echo '"' . URL . 'Livraison/livraisonTerminee?li_numero=' . $livraison["LI_NUMERO"] . '"'; ?>>Terminer</a>
+                    <?php } else { ?>
+                        <span style="color : green">Livraison effectuée</span>
+                    <?php } ?>
                 </td>
                 <td><div class="w3-container">
                         <div class="w3-dropdown-hover">

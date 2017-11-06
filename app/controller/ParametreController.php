@@ -21,8 +21,12 @@ class ParametreController extends Controller {
 
     public function recreerLaBaseDeDonneeAction() {
         $this->loadModel("Parametre");
-        $this->model->recreerLaBaseDeDonnée();
-        $success = "La base a été recréée";
+        $result = $this->model->recreerLaBaseDeDonnée();
+        if ($result){
+            $success = "La base a été recréée";
+        } else {
+            $errors[] = "Erreur de script, executez à la main : /utils/bdd.sql dans phpmyadmin";
+        }
         require APP . 'view/_templates/header.php';
         require APP . 'view/parametre/index.php';
         require APP . 'view/_templates/footer.php';

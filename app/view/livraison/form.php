@@ -2,6 +2,11 @@
 
 	<input type="hidden" value="<?php echo $co_numero;?>" name="co_numero">
 
+	<div class="form-group row">
+			<label class="col-sm-2 col-form-label" for="date">Date prévue (*):</label>
+			<input class="form-control col-sm-2" id="date" type="date" name="DATE_LIV_PREVUE"><br \>
+		</div>
+
 	<table id="keywords" class="table table-striped table-bordered table-hover" cellspacing="0" cellpadding="0">
 		<thead class="thead-light">
 	        <tr>
