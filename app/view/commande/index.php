@@ -16,7 +16,7 @@
 
     </br>
     <?php  
-        req
+    require APP . 'view/_templates/alert.php';
     ?>
     </br>
    <table id="keywords" class="table table-striped table-bordered table-hover" cellspacing="0" cellpadding="0">
