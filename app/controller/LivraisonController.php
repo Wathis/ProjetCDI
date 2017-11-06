@@ -22,7 +22,21 @@ class LivraisonController extends Controller {
 
         if (isset($_POST["submit"])) {
             if (isset($_POST["CO_NUMERO"]) && !empty($_POST["CO_NUMERO"])){
+                $co_numero = $_POST["CO_NUMERO"];
+                $articles = $this->model->getArticles($co_numero);
+                $amodif = 0;
+                foreach ($articles as $val)
+                    {
+                        if ($val["LIC_QTCMDEE"]-$val["LIC_QTLIVREE"] != 0)
+                            {
+                                $amodif = 1;                                                
+                    }
+                }
+                if($amodif == 0){
+                    $errors[] = "La Commande sélectionnée ne peut pas etre modifié";
+                }else{
                 header("Location:".URL."livraison/ajouter?co_numero=" . $_POST["CO_NUMERO"]);
+            }
             } else {
                 $errors[] = "Vous devez choisir une commande";
             }

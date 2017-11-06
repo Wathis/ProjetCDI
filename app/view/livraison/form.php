@@ -7,6 +7,8 @@
 	        <tr>
 	            <th>Article concerné par la livraison</th>
 	            <th>Quantité livrée</th>
+	            <th>Quantité deja Livrée</th>
+	            <th>Quantité non Livrée</th>
 	        </tr>
         </thead>
         <tbody>
@@ -21,6 +23,12 @@
 				</td>
 				<td>
 					<input type="number" placeholder="3" name="quantity<?php echo $article['AR_NUMERO'] ?>">
+				</td>
+				<td>
+					<?php echo $article['LIC_QTLIVREE']; ?>			
+				</td>
+				<td>
+					<?php $Qrest = $article['LIC_QTCMDEE']-$article['LIC_QTLIVREE'];echo $Qrest; ?>
 				</td>
 			</tr>
 		<?php
