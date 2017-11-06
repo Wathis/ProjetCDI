@@ -28,6 +28,7 @@
 2017-11-06 12:54:52 : Le client existe déjà
 2017-11-06 12:54:56 : Client modifié
 2017-11-06 12:55:06 : Ce client exite déjà
+<<<<<<< HEAD
 2017-11-06 12:13:33 : Veuillez rentrer un nombre
 2017-11-06 12:15:42 : Ce client existe déjà
 2017-11-06 12:15:49 : Ce client existe déjà
@@ -78,3 +79,21 @@
 2017-11-06 13:00:17 : La base a été recréé
 2017-11-06 13:00:24 : La base a été recréé
 2017-11-06 13:00:54 : La base a été recréé
+=======
+2017-11-06 13:34:33 : La base a été recréée
+2017-11-06 13:35:22 : Commande passée
+2017-11-06 13:35:22 : Le stock n'est pas géré pour cet article
+2017-11-06 13:39:50 : Un article va être livré en trop
+2017-11-06 13:39:55 : Un article va être livré en trop
+2017-11-06 13:49:49 : Un particulier ne peut avoir de chiffre d'affaire
+2017-11-06 13:49:55 : Le chiffre d'affaire doit être un nombre
+2017-11-06 13:50:02 : Client ajouté
+2017-11-06 13:50:10 : Client ajouté
+2017-11-06 13:51:21 : Un particulier ne peut avoir de chiffre d'affaire
+2017-11-06 13:51:41 : Client ajouté
+2017-11-06 13:52:17 : Le chiffre d'affaire doit être un nombre
+2017-11-06 13:52:20 : Un particulier ne peut avoir de chiffre d'affaire
+2017-11-06 13:52:23 : Ce client exite déjà
+2017-11-06 13:52:27 : Client ajouté
+2017-11-06 14:00:21 : Veuillez remplir tous les champs obligatoires (*)
+>>>>>>> e604757fa820d1a5371a8e805316e2e404cdf5d1
