@@ -38,12 +38,7 @@
     </form> -->
     </br></br>
     <?php  
-        foreach ($livraisons as $livraison) {
-            if (in_array($livraison["LI_NUMERO"],$livraisonsEnRetardIds)){
-                echo '<div style="color:red">Des commandes sont en retard de plus de 5 jours</div>';
-                break;
-            }
-        }
+        require APP . 'view/_templates/alert.php';
     ?>
     <table id="keywords" class="table table-striped table-bordered table-hover" cellspacing="0" cellpadding="0">
         <thead class="thead-light">
