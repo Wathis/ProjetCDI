@@ -22,7 +22,7 @@ class ParametreController extends Controller {
     public function recreerLaBaseDeDonneeAction() {
         $this->loadModel("Parametre");
         $this->model->recreerLaBaseDeDonnée();
-        $success = "La base a été recréé";
+        $success = "La base a été recréée";
         require APP . 'view/_templates/header.php';
         require APP . 'view/parametre/index.php';
         require APP . 'view/_templates/footer.php';
