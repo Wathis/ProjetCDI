@@ -16,12 +16,7 @@
 
     </br>
     <?php  
-        foreach ($commandes as $commande) {
-            if (in_array($commande["CO_NUMERO"],$commandesSansLivraisons)){
-                echo '<div class="alert alert-danger">Des commandes n\'ont pas de livraison</div>';
-                break;
-            }
-        }
+        req
     ?>
     </br>
    <table id="keywords" class="table table-striped table-bordered table-hover" cellspacing="0" cellpadding="0">

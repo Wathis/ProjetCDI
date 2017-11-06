@@ -7,7 +7,7 @@ class LivraisonController extends Controller {
 		$this->loadModel('Livraison');
 		$livraisons = $this->model->getAllLivraisons();
         $livraisonsEnRetardIds = $this->model->getLivraisonsEnRetard();
-        $errors[] = $this->chargerAlerteCommandeRetard($livraisons, $livraisonsEnRetardIds);
+        $errors[] = $this->chargerAlertesCommandesRetards($livraisons, $livraisonsEnRetardIds);
 		require APP . 'view/_templates/header.php';
         require APP . 'view/livraison/index.php';
         require APP . 'view/_templates/footer.php';
@@ -91,7 +91,7 @@ class LivraisonController extends Controller {
     public function commandesAction() {
         $this->loadModel('Livraison');
         $livraisonsEnRetardIds = $this->model->getLivraisonsEnRetard();
-        $errors[] = $this->chargerAlerteCommandeRetard($livraisons, $livraisonsEnRetardIds);
+        $errors[] = $this->chargerAlertesCommandesRetards($livraisons, $livraisonsEnRetardIds);
         $form = new Form();
         if (isset($_GET)) {
             if (isset($_GET["co_numero"]) && !empty($_GET["co_numero"])){
@@ -114,7 +114,7 @@ class LivraisonController extends Controller {
         $ordre = $_POST["ordre1"];
         $livraisons = $this->model->getLivraisonOrder($choix,$ordre);
         $livraisonsEnRetardIds = $this->model->getLivraisonsEnRetard();
-        $errors[] = $this->chargerAlerteCommandeRetard($livraisons, $livraisonsEnRetardIds);
+        $errors[] = $this->chargerAlertesCommandesRetards($livraisons, $livraisonsEnRetardIds);
         require APP . 'view/_templates/header.php';
         require APP . 'view/livraison/index.php';
         require APP . 'view/_templates/footer.php';
@@ -124,7 +124,7 @@ class LivraisonController extends Controller {
     public function consulterLivraisonsClientAction() {
         $this->loadModel('Livraison');
         $livraisonsEnRetardIds = $this->model->getLivraisonsEnRetard();
-        $errors[] = $this->chargerAlerteCommandeRetard($livraisons, $livraisonsEnRetardIds);
+        $errors[] = $this->chargerAlertesCommandesRetards($livraisons, $livraisonsEnRetardIds);
         $form = new Form();
         if (isset($_GET)) {
             if (isset($_GET["cl_numero"]) && !empty($_GET["cl_numero"])){
@@ -147,17 +147,17 @@ class LivraisonController extends Controller {
         $choix = $_POST["choix"];
         $ordre = $_POST["ordre"];
         $livraisons = $this->model->getLivraisonRecherche($champ,$choix,$ordre);
-        $errors[] = $livraisonsEnRetardIds = $this->model->getLivraisonsEnRetard();
-        $errors[] = $this->chargerAlerteCommandeRetard($livraisons, $livraisonsEnRetardIds);
+        $livraisonsEnRetardIds = $this->model->getLivraisonsEnRetard();
+        $errors[] = $this->chargerAlertesCommandesRetards($livraisons, $livraisonsEnRetardIds);
         require APP . 'view/_templates/header.php';
         require APP . 'view/livraison/index.php';
         require APP . 'view/_templates/footer.php';
     }
 
-    private function chargerAlerteCommandeRetard($livraisons, $livraisonsEnRetardIds) {
+    private function chargerAlertesCommandesRetards($livraisons, $livraisonsEnRetardIds) {
         foreach ($livraisons as $livraison) {
             if (in_array($livraison["LI_NUMERO"],$livraisonsEnRetardIds)){
-                return "Des commandes sont en retard de plus de 5 jours";
+                return "Des commandes sont en retard de plus de 5 jours, ou sont incompletes";
             }
         }
         return null;

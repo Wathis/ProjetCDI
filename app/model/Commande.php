@@ -14,6 +14,20 @@ class Commande extends Model {
         return $query->fetchAll();
     }
 
+    //Renvoie les ids des commandes 
+    public function getCommandesEnRetard(){
+        $sql = "SELECT CO_NUMERO FROM CDI_LIGCDE LIG WHERE LIC_QTCMDEE > LIC_QTLIVREE AND ( DATE_ADD((SELECT CO_DATE FROM CDI_COMMANDE WHERE CO_NUMERO = LIG.CO_NUMERO), INTERVAL 5 DAY) <= NOW() OR DATE_LIV IS NULL )";
+        $query = $this->db->prepare($sql);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_ASSOC); 
+        //Extraire juste les ids
+        $ids = array();
+        foreach ($results as $result) {
+            $ids[] = $result["CO_NUMERO"];
+        }
+        return $ids;
+    }
+
     //Recupere les ids des commandes qui n'ont pas encore de livraisons
     public function getCommandeSansLivraisons() {
         $sql = 'SELECT CO_NUMERO FROM CDI_COMMANDE JOIN CDI_CLIENT USING (CL_NUMERO) WHERE CO_NUMERO NOT IN 

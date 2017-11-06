@@ -184,4 +184,12 @@ class CommandeController extends Controller {
         require APP . 'view/commande/index.php';
         require APP . 'view/_templates/footer.php';
     }
+    private function chargerAlerteCommandeRetard($commandes, $commandesSansLivraisons) {
+        foreach ($commandes as $commande) {
+            if (in_array($commande["CO_NUMERO"],$commandesSansLivraisons)){
+                return "Des commandes sont en retard de plus de 5 jours, ou sont incompletes";
+            }
+        }
+        return null;
+    }
 }
