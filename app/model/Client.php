@@ -44,13 +44,14 @@ class Client extends Model {
 
     // Fonction pour ajouter un nouveau client dans la base
     // Client est tableau associatif des informations du client
+    // Return true si il a été inséré, false sinon
 	public function ajouterUnClient($client) {
 		$num = $this->getMaxId('CDI_CLIENT','CL_NUMERO','C');
 
 		$sql = 'INSERT INTO CDI_CLIENT (CL_NUMERO,CL_NOM,CL_PRENOM,CL_LOCALITE,CL_PAYS,CL_CA,CL_TYPE,EMP_ENUME) VALUES (:CL_NUMERO,:CL_NOM,:CL_PRENOM,:CL_LOCALITE,:CL_PAYS,:CL_CA,:CL_TYPE,:EMP_ENUME)';
 		$query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 
-		$query->execute(array(
+		$result = $query->execute(array(
 			':CL_NUMERO' => $num,
 			':CL_NOM' =>  $client["CL_NOM"],
 			':CL_PRENOM' =>  $client["CL_PRENOM"],
@@ -60,6 +61,7 @@ class Client extends Model {
 			':CL_TYPE' =>  $client["CL_TYPE"],
 			':EMP_ENUME' =>  null
 		));
+		return $result;
 	}
 
 	//Fonction qui supprime un client si celui-ci n'a pas de commande 
@@ -86,11 +88,14 @@ class Client extends Model {
 		$query->execute();
 		return $query->fetch(PDO::FETCH_ASSOC);
 	}
+
+	//Permet de modifier un client dans la base
+	//Retourne false si non modifié, true sinon
 	public function modifierClient($client,$num)
 	{
 		$sql = 'UPDATE CDI_CLIENT set CL_NOM= :CL_NOM,CL_PRENOM= :CL_PRENOM,CL_LOCALITE= :CL_LOCALITE,CL_PAYS= :CL_PAYS,CL_CA= :CL_CA,CL_TYPE= :CL_TYPE,EMP_ENUME= :EMP_ENUME where CL_NUMERO= :CL_NUMERO';
 		$query = $this->db->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-		$query->execute(array(
+		$result = $query->execute(array(
 			':CL_NUMERO' => $num,
 			':CL_NOM' =>  $client["CL_NOM"],
 			':CL_PRENOM' =>  $client["CL_PRENOM"],
@@ -100,5 +105,6 @@ class Client extends Model {
 			':CL_TYPE' =>  $client["CL_TYPE"],
 			':EMP_ENUME' =>  null
 		));
+		return $result;
 	}
 }

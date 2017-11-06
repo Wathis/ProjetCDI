@@ -16,7 +16,7 @@ class ClientController extends Controller {
 	public function ajouterAction() {
 		$this->loadModel('Pays');
         $errors = array();
-		$informations = ["CL_NOM","CL_PRENOM","CL_LOCALITE","CL_CA"];
+		$informationsDiverses = ["CL_NOM","CL_PRENOM","CL_LOCALITE","CL_CA"];
 		$informationsObligatoires = ["CL_NOM","CL_PRENOM","CL_LOCALITE"];
 		//On charge les pays pour la vue
 		$pays = $this->model->getAllPays();
@@ -56,8 +56,11 @@ class ClientController extends Controller {
                     if (empty($errors)) {
                         //on charge le modele client pour acceder aux connexions avec la base de donnée
                         $this->loadModel('Client');
-                        $this->model->ajouterUnClient($client);
-                        $success = "Client ajouté";
+                        if ($this->model->ajouterUnClient($client)) {
+                            $success = "Client ajouté";
+                        } else {
+                            $errors[] = "Ce client exite déjà";
+                        }
                         // echo "CL_NOM : ",$client["CL_NOM"],"<br \>";
                         // echo "CL_PRENOM : ",$client["CL_PRENOM"],"<br \>";
                         // echo "CL_LOCALITE : ",$client["CL_LOCALITE"],"<br \>";
@@ -68,7 +71,7 @@ class ClientController extends Controller {
 		}
 
 		// Charge les informations du client depuis le tableau $_POST
-		$client = $form->chargerValeursFormulairePost($informations);
+		$client = $form->chargerValeursFormulairePost($informationsDiverses);
 
 		require APP . 'view/_templates/header.php';
         require APP . 'view/client/ajouter.php';
@@ -140,7 +143,6 @@ class ClientController extends Controller {
 	public function modifierClientAction(){
 		$this->loadModel('Pays');
 		$pays = $this->model->getAllPays();
-		$informations = ["CL_NOM","CL_PRENOM","CL_LOCALITE","CL_CA"];
 		$informationsObligatoires = ["CL_NOM","CL_PRENOM","CL_LOCALITE"];
 		$form = new Form();
 
@@ -173,11 +175,14 @@ class ClientController extends Controller {
                 }
                 // //On securise les champs avant l'insertion en base de donnée
                 // $client = $form->securiserLesChamps($client);
-                if (empty($errors))
-                {
-					$this->model->modifierClient($client,$num);
-                    $success = "Client modifié";
+                if (empty($errors)) {
+					if ($this->model->modifierClient($client,$num)) {
+                        $success = "Client modifié";
+                    } else {
+                        $errors[] = "Le client existe déjà";
+                    }
                 }
+
 			}
 
 		}
