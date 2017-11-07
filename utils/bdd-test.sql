@@ -1,24 +1,23 @@
--- phpMyAdmin SQL Dump
--- version 4.7.3
--- https://www.phpmyadmin.net/
---
--- Hôte : localhost:3306
--- Généré le :  mar. 07 nov. 2017 à 13:02
--- Version du serveur :  5.6.35
--- Version de PHP :  7.1.8
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
 
---
--- Base de données :  `projetCDI`
---
+SET SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO';
+SET time_zone = '+00:00';
 
--- --------------------------------------------------------
 
---
--- Structure de la table `CDI_ARTICLE`
---
+DROP TABLE IF EXISTS CDI_PAYS;
+DROP TABLE IF EXISTS BILAN;
+DROP TABLE IF EXISTS SONDAGE;
+DROP TABLE IF EXISTS CDI_POIMESSAGE;
+DROP TABLE IF EXISTS CDI_MESSAGE;
+DROP TABLE IF EXISTS CDI_ARTICLE;
+DROP TABLE IF EXISTS CDI_CLIENT;
+DROP TABLE IF EXISTS CDI_COMMANDE;
+DROP TABLE IF EXISTS CDI_FOURNISSEUR;
+DROP TABLE IF EXISTS CDI_LIGCDE;
+DROP TABLE IF EXISTS CDI_LIV_MESSAGE;
+DROP TABLE IF EXISTS CDI_LIVRAISON;
+DROP TABLE IF EXISTS CDI_MAGASIN;
+DROP TABLE IF EXISTS CDI_LIGLIV;
 
 CREATE TABLE `CDI_ARTICLE` (
   `AR_NUMERO` char(8) NOT NULL DEFAULT '',
@@ -41,7 +40,7 @@ INSERT INTO `CDI_ARTICLE` (`AR_NUMERO`, `FO_NUMERO`, `AR_NOM`, `AR_POIDS`, `AR_C
 ('A02', 'F07', 'IPHONE 8', '254.000', 'NOIR ', 1113, '600.00', '800.00', NULL),
 ('A03', 'F07', 'SAMSUNG GALAXY S8', '256.000', 'VERT', 652, '600.00', '800.00', NULL),
 ('A04', 'F09', 'LG 32J500V', '3000.000', 'NOIR', 544, '999.99', '999.99', NULL),
-('A05', 'F05', 'MONTRE CONNECTéE', '120.000', 'ORANGE', NULL, '100.00', '120.00', NULL),
+('A05', 'F05', 'MONTRE CONNECTÉE', '120.000', 'ORANGE', NULL, '100.00', '120.00', NULL),
 ('A06', 'F02', 'BUREAU 2ZD15', '2000.000', 'MARRON', 4, '100.00', '119.00', NULL);
 
 -- --------------------------------------------------------

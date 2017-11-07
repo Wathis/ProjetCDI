@@ -47,7 +47,6 @@ class LivraisonController extends Controller {
         require APP . 'view/_templates/footer.php';
     }
 
-
     //Creer une livraison 
     public function ajouterAction() {
         $errors = array();

@@ -10,11 +10,55 @@ class CommandeController extends Controller {
         $commandes = $this->model->getAllCommandes();
         $commandesEnRetardIds = $this->model->getCommandesEnRetard();
         $errors = $this->chargerAlerteCommandeRetard($commandes,$commandesEnRetardIds);
+        // $commandesAvecLivraisonsEnCours = $this->findCommandesAvecLivraisonsEnCours($commandes);
+        // $commandesAvecLivraisonsTerminees = $this->findCommandesAvecLivraisonsTerminees($commandes);
+        $commandesTerminees = $this->findCommandesTerminees($commandes);
         require APP . 'view/_templates/header.php';
         require APP . 'view/commande/index.php';
         require APP . 'view/_templates/footer.php';
     }
 
+    //Permet de recuperer les ids des commandes qui ont des livraisons en cours
+    private function findCommandesAvecLivraisonsEnCours($commandes) {
+        $commandesAvecLivraisonsEnCours = array();
+        $this->loadModel('Livraison');
+        foreach ($commandes as $commande) {
+            $livraisonsEnCours = $this->model->getLivraisonsCommandeEnCours($commande["CO_NUMERO"]);
+            // $livraisonsFinies = $this->model->getLivraisonsCommandeFinies($commande["CO_NUMERO"]);
+            if (count($livraisonsEnCours) > 0 ) {
+                $commandesAvecLivraisonsEnCours[] = $commande["CO_NUMERO"];
+            }
+        }
+        return $commandesAvecLivraisonsEnCours;
+    }
+
+    //Permet de recuperer les ids des commandes ont des livraisons terminés
+    // ATTENTION : IL faut l'appeller apres findCommandesAvecLivraisonsEnCours
+    private function findCommandesAvecLivraisonsTerminees($commandes) {
+        $commandesAvecLivraisonsTerminees = array();
+        foreach ($commandes as $commande) {
+            $livraisonsTermines = $this->model->getLivraisonsCommandeFinies($commande["CO_NUMERO"]);
+            // $livraisonsFinies = $this->model->getLivraisonsCommandeFinies($commande["CO_NUMERO"]);
+            if (count($livraisonsTermines) > 0 ) {
+                $commandesAvecLivraisonsTerminees[] = $commande["CO_NUMERO"];
+            }
+        }
+        return $commandesAvecLivraisonsTerminees;
+    }
+
+
+    //Permet de recuperer les ids des commandes qui n'ont plus d'article a mettre en livraison 
+    public function findCommandesTerminees($commandes) {
+        $commandesTerminees = array();
+        $this->loadModel('Article');
+        foreach ($commandes as $commande) {
+            $articles = $this->model->getArticlesRestantALivrer($commande["CO_NUMERO"]);
+            if (count($articles) == 0) {
+                $commandesTerminees[] = $commande["CO_NUMERO"];
+            }
+        }
+        return $commandesTerminees;
+    }
 
     //Créer une commande 
     public function ajouterAction() {
@@ -105,6 +149,7 @@ class CommandeController extends Controller {
         $commandes = $this->model->getCommandeOrder($choix,$ordre);
         $commandesEnRetardIds = $this->model->getCommandesEnRetard();
         $errors = $this->chargerAlerteCommandeRetard($commandes,$commandesEnRetardIds);
+        $commandesTerminees = $this->findCommandesTerminees($commandes);
         require APP . 'view/_templates/header.php';
         require APP . 'view/commande/index.php';
         require APP . 'view/_templates/footer.php';
@@ -149,9 +194,10 @@ class CommandeController extends Controller {
         } else {
             //Sur tous les articles
             $commandes = $this->model->getAllCommandes();
-            $commandesEnRetardIds = $this->model->getCommandesEnRetard();
-            $errors = $this->chargerAlerteCommandeRetard($commandes,$commandesEnRetardIds);
         }
+        $commandesEnRetardIds = $this->model->getCommandesEnRetard();
+        $errors = $this->chargerAlerteCommandeRetard($commandes,$commandesEnRetardIds);
+        $commandesTerminees = $this->findCommandesTerminees($commandes);
         require APP . 'view/_templates/header.php';
         require APP . 'view/commande/consulter.php';
         require APP . 'view/_templates/footer.php';
@@ -171,12 +217,15 @@ class CommandeController extends Controller {
                 $commandes = $this->model->getCommandeClient($num);
             } else { //Alors aucun magasin choisi
                 $errors[] = "Vous n'avez pas fourni de numero de client";
+                $commandes = $this->model->getAllCommandes();
             }
         } else {
             $errors[] = "Vous n'avez pas fourni de numero de client";
+            $commandes = $this->model->getAllCommandes();
         }
         $commandesEnRetardIds = $this->model->getCommandesEnRetard();
         $errors = $this->chargerAlerteCommandeRetard($commandes,$commandesEnRetardIds);
+        $commandesTerminees = $this->findCommandesTerminees($commandes);
         require APP . 'view/_templates/header.php';
         require APP . 'view/commande/index.php';
         require APP . 'view/_templates/footer.php';
@@ -190,6 +239,7 @@ class CommandeController extends Controller {
         $commandes = $this->model->getCommandeRecherche($champ,$choix,$ordre);
         $commandesEnRetardIds = $this->model->getCommandesEnRetard();
         $errors = $this->chargerAlerteCommandeRetard($commandes,$commandesEnRetardIds);
+        $commandesTerminees = $this->findCommandesTerminees($commandes);
         require APP . 'view/_templates/header.php';
         require APP . 'view/commande/index.php';
         require APP . 'view/_templates/footer.php';

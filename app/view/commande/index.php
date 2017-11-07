@@ -71,7 +71,14 @@
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Livraison/commandes?co_numero=' . $commande["CO_NUMERO"] . '"'; ?>>Livraisons déjà faites</a>
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Livraison/commandesEnCours?co_numero=' . $commande["CO_NUMERO"] . '"'; ?>>Livraisons en cours</a>
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Article/restantALivrer?co_numero=' . $commande["CO_NUMERO"] . '"'; ?>>Restant à livrer</a>
+                                <?php 
+                                    if (!in_array($commande["CO_NUMERO"],$commandesTerminees)) {
+                                ?>
+                                    
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Livraison/ajouter?co_numero=' . $commande["CO_NUMERO"] . '"'; ?>>Ajouter nouvelle livraison</a>
+                                <?php
+                                    } 
+                                ?>
                                 <a class="w3-bar-item w3-button" href=<?php echo '"' . URL . 'Pdf/index?co_numero=' . $commande["CO_NUMERO"] . '"'; ?>>Récupérer le pdf</a>
                             </div>
                         </div>

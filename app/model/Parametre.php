@@ -97,5 +97,4 @@ class Parametre extends Model {
         $query = $this->db->prepare($sql);      
         $query->execute();
     }
-
 }
