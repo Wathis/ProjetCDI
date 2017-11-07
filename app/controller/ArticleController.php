@@ -35,7 +35,7 @@ class ArticleController extends Controller
             //On fait toutes les verifications obligatoires
             $articleInformations = array();
             if (isset($_POST['AR_NOM']) && !empty($_POST['AR_NOM'])){
-                $articleInformations["AR_NOM"] = strtoupper($_POST['AR_NOM']);   
+                $articleInformations["AR_NOM"] = mb_strtoupper($_POST['AR_NOM']);   
             } else {
                 $errors[] = "Vous n'avez pas entré de nom d'article";
             }
