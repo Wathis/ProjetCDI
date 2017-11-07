@@ -189,7 +189,11 @@ class Form {
 	private function cassePrenom($champ)
 	{
 		$champ = $this->mettreMinuscule($champ);
-		$prem = $this->supprimerAccent($champ[0]);
+        if (strlen($champ) > 0) {
+            $prem = $this->supprimerAccent($champ[0]);
+        } else {
+            $prem = $champ;
+        }
 		for ($i=1; $i<strlen($champ); $i++) {
 			$prem= $prem.$champ[$i];
 		}

@@ -75,8 +75,18 @@ class Article extends Model
 
     //Recupere les articles restants a livrer pour une commande
     public function getArticlesRestantALivrer($co_numero) {
-        $sql = 'SELECT * FROM CDI_ARTICLE JOIN CDI_LIGCDE USING (AR_NUMERO) 
-                WHERE CO_NUMERO = :CO_NUMERO AND LIC_QTCMDEE > LIC_QTLIVREE';
+        $sql = 'SELECT *,LIC_QTCMDEE - QTLIVREE AS RESTANT FROM CDI_ARTICLE 
+                JOIN CDI_LIGCDE USING (AR_NUMERO)
+                JOIN
+                (   
+                    SELECT DISTINCT AR_NUMERO, SUM(LIC_QTLIVREE) + SUM(IFNULL(LIL_QTLIVREE,0)) as QTLIVREE FROM CDI_ARTICLE 
+                    JOIN CDI_LIGCDE USING (AR_NUMERO) 
+                    LEFT JOIN CDI_LIVRAISON USING (CO_NUMERO) 
+                    LEFT JOIN CDI_LIGLIV USING (LI_NUMERO,AR_NUMERO)
+                    WHERE CO_NUMERO = :CO_NUMERO
+                    GROUP BY AR_NUMERO
+                ) as e1 USING (AR_NUMERO)
+                WHERE CO_NUMERO = :CO_NUMERO AND LIC_QTCMDEE - QTLIVREE > 0';
         $query = $this->db->prepare($sql);
         $query->execute(array(
             ":CO_NUMERO" => $co_numero

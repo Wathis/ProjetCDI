@@ -11,6 +11,7 @@
             <th>Prix Achat</th>
             <th>Prix Vente</th>
             <th>Prix Vendu</th>
+            <th>Quantité</th>
             <th>En stock</th>
         </tr>
         </thead>
@@ -35,6 +36,7 @@
                         }
                     ?>    
                 </td>
+                <td><?php echo $article["LIC_QTCMDEE"]; ?></td>
                 <td><?php echo $article["AR_STOCK"]; ?></td>
             </tr>
         <?php } ?>

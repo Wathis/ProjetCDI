@@ -23,11 +23,11 @@ class LivraisonController extends Controller {
         if (isset($_POST["submit"])) {
             if (isset($_POST["CO_NUMERO"]) && !empty($_POST["CO_NUMERO"])){
                 $co_numero = $_POST["CO_NUMERO"];
-                $articles = $this->model->getArticles($co_numero);
+                $articles = $this->model->getArticlesAvecLivraisonsEnCours($co_numero);
                 $amodif = 0;
                 foreach ($articles as $val)
                     {
-                        if ($val["LIC_QTCMDEE"]-$val["LIC_QTLIVREE"] != 0)
+                        if ($val["LIC_QTCMDEE"]-$val["QTLIVREE"] > 0)
                             {
                                 $amodif = 1;                                                
                     }
@@ -85,9 +85,13 @@ class LivraisonController extends Controller {
                 if (isset($_POST[$article["AR_NUMERO"]])) {
                     if (isset($_POST["quantity" . $article["AR_NUMERO"]]) && !empty($_POST["quantity" . $article["AR_NUMERO"]])) {
                         $quantite = $_POST["quantity" . $article["AR_NUMERO"]];
-                        $restant = $this->model->getNombreCommandéPourArticle($article["AR_NUMERO"], $co_numero);
+                        $qtLivree =  $this->findChampDansArticles('QTLIVREE',$articles,$article["AR_NUMERO"]);
+                        $restant = $this->findChampDansArticles('RESTANT',$articles,$article["AR_NUMERO"]);
                         if ( $quantite > 0 ){
                             if ($restant - $quantite >= 0) {
+                                if (empty($errors)) {   
+                                    $articles = $this->replaceQuantiteArticle($articles,$article["AR_NUMERO"], $qtLivree + $quantite);
+                                }
                                 $articlesLivres[] = array (
                                     "AR_NUMERO" => $article["AR_NUMERO"],
                                     "QUANTITE" => $quantite
@@ -109,10 +113,29 @@ class LivraisonController extends Controller {
                 $success = "Livraison ajoutée";
             }
         } 
-
         require APP . 'view/_templates/header.php';
         require APP . 'view/livraison/ajouter.php';
         require APP . 'view/_templates/footer.php';
+    }
+
+    //Trouver la quantité restante dans un tableau
+    private function findChampDansArticles($champ,$articles,$ar_numero) {
+        foreach ($articles as $article) {
+            if ($article["AR_NUMERO"] == $ar_numero) {
+                return $article[$champ];
+            }
+        }
+    }
+
+    //Permet d'update le tableau d'article avec la quantite
+    private function replaceQuantiteArticle($articles,$ar_numero,$quantite) {
+        foreach ($articles as $id => $article) {
+            if ($article["AR_NUMERO"] == $ar_numero) {
+                $articles[$id]["QTLIVREE"] = $quantite;
+                break;
+            }
+        }
+        return $articles;
     }
 
     //Action pour dire qu'une livraison est terminée

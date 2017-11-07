@@ -27,7 +27,7 @@ class ArticleController extends Controller
         $this->loadModel('Fournisseur');
         $fournisseurs = $this->model->getAllFournisseurs();
 
-        $erros = array();
+        $errors = array();
         $form = new Form();
 
         //L'utilisateur a appuyé sur "ajouter"
@@ -37,27 +37,27 @@ class ArticleController extends Controller
             if (isset($_POST['AR_NOM']) && !empty($_POST['AR_NOM'])){
                 $articleInformations["AR_NOM"] = strtoupper($_POST['AR_NOM']);   
             } else {
-                $erros[] = "Vous n'avez pas entré de nom d'article";
+                $errors[] = "Vous n'avez pas entré de nom d'article";
             }
 
             if (isset($_POST['AR_PV'])){
                 if (!preg_match("#^[0-9]+$#", $_POST['AR_PV'])) {
-                    $erros[] = "Le prix de vente doit être un nombre";
+                    $errors[] = "Le prix de vente doit être un nombre";
                 } else {
                     $articleInformations["AR_PV"] = $_POST['AR_PV'];   
                 }
             } else {
-                $erros[] = "Vous n'avez pas entré de prix de vente";
+                $errors[] = "Vous n'avez pas entré de prix de vente";
             }
 
             if (isset($_POST['AR_PA'])){
                 if (!preg_match("#^[0-9]+$#", $_POST['AR_PA'])) {
-                    $erros[] = "Le prix d'achat doit être un nombre";
+                    $errors[] = "Le prix d'achat doit être un nombre";
                 } else {
                     $articleInformations["AR_PA"] = $_POST['AR_PA'];   
                 }
             } else {
-                $erros[] = "Vous n'avez pas entré de prix d'achat";
+                $errors[] = "Vous n'avez pas entré de prix d'achat";
             }
 
             //On extrait les données facultatives
@@ -66,21 +66,21 @@ class ArticleController extends Controller
             //le isset et empty permettent de rendre les champs facultatifs
             if (isset($_POST['AR_POIDS']) && !empty($_POST['AR_POIDS'])) {
                 if (!preg_match("#^[0-9]+$#", $_POST['AR_POIDS'])) {
-                    $erros[] = "Le poids est invalide";
+                    $errors[] = "Le poids est invalide";
                 } else {
                     $articleInformations["AR_POIDS"] = $_POST['AR_POIDS'];   
                 }
             }
             if (isset($_POST['AR_STOCK']) && !empty($_POST['AR_STOCK'])) {
                 if (!preg_match("#^[0-9]+$#", $_POST['AR_STOCK'])) {
-                    $erros[] = "Le stock est invalide";
+                    $errors[] = "Le stock est invalide";
                 } else {
                     $articleInformations["AR_STOCK"] = $_POST['AR_STOCK'];   
                 }
             }
 
             //Donc toutes les données sont récupérées, on peut inserer l'article
-            if (count($erros) == 0) {
+            if (count($errors) == 0) {
                 //Insertion de l'article
                 $this->loadModel('Article');
                 $this->model->ajouterArticle($articleInformations);

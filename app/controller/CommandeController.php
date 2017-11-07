@@ -121,7 +121,7 @@ class CommandeController extends Controller {
             if (isset($_GET["co_numero"]) && !empty($_GET["co_numero"])){
                 $co_numero = $_GET["co_numero"];
                 $co_numero = $form->securiserChamp($co_numero);
-                $articles = $this->model->getArticles($co_numero);
+                $articles = $this->model->getArticlesAvecLivraisonsEnCours($co_numero);
             } else { //Alors aucune commande choisie
                 $errors[] = "Vous n'avez pas sélectionné une commande valide";
             }

@@ -14,10 +14,22 @@ class Commande extends Model {
         return $query->fetchAll();
     }
 
+    //Permet d'avoir les articles de la commandes, et de savoir aussi le nombre déjà livré ou en cours
     public function getArticlesAvecLivraisonsEnCours($co_numero) {
-        $sql = 'SELECT * FROM CDI_LIGCDE JOIN CDI_ARTICLE using (AR_NUMERO) WHERE CO_NUMERO = :co_numero;';
+        $sql = 'SELECT *,LIC_QTCMDEE - QTLIVREE AS RESTANT FROM CDI_ARTICLE 
+                JOIN CDI_LIGCDE USING (AR_NUMERO)
+                JOIN
+                (   
+                    SELECT DISTINCT AR_NUMERO, SUM(LIC_QTLIVREE) + SUM(IFNULL(LIL_QTLIVREE,0)) as QTLIVREE FROM         CDI_ARTICLE 
+                    JOIN CDI_LIGCDE USING (AR_NUMERO) 
+                    LEFT JOIN CDI_LIVRAISON USING (CO_NUMERO) 
+                    LEFT JOIN CDI_LIGLIV USING (LI_NUMERO,AR_NUMERO)
+                    WHERE CO_NUMERO = :CO_NUMERO
+                    GROUP BY AR_NUMERO
+                ) as e1 USING (AR_NUMERO)
+                WHERE CO_NUMERO = :CO_NUMERO';
         $query = $this->db->prepare($sql);
-        $parameters = array(':co_numero' => $co_numero);
+        $parameters = array(':CO_NUMERO' => $co_numero);
         $query->execute($parameters);
         return $query->fetchAll();
     }

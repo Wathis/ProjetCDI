@@ -16,14 +16,14 @@ class Livraison extends Model {
 
     //Donne le nombre d'article commandé
     public function getNombreCommandéPourArticle($ar_numero, $co_numero) {
-        $sql = 'SELECT LIC_QTCMDEE - LIC_QTLIVREE as restant FROM CDI_LIGCDE WHERE AR_NUMERO = :AR_NUMERO AND CO_NUMERO = :CO_NUMERO;';
+        $sql = 'SELECT LIC_QTCMDEE FROM CDI_LIGCDE WHERE AR_NUMERO = :AR_NUMERO AND CO_NUMERO = :CO_NUMERO;';
         $query = $this->db->prepare($sql);
         $query->execute(array(
             ":AR_NUMERO" => $ar_numero,
             ":CO_NUMERO" => $co_numero
         ));
         $query = $query->fetch();
-        return (int) $query["restant"];
+        return (int) $query["LIC_QTCMDEE"];
     }
 
     //Insere une nouvelle livraison et ligne de livraison

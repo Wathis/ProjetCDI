@@ -20,23 +20,25 @@
 
     	<?php
 			foreach ($articles as $article) {
-		?>
-			<tr> 
-				<td>
-					<?php echo '<input name="' . $article["AR_NUMERO"] . '" type="checkbox" value="' . $article["AR_NUMERO"] . '">'?> 
-					<?php echo '<label for="' . $article["AR_NUMERO"] . '">' . $article["AR_NOM"] . '</label>'?> 
-				</td>
-				<td>
-					<input type="number" placeholder="3" name="quantity<?php echo $article['AR_NUMERO'] ?>">
-				</td>
-				<td>
-					<?php echo $article['LIC_QTLIVREE']; ?>			
-				</td>
-				<td>
-					<?php $Qrest = $article['LIC_QTCMDEE']-$article['LIC_QTLIVREE'];echo $Qrest; ?>
-				</td>
-			</tr>
-		<?php
+				if ($article["RESTANT"] > 0) {
+			?>
+				<tr> 
+					<td>
+						<?php echo '<input name="' . $article["AR_NUMERO"] . '" type="checkbox" value="' . $article["AR_NUMERO"] . '">'?> 
+						<?php echo '<label for="' . $article["AR_NUMERO"] . '">' . $article["AR_NOM"] . '</label>'?> 
+					</td>
+					<td>
+						<input type="number" placeholder="Exemple : 3" value = "" name="quantity<?php echo $article['AR_NUMERO'] ?>">
+					</td>
+					<td>
+						<?php echo $article['QTLIVREE']; ?>			
+					</td>
+					<td>
+						<?php $Qrest = $article['LIC_QTCMDEE']-$article['QTLIVREE'];echo $Qrest; ?>
+					</td>
+				</tr>
+			<?php
+				}
 			}
 		?> 
 		</tbody>

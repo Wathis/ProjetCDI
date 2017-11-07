@@ -15,7 +15,8 @@ class Client extends Model {
 	//Recupere les numeros des clients qui ont des commandes en retard ( 5 jours )
 	public function getClientRetards() {
 
-		$sql = 'SELECT CL_NUMERO FROM CDI_CLIENT WHERE CL_NUMERO IN ( SELECT CL_NUMERO FROM CDI_COMMANDE WHERE CO_NUMERO IN ( SELECT CO_NUMERO FROM CDI_LIGCDE WHERE LIC_QTCMDEE > LIC_QTLIVREE ) AND DATE_ADD(CO_DATE, INTERVAL 5 DAY) < NOW() )';
+		$sql = 'SELECT CL_NUMERO FROM CDI_COMMANDE WHERE CO_NUMERO in (
+				SELECT CO_NUMERO FROM CDI_COMMANDE WHERE CO_NUMERO IN (SELECT CO_NUMERO FROM CDI_LIVRAISON as LIV WHERE DATE_LIV_REELE IS NULL AND DATE_LIV_PREVUE <= NOW()))';
 		$query = $this->db->prepare($sql);
 		$query->execute();
 		$results = $query->fetchAll();
