@@ -71,7 +71,7 @@ class ArticleController extends Controller
                     $articleInformations["AR_POIDS"] = $_POST['AR_POIDS'];   
                 }
             }
-            if (isset($_POST['AR_STOCK']) && !empty($_POST['AR_STOCK'])) {
+            if (isset($_POST['AR_STOCK'])) {
                 if (!preg_match("#^[0-9]+$#", $_POST['AR_STOCK'])) {
                     $errors[] = "Le stock est invalide";
                 } else {

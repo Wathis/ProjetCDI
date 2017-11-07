@@ -25,6 +25,20 @@ class Article extends Model
         return $nbr > 0;
     }
 
+    //Return true si le stock est null
+    public function getStock($ar_numero) {
+        $sql = "SELECT AR_STOCK FROM CDI_ARTICLE WHERE  AR_NUMERO = :AR_NUMERO";
+        $query = $this->db->prepare($sql);
+        $query->execute(array(
+            ":AR_NUMERO" => $ar_numero
+        ));
+        $query = $query->fetch();
+        $nbr = $query["AR_STOCK"];
+        echo $nbr;
+        var_dump($nbr);
+        return $nbr;
+    }
+
     //On check si il reste des articles en stock
     public function estEnStock($ar_numero,$quantity) {
         $sql = "SELECT AR_STOCK FROM CDI_ARTICLE WHERE  AR_NUMERO = :ar_numero";
