@@ -46,9 +46,9 @@ class Article extends Model
         $query->execute(array(
             ':AR_NUMERO' => $num,
             ':AR_NOM' =>  $article["AR_NOM"],
-            ':AR_POIDS' =>  $article["AR_POIDS"],
+            ':AR_POIDS' =>  isset($article["AR_POIDS"]) ? $article["AR_POIDS"] : null,
             ':AR_COULEUR' =>  $article["AR_COULEUR"],
-            ':AR_STOCK' =>  $article["AR_STOCK"],
+            ':AR_STOCK' =>  isset($article["AR_STOCK"]) ? $article["AR_STOCK"] : null,
             ':AR_PA' =>  $article["AR_PA"],
             ':AR_PV' =>  $article["AR_PV"],
             ':FO_NUMERO' =>  $article["FO_NUMERO"]
@@ -81,7 +81,7 @@ class Article extends Model
                 (   
                     SELECT DISTINCT AR_NUMERO, SUM(LIC_QTLIVREE) + SUM(IFNULL(LIL_QTLIVREE,0)) as QTLIVREE FROM CDI_ARTICLE 
                     JOIN CDI_LIGCDE USING (AR_NUMERO) 
-                    LEFT JOIN CDI_LIVRAISON USING (CO_NUMERO) 
+                    LEFT JOIN (SELECT * FROM CDI_LIVRAISON WHERE DATE_LIV_REELE IS NULL) as e1 USING (CO_NUMERO) 
                     LEFT JOIN CDI_LIGLIV USING (LI_NUMERO,AR_NUMERO)
                     WHERE CO_NUMERO = :CO_NUMERO
                     GROUP BY AR_NUMERO

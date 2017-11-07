@@ -16,7 +16,7 @@ class ClientController extends Controller {
 	public function ajouterAction() {
 		$this->loadModel('Pays');
         $errors = array();
-		$informationsDiverses = ["CL_NOM","CL_PRENOM","CL_LOCALITE","CL_CA","CL_TYPE"];
+		$informationsDiverses = ["CL_NOM","CL_PRENOM","CL_LOCALITE","CL_CA","CL_TYPE","CL_PAYS"];
 		$informationsObligatoires = ["CL_NOM","CL_PRENOM","CL_LOCALITE"];
 		//On charge les pays pour la vue
 		$pays = $this->model->getAllPays();

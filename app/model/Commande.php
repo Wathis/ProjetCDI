@@ -22,7 +22,7 @@ class Commande extends Model {
                 (   
                     SELECT DISTINCT AR_NUMERO, SUM(LIC_QTLIVREE) + SUM(IFNULL(LIL_QTLIVREE,0)) as QTLIVREE FROM         CDI_ARTICLE 
                     JOIN CDI_LIGCDE USING (AR_NUMERO) 
-                    LEFT JOIN CDI_LIVRAISON USING (CO_NUMERO) 
+                    LEFT JOIN (SELECT * FROM CDI_LIVRAISON WHERE DATE_LIV_REELE IS NULL) as e1 USING (CO_NUMERO) 
                     LEFT JOIN CDI_LIGLIV USING (LI_NUMERO,AR_NUMERO)
                     WHERE CO_NUMERO = :CO_NUMERO
                     GROUP BY AR_NUMERO

@@ -85,9 +85,6 @@ class ArticleController extends Controller
                 $this->loadModel('Article');
                 $this->model->ajouterArticle($articleInformations);
                 $success = "Article ajouté";
-                echo "<PRE>";
-                print_r($articleInformations);
-                echo "</PRE>";
             }
         }
 
