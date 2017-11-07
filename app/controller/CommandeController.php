@@ -9,7 +9,7 @@ class CommandeController extends Controller {
         $commandesSansLivraisons = $this->model->getCommandeSansLivraisons();
         $commandes = $this->model->getAllCommandes();
         $commandesEnRetardIds = $this->model->getCommandesEnRetard();
-        $errors[] = $this->chargerAlerteCommandeRetard($commandes,$commandesEnRetardIds);
+        $errors = $this->chargerAlerteCommandeRetard($commandes,$commandesEnRetardIds);
         require APP . 'view/_templates/header.php';
         require APP . 'view/commande/index.php';
         require APP . 'view/_templates/footer.php';
@@ -104,7 +104,7 @@ class CommandeController extends Controller {
         $commandesSansLivraisons = $this->model->getCommandeSansLivraisons();
         $commandes = $this->model->getCommandeOrder($choix,$ordre);
         $commandesEnRetardIds = $this->model->getCommandesEnRetard();
-        $errors[] = $this->chargerAlerteCommandeRetard($commandes,$commandesEnRetardIds);
+        $errors = $this->chargerAlerteCommandeRetard($commandes,$commandesEnRetardIds);
         require APP . 'view/_templates/header.php';
         require APP . 'view/commande/index.php';
         require APP . 'view/_templates/footer.php';
@@ -149,6 +149,8 @@ class CommandeController extends Controller {
         } else {
             //Sur tous les articles
             $commandes = $this->model->getAllCommandes();
+            $commandesEnRetardIds = $this->model->getCommandesEnRetard();
+            $errors = $this->chargerAlerteCommandeRetard($commandes,$commandesEnRetardIds);
         }
         require APP . 'view/_templates/header.php';
         require APP . 'view/commande/consulter.php';
@@ -174,7 +176,7 @@ class CommandeController extends Controller {
             $errors[] = "Vous n'avez pas fourni de numero de client";
         }
         $commandesEnRetardIds = $this->model->getCommandesEnRetard();
-        $errors[] = $this->chargerAlerteCommandeRetard($commandes,$commandesEnRetardIds);
+        $errors = $this->chargerAlerteCommandeRetard($commandes,$commandesEnRetardIds);
         require APP . 'view/_templates/header.php';
         require APP . 'view/commande/index.php';
         require APP . 'view/_templates/footer.php';
@@ -187,7 +189,7 @@ class CommandeController extends Controller {
         $ordre = $_POST["ordre"];
         $commandes = $this->model->getCommandeRecherche($champ,$choix,$ordre);
         $commandesEnRetardIds = $this->model->getCommandesEnRetard();
-        $errors[] = $this->chargerAlerteCommandeRetard($commandes,$commandesEnRetardIds);
+        $errors = $this->chargerAlerteCommandeRetard($commandes,$commandesEnRetardIds);
         require APP . 'view/_templates/header.php';
         require APP . 'view/commande/index.php';
         require APP . 'view/_templates/footer.php';
@@ -195,7 +197,7 @@ class CommandeController extends Controller {
     private function chargerAlerteCommandeRetard($commandes, $commandesEnRetardIds) {
         foreach ($commandes as $commande) {
             if (in_array($commande["CO_NUMERO"],$commandesEnRetardIds)){
-                return "Des commandes sont en retard";
+                return array("Des commandes sont en retard");
             }
         }
         return null;

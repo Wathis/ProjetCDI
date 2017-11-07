@@ -30,7 +30,7 @@ class Livraison extends Model {
     public function insererNouvelleLivraison($co_numero,$articlesLivres,$date_liv_prevue) {
         $li_numero_max = $this->getMaxId('CDI_LIVRAISON','LI_NUMERO','L');
 
-        $sql = 'INSERT INTO CDI_LIVRAISON (LI_NUMERO,CO_NUMERO,DATE_LIV, MA_NUMERO, CL_NUMERO) VALUES (:LI_NUMERO,:CO_NUMERO,:DATE_LIV,
+        $sql = 'INSERT INTO CDI_LIVRAISON (LI_NUMERO,CO_NUMERO,DATE_LIV_PREVUE, MA_NUMERO, CL_NUMERO) VALUES (:LI_NUMERO,:CO_NUMERO,:DATE_LIV_PREVUE,
             (
                 SELECT MA_NUMERO FROM CDI_COMMANDE WHERE CO_NUMERO = :CO_NUMERO
             ),
@@ -44,7 +44,7 @@ class Livraison extends Model {
         $query->execute(array(
             ':LI_NUMERO' => $li_numero_max,
             ':CO_NUMERO' =>  $co_numero,
-            ':DATE_LIV' =>  $date_liv_prevue
+            ':DATE_LIV_PREVUE' =>  $date_liv_prevue
         ));
 
         foreach ($articlesLivres as $article) {
@@ -104,10 +104,24 @@ class Livraison extends Model {
     }
 
     //Permet de recuperer les livraisons concerné par le numero de commande envoyé en parametre
-    public function getLivraisonsCommande($co_numero) {
+    public function getLivraisonsCommandeFinies($co_numero) {
         $sql = 'SELECT * FROM CDI_LIVRAISON  
                 JOIN CDI_CLIENT USING (CL_NUMERO)
-                WHERE CO_NUMERO = :co_numero;'
+                WHERE CO_NUMERO = :co_numero
+                AND DATE_LIV_REELE IS NOT NULL'
+            ;
+        $query = $this->db->prepare($sql);
+        $parameters = array(':co_numero' => $co_numero);
+        $query->execute($parameters);
+        return $query->fetchAll();
+    }
+
+    //Permet de recuperer les livraisons  en cours d'une commande
+    public function getLivraisonsCommandeEnCours($co_numero) {
+        $sql = 'SELECT * FROM CDI_LIVRAISON  
+                JOIN CDI_CLIENT USING (CL_NUMERO)
+                WHERE CO_NUMERO = :co_numero
+                AND DATE_LIV_REELE IS NULL'
             ;
         $query = $this->db->prepare($sql);
         $parameters = array(':co_numero' => $co_numero);

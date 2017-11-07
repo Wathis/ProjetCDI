@@ -24,7 +24,8 @@ class Commande extends Model {
 
     //Renvoie les ids des commandes 
     public function getCommandesEnRetard(){
-        $sql = "SELECT CO_NUMERO FROM CDI_LIGCDE LIG WHERE LIC_QTCMDEE > LIC_QTLIVREE AND ( DATE_ADD((SELECT CO_DATE FROM CDI_COMMANDE WHERE CO_NUMERO = LIG.CO_NUMERO), INTERVAL 5 DAY) <= NOW() OR DATE_LIV IS NULL )";
+        // $sql = "SELECT CO_NUMERO FROM CDI_LIGCDE LIG WHERE LIC_QTCMDEE > LIC_QTLIVREE AND ( DATE_ADD((SELECT CO_DATE FROM CDI_COMMANDE WHERE CO_NUMERO = LIG.CO_NUMERO), INTERVAL 5 DAY) <= NOW() OR DATE_LIV IS NULL )";
+        $sql = "SELECT CO_NUMERO FROM CDI_COMMANDE WHERE CO_NUMERO IN (SELECT CO_NUMERO FROM CDI_LIVRAISON as LIV WHERE DATE_LIV_REELE IS NULL AND DATE_LIV_PREVUE <= NOW())";
         $query = $this->db->prepare($sql);
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_ASSOC); 

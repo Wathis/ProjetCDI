@@ -17,7 +17,7 @@ class LivraisonController extends Controller {
     public function choisirCommandeAction() {
 
         $this->loadModel('Commande');
-        $commandes = $this->model->getAllCommandesPourAjouter();
+        $commandes = $this->model->getAllCommandes();
         $errors = array();
 
         if (isset($_POST["submit"])) {
@@ -130,15 +130,14 @@ class LivraisonController extends Controller {
         require APP . 'view/_templates/footer.php';
     }
 
-    //Action pour afficher les livraisons d'une commande
-    public function commandesAction() {
+    //Action pour afficher les livraisons d'une commande en cours
+    public function commandesEnCoursAction() {
         $this->loadModel('Livraison');
         $form = new Form();
         if (isset($_GET)) {
             if (isset($_GET["co_numero"]) && !empty($_GET["co_numero"])){
                 $co_numero = $_GET["co_numero"];
-                $co_numero = $form->securiserChamp($co_numero);
-                $livraisons = $this->model->getLivraisonsCommande($co_numero);
+                $livraisons = $this->model->getLivraisonsCommandeEnCours($co_numero);
             } else { //Alors aucun magasin choisi
                 $errors[] = "Vous n'avez pas fourni de numero de commande";
             }
@@ -151,6 +150,28 @@ class LivraisonController extends Controller {
         require APP . 'view/livraison/index.php';
         require APP . 'view/_templates/footer.php';
     }
+
+    //Action pour afficher les livraisons d'une commande
+    public function commandesAction() {
+        $this->loadModel('Livraison');
+        $form = new Form();
+        if (isset($_GET)) {
+            if (isset($_GET["co_numero"]) && !empty($_GET["co_numero"])){
+                $co_numero = $_GET["co_numero"];
+                $livraisons = $this->model->getLivraisonsCommandeFinies($co_numero);
+            } else { //Alors aucun magasin choisi
+                $errors[] = "Vous n'avez pas fourni de numero de commande";
+            }
+        } else {
+            $errors[] = "Vous n'avez pas fourni de numero de commande";
+        }
+        $livraisonsEnRetardIds = $this->model->getLivraisonsEnRetard();
+        $errors = $this->chargerAlertesCommandesRetards($livraisons, $livraisonsEnRetardIds);
+        require APP . 'view/_templates/header.php';
+        require APP . 'view/livraison/index.php';
+        require APP . 'view/_templates/footer.php';
+    }
+
     public function trieLiAction() {
         $this->loadModel('Livraison');
         $choix = $_POST["tris"];
